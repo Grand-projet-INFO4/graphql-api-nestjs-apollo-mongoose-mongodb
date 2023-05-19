@@ -2,17 +2,10 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-provider = "prisma-client-js"
-previewFeatures = ["mongodb"]
+  provider = "prisma-client-js"
 }
 
 datasource db {
-provider = "mongodb"
-url = env("DATABASE_URL")
-}
-
-model Post {
-id String @id @default(auto())@map("_id")@db.ObjectId
-numero String
-name String
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
 }
