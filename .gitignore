@@ -36,3 +36,6 @@ lerna-debug.log*
 
 # Environment variables
 .env
+
+# Draw.io backups
+diagrams/*.drawio.bkp
