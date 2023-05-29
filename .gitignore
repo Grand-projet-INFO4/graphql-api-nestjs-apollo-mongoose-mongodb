@@ -37,5 +37,10 @@ lerna-debug.log*
 # Environment variables
 .env
 
-# Draw.io backups
+# Draw.io backup and temporary files
 diagrams/*.drawio.bkp
+diagrams/*.drawio.dtmp
+
+# Microsoft word's backup and temporary files
+docs/~*.docx
+docs/*.tmp
