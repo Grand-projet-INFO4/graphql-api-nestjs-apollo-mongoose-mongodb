@@ -1,0 +1,14 @@
+type User {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  username: String!
+  photo: String
+  email: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Query {
+  users: [User!]!
+}
