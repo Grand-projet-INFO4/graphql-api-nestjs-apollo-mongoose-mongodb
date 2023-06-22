@@ -1,0 +1,41 @@
+type Query {
+  # An authenticated user from an access token
+  me: User!
+}
+
+type Mutation {
+  # User registration
+  signup(payload: SignupInput!): AuthResult!
+  # User login
+  signin(email: String!, password: String!): AuthResult!
+  # Access Token refresh
+  refreshToken: AccessToken!
+  # User log out
+  signout: Void
+  # User unregistration
+  unregister: Void
+}
+
+# Authentication result object type after registration or sign in operations
+type AuthResult {
+  user: User!
+  accessToken: String!
+  expiresAt: DateTime! # Access token expiration date
+  refreshToken: String!
+}
+
+# Access token object type after token refresh
+type AccessToken {
+  accessToken: String!
+  expiresAt: DateTime! # Access token expiration date
+}
+
+# Input for the user registration mutation
+input SignupInput {
+  firstName: String!
+  lastName: String!
+  email: String!
+  username: String!
+  password: String!
+  passwordConfirmation: String!
+}
