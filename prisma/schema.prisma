@@ -48,6 +48,8 @@ model Driver {
   currentTrip   Trip?                 @relation(fields: [currentTripId], references: [id], onUpdate: NoAction, onDelete: NoAction)
   nextTripsIds  String[]              @db.ObjectId
   nextTrips     PlannedTrip[]         @relation(fields: [nextTripsIds], references: [id])
+  vehicleId     String?               @db.ObjectId
+  vehicle       Vehicle?              @relation(fields: [vehicleId], references: [id])
   createdAt     DateTime              @default(now())
   updatedAt     DateTime              @updatedAt
 
@@ -234,6 +236,7 @@ model Vehicle {
   status          VehicleStatus    @default(OutOfService)
   state           VehicleState     @default(Operational)
   position        GeoJSONPoint?
+  positionAt      DateTime?
   model           CarModelDocument
   rearSeatsRows   Int
   rearSeatsCols   Int
@@ -245,6 +248,8 @@ model Vehicle {
   currentTrip     Trip?            @relation(fields: [currentTripId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   nextTripsIds    String[]         @db.ObjectId
   nextTrips       PlannedTrip[]
+  driversIds      String[]         @db.ObjectId
+  drivers         Driver[]
   createdAt       DateTime         @default(now())
   updatedAt       DateTime         @updatedAt
   trips           Trip[]           @relation(name: "vehicle")

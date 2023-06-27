@@ -11,6 +11,7 @@ async function main() {
       lastName: 'Doe',
       username: 'johndoe',
       photo: 'johndoe.jpg',
+      phone: '0324924506',
       email: 'johndoe@gmail.com',
       password: '$2b$10$eB1akZ3I7s05AQEJkFiys.szfpFm7yRqq9IXsBGz/Xss1AP80XA2G',
     },

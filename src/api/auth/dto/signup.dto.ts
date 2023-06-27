@@ -15,6 +15,9 @@ import { SignupInput } from 'src/graphql/schema';
 // Regex for the valid user name
 const validUsernameSchema = /^('?[A-z]+'?\s?)+$/;
 
+// Regex for a valid malagasy phone number
+const mgPhoneNumberRegex = /^(\+261|0)(32|33|34)\d{7}$/;
+
 export default class SignupDTO implements SignupInput {
   @Matches(validUsernameSchema, {
     message: 'The first name is not valid',
@@ -52,6 +55,14 @@ export default class SignupDTO implements SignupInput {
   @IsNotEmpty({ message: 'The email must not be empty' })
   @Transform(({ value }) => value?.trim())
   email: string;
+
+  @IsUniqueUserField('phone')
+  @Matches(mgPhoneNumberRegex, {
+    message: 'The phone number is not a valid malagasy phone number',
+  })
+  @Transform(({ value }) => (value as string).trim().replace(/\s/g, ''))
+  @IsNotEmpty({ message: 'The phone number must not be empty' })
+  phone: string;
 
   @IsStrongPassword(
     {},

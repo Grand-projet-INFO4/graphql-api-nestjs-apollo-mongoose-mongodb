@@ -53,6 +53,7 @@ export class AuthService {
         lastName: payload.lastName,
         username: payload.username,
         email: payload.email,
+        phone: payload.phone,
         password: hashedPassword,
       },
     });

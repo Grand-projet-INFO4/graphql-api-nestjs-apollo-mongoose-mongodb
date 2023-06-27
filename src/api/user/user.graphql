@@ -5,6 +5,7 @@ type User {
   username: String!
   photo: String
   email: String!
+  phone: String!
   createdAt: DateTime!
   updatedAt: DateTime!
 }

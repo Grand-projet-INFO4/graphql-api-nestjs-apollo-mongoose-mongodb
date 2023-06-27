@@ -12,6 +12,7 @@ export interface SignupInput {
     firstName: string;
     lastName: string;
     email: string;
+    phone: string;
     username: string;
     password: string;
     passwordConfirmation: string;
@@ -54,6 +55,7 @@ export interface User {
     username: string;
     photo?: Nullable<string>;
     email: string;
+    phone: string;
     createdAt: DateTime;
     updatedAt: DateTime;
 }

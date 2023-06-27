@@ -12,7 +12,7 @@ export class UniqueUserFieldValidator extends UniqueFieldValidator {
   }
 
   async checkUnique(
-    field: 'id' | 'email' | 'username',
+    field: 'id' | 'email' | 'username' | 'phone',
     value: string,
   ): Promise<boolean> {
     return (await this.prisma.user.count({ where: { [field]: value } })) === 0;
