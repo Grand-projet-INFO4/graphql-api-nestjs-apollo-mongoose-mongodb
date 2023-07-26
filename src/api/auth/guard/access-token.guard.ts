@@ -4,6 +4,10 @@ import { AuthGuard } from '@nestjs/passport';
 
 @Injectable()
 export class AccessTokenGuard extends AuthGuard('AccessTokenJwt') {
+  constructor(private layer: 'REST' | 'GraphQL' = 'GraphQL') {
+    super();
+  }
+
   /**
    * Gets the request object of the graphQL request being made
    *
@@ -11,7 +15,11 @@ export class AccessTokenGuard extends AuthGuard('AccessTokenJwt') {
    * @returns The request object
    */
   getRequest(context: ExecutionContext) {
-    const ctx = GqlExecutionContext.create(context);
-    return ctx.getContext().req as Request;
+    if (this.layer === 'GraphQL') {
+      const ctx = GqlExecutionContext.create(context);
+      return ctx.getContext().req as Request;
+    } else {
+      return context.switchToHttp().getRequest();
+    }
   }
 }

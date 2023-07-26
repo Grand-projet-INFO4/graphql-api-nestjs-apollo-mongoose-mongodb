@@ -5,21 +5,26 @@ import {
   Matches,
   IsEmail,
   IsStrongPassword,
+  IsOptional,
+  IsMongoId,
 } from 'class-validator';
 import { Transform } from 'class-transformer';
 
 import { IsUniqueUserField } from '../../user/decorator';
 import { IsEqualTo } from 'src/common/decorators';
-import { SignupInput } from 'src/graphql/schema';
+import { CityFieldExists } from 'src/api/city/decorator';
 
-// Regex for the valid user name
-const validUsernameSchema = /^('?[A-z]+'?\s?)+$/;
+// Regex for a valid name (firstName or lastName)
+const nameRegExp = /^('?[A-z]+'?\s?)+$/;
+
+// Regex for a valid username
+const usernameRegExp = /^([A-z]+[0-9]*((-|\.|_)?([A-z]|[0-9])+)*)$/;
 
 // Regex for a valid malagasy phone number
 const mgPhoneNumberRegex = /^(\+261|0)(32|33|34)\d{7}$/;
 
-export default class SignupDTO implements SignupInput {
-  @Matches(validUsernameSchema, {
+export class SignupDTO {
+  @Matches(nameRegExp, {
     message: 'The first name is not valid',
   })
   @MaxLength(50, {
@@ -32,7 +37,7 @@ export default class SignupDTO implements SignupInput {
   @Transform(({ value }) => value?.trim())
   firstName: string;
 
-  @Matches(validUsernameSchema, {
+  @Matches(nameRegExp, {
     message: 'The last name is not valid',
   })
   @MaxLength(50, {
@@ -46,9 +51,19 @@ export default class SignupDTO implements SignupInput {
   lastName: string;
 
   @IsUniqueUserField('username')
+  @Matches(usernameRegExp, {
+    message:
+      "The username must start with a letter and may include digits and only supports '.', '-' or '_' as seperators",
+  })
   @IsNotEmpty({ message: 'The username must not be empty' })
   @Transform(({ value }) => value?.trim())
-  username: string;
+  @IsOptional()
+  username?: string;
+
+  @CityFieldExists('_id')
+  @IsMongoId({ message: 'The city id must be a valid MongoDB id' })
+  @IsOptional()
+  cityId?: string;
 
   @IsUniqueUserField('email')
   @IsEmail({}, { message: 'The email is not a valid email address' })
@@ -61,8 +76,8 @@ export default class SignupDTO implements SignupInput {
     message: 'The phone number is not a valid malagasy phone number',
   })
   @Transform(({ value }) => (value as string).trim().replace(/\s/g, ''))
-  @IsNotEmpty({ message: 'The phone number must not be empty' })
-  phone: string;
+  @IsOptional()
+  phone?: string;
 
   @IsStrongPassword(
     {},

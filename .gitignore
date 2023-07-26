@@ -44,3 +44,6 @@ diagrams/*.drawio.dtmp
 # Microsoft word's backup and temporary files
 docs/~*.docx
 docs/*.tmp
+
+# Mongo IDs logger helper
+# gen-mongo-ids.mjs

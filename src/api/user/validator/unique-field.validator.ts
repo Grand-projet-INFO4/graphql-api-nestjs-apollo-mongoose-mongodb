@@ -1,20 +1,21 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
 import { ValidatorConstraint } from 'class-validator';
 
 import { UniqueFieldValidator } from 'src/common/validators';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { User, UserModel } from '../schema';
 
 @ValidatorConstraint({ name: 'Unique', async: true })
 @Injectable()
 export class UniqueUserFieldValidator extends UniqueFieldValidator {
-  constructor(private prisma: PrismaService) {
+  constructor(@InjectModel(User.name) private userModel: UserModel) {
     super();
   }
 
   async checkUnique(
-    field: 'id' | 'email' | 'username' | 'phone',
+    field: '_id' | 'email' | 'username' | 'phone',
     value: string,
   ): Promise<boolean> {
-    return (await this.prisma.user.count({ where: { [field]: value } })) === 0;
+    return !(await this.userModel.findOne({ [field]: value }));
   }
 }

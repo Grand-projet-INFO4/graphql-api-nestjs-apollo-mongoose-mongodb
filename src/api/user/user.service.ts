@@ -1,26 +1,33 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
 import { ConfigService } from '@nestjs/config';
-import { User } from '@prisma/client';
+import { Types } from 'mongoose';
+
 import {
   IMAGES_DIR,
   STATIC_FILES_URL_PREFIX,
 } from 'src/common/constants/static-files.constants';
-import { PrismaService } from 'src/prisma/prisma.service';
 import { USERS_PHOTOS_DIR } from './user.constants';
+import { User, UserDocument, UserModel } from './schema';
+import { slugify } from 'src/common/utils/string.utils';
+import { getRandomInteger } from 'src/common/utils/number.utils';
+
+// The maximum count of possible similar usernames
+const MAX_EQUAL_USERNAMES_COUNT = 99_999;
 
 @Injectable()
 export class UserService {
-  constructor(private prisma: PrismaService, private config: ConfigService) {}
+  constructor(
+    @InjectModel(User.name) private userModel: UserModel,
+    private config: ConfigService,
+  ) {}
 
-  async getOne(identifier: string) {
-    const user = await this.prisma.user.findFirst({
-      where: {
-        OR: [
-          { id: identifier },
-          { email: identifier },
-          { username: identifier },
-        ],
-      },
+  async getOne(
+    identifier: Types.ObjectId | string | number,
+    field: '_id' | 'username' | 'email' = '_id',
+  ) {
+    const user = await this.userModel.findOne({
+      [field]: identifier,
     });
     if (!user) {
       throw new NotFoundException('The user does not exist');
@@ -28,13 +35,36 @@ export class UserService {
     return user;
   }
 
-  async delete(user: User) {
-    await this.prisma.user.delete({
-      where: {
-        id: user.id,
+  async delete(user: UserDocument) {
+    await this.userModel.deleteOne({ _id: user.id });
+    return user;
+  }
+
+  /**
+   * Gets a unique username from the first name and a last name
+   */
+  async getUniqueUsername(
+    firstName: string,
+    lastName: string,
+  ): Promise<string> {
+    const username = `${slugify(firstName)}.${slugify(lastName)}`;
+    const userStartingWithUsername = await this.userModel.findOne({
+      username: {
+        $regex: new RegExp(`^${username}`, 'i'),
       },
     });
-    return user;
+    let isUniqueUsername: boolean = userStartingWithUsername === null;
+    while (!isUniqueUsername) {
+      // Trying a combination of the base username with a random count
+      // until we get a non-taken username
+      const usernameTry = `${username}.${getRandomInteger(
+        MAX_EQUAL_USERNAMES_COUNT,
+      )}`;
+      isUniqueUsername = !(await this.userModel.findOne({
+        username: usernameTry,
+      }));
+    }
+    return username;
   }
 
   /**
