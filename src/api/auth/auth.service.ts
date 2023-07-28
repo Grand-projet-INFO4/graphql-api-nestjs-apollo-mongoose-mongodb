@@ -1,4 +1,4 @@
-import { ForbiddenException, Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable, Inject } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService, JwtSignOptions } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/mongoose';
@@ -16,9 +16,10 @@ import { User, UserDocument, UserModel } from '../user/schema';
 import { UserService } from '../user/user.service';
 import { UserRole } from '../user/user.constants';
 import { CityService } from '../city/city.service';
+import { RedisClientInstance } from 'src/redis/redis';
 
 // Access token duration: 3 days
-export const ACCESS_TOKEN_DURATION = '3d';
+export const ACCESS_TOKEN_DURATION = 15 * 60; // 15 minutes
 
 @Injectable()
 export class AuthService {
@@ -28,7 +29,29 @@ export class AuthService {
     private cityService: CityService,
     private config: ConfigService,
     private jwtService: JwtService,
+    @Inject('REDIS_CLIENT') private readonly redisClient: RedisClientInstance,
   ) {}
+
+  /**
+   * Gets the redis key for the set of the refresh tokens cache of an authenticated user
+   *
+   * @param user The id of the authenticated user
+   */
+  private getUserRefreshTokensRedisKey(userId: string) {
+    return `user:${userId}-refresh-token`;
+  }
+
+  /**
+   * Adds a refresh token to a user's refresh tokens cache in
+   *
+   * @param userId The id of the user that owns the refresh token
+   */
+  private async addUserRefreshToken(userId: string, refreshToken: string) {
+    await this.redisClient.sAdd(
+      this.getUserRefreshTokensRedisKey(userId),
+      refreshToken,
+    );
+  }
 
   /**
    * Generates an ACCESS or REFRESH token
@@ -43,10 +66,32 @@ export class AuthService {
     // A refresh token does not have an expiration date whereas an access token does
     const options: JwtSignOptions =
       tokenType === 'ACCESS' ? { expiresIn: '3d' } : undefined;
-    return this.jwtService.signAsync(payload, {
+    const token = await this.jwtService.signAsync(payload, {
       secret,
       ...options,
     });
+
+    // Adding the refresh token to the redis cache for the authenticated user if this is REFRESH token
+    if (tokenType === 'REFRESH') {
+      await this.addUserRefreshToken(payload.sub, token);
+    }
+
+    return token;
+  }
+
+  /**
+   * Checks the validity of a refresh token
+   *
+   * @param token The refresh token
+   */
+  async isValidUserRefreshToken(
+    token: string,
+    user: UserDocument,
+  ): Promise<boolean> {
+    return this.redisClient.sIsMember(
+      this.getUserRefreshTokensRedisKey(user.id),
+      token,
+    );
   }
 
   /**
@@ -141,11 +186,53 @@ export class AuthService {
   }
 
   /**
+   * Removes a provided refresh token of a user from the user's refresh tokens cache in Redis
+   *
+   * @param token The refresh token
+   * @param user The user who owns of the refresh token
+   */
+  async removeUserRefreshToken(token: string, user: UserDocument) {
+    const key = this.getUserRefreshTokensRedisKey(user.id);
+
+    // Making sure that the refresh token belongs to the user
+    if (!(await this.redisClient.sIsMember(key, token))) {
+      throw new ForbiddenException(
+        'Removing a refresh token that does not belong to a user is not allowed',
+      );
+    }
+
+    await this.redisClient.sRem(key, token);
+    // Deleting the key if the refresh tokens set for the key is empty
+    if ((await this.redisClient.sCard(key)) === 0) {
+      await this.redisClient.del(key);
+    }
+  }
+
+  /**
+   * Deletes the refresh tokens of a specified user from the the user's refresh tokens cache in Redis
+   *
+   * @param user The user that owns the refresh tokens
+   */
+  async deleteUserRefreshTokens(user: UserDocument) {
+    await this.redisClient.del(this.getUserRefreshTokensRedisKey(user.id));
+  }
+
+  /**
+   *
+   * @param user The user to sign out
+   * @param refreshToken The refresh token associated with the user
+   */
+  async signout(user: UserDocument, refreshToken: string) {
+    await this.removeUserRefreshToken(refreshToken, user);
+  }
+
+  /**
    * Deletes an authenticated user's account
    *
    * @param authUser The authenticated whose user account is to be deleted
    */
   async deleteAccount(authUser: UserDocument) {
+    await this.deleteUserRefreshTokens(authUser);
     return this.userService.delete(authUser);
   }
 }
