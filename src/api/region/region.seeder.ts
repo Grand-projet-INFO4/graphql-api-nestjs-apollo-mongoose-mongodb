@@ -90,7 +90,7 @@ export class RegionSeeder implements Seeder {
               regionName: 'Atsinanana',
             },
             {
-              regionName: 'Alaotra Mangoro',
+              regionName: 'Alaotra-Mangoro',
             },
             {
               regionName: 'Analanjirofo',

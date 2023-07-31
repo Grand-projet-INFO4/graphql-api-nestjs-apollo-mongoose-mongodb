@@ -13,6 +13,7 @@ import { RegionModule } from './api/region/region.module';
 import { isProductionEnvironment } from './common/helpers/environment.helper';
 import { CityModule } from './api/city/city.module';
 import { RedisModule } from './redis/redis.module';
+import { HighwayModule } from './api/highway/highway.module';
 
 @Module({
   controllers: [AppController],
@@ -34,6 +35,7 @@ import { RedisModule } from './redis/redis.module';
     RegionModule,
     CityModule,
     RedisModule,
+    HighwayModule,
   ],
 })
 export class AppModule {}

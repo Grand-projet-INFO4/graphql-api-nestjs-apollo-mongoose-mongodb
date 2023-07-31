@@ -12,6 +12,13 @@ export class City {
   cityName: string;
 
   /**
+   * Alternative city name
+   * Some cities of madagascar have an alternative name inherited from the french colonialism
+   */
+  @Prop({ type: String, index: true })
+  alt?: string;
+
+  /**
    * The weight of a city determines the importance of the city amongst all cities
    * It scales from 1 to 5.
    * 5: Capital of Madagascar (Antananarivo)
@@ -32,7 +39,12 @@ export const citySchema = SchemaFactory.createForClass(City);
 
 // Text search index
 citySchema.index(
-  { cityName: 'text', 'region.regionName': 'text', 'region.province': 'text' },
+  {
+    cityName: 'text',
+    alt: 'text',
+    'region.regionName': 'text',
+    'region.province': 'text',
+  },
   {
     name: 'cities_text_index',
     weights: {
