@@ -9,6 +9,8 @@ import type {
   UserJwtPayload,
   AuthResult,
   AccessToken,
+  ReqAuthUser,
+  SanitizedAuthUser,
 } from './auth';
 import { SignupDTO } from './dto';
 import { addDurationFromNow } from 'src/common/utils/date-time.utils';
@@ -77,6 +79,37 @@ export class AuthService {
     }
 
     return token;
+  }
+
+  /**
+   * Sanitized auth user data to be sent on the client
+   */
+  sanitizeAuthUser(authUser: ReqAuthUser): SanitizedAuthUser {
+    const data: SanitizedAuthUser = {
+      id: authUser.id,
+      firstName: authUser.firstName,
+      lastName: authUser.lastName,
+      username: authUser.username,
+      email: authUser.email,
+      roles: authUser.roles,
+    };
+    authUser.phone && (data.phone = authUser.phone);
+    if (authUser.city) {
+      const { city } = authUser;
+      data.city = {
+        id: city.id,
+        cityName: city.cityName,
+        region: {
+          id: city.region.id,
+          regionName: city.region.regionName,
+          province: city.region.province,
+        },
+      };
+    }
+    if (authUser.photo) {
+      data.photo = this.userService.getPhotoURL(authUser.photo);
+    }
+    return data;
   }
 
   /**

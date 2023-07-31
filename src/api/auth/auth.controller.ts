@@ -19,6 +19,7 @@ import { AuthUser } from './decorator';
 import { REFRESH_TOKEN_COOKIE_NAME } from './auth.constants';
 import { VerifyRefreshTokenGuard } from './guard/verify-refresh-token.guard';
 import { BearerToken } from './decorator/bearer-token.decorator';
+import { ReqAuthUser } from './auth';
 
 // Config options for a refresh token cookie
 const refreshTokenCookieOptions: CookieOptions = {
@@ -63,8 +64,8 @@ export class AuthController {
 
   @Get('me')
   @UseGuards(new AccessTokenGuard('REST'))
-  async getMe(@AuthUser() authUser: UserDocument) {
-    return authUser;
+  async getMe(@AuthUser() authUser: ReqAuthUser) {
+    return this.authService.sanitizeAuthUser(authUser);
   }
 
   @Get('token')
