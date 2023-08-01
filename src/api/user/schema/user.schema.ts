@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Model } from 'mongoose';
 
-import { UserRole, userRolesSet } from '../user.constants';
+import { UserRole, USER_ROLES } from '../user.constants';
 import { EmbeddedCityDocument, embeddedCitySchema } from 'src/api/city/schema';
 
 @Schema({ timestamps: true })
@@ -30,15 +30,10 @@ export class User {
   @Prop({ type: String, required: true })
   password: string;
 
-  @Prop([
-    {
-      type: String,
-      required: true,
-      validate(role: string) {
-        return userRolesSet.has(role as UserRole);
-      },
-    },
-  ])
+  @Prop({
+    type: { type: [String], required: true, enum: USER_ROLES },
+    required: true,
+  })
   roles: UserRole[];
 }
 

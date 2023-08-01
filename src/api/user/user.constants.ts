@@ -20,12 +20,20 @@ export enum UserRole {
   Admin = 'ADMIN',
   SuperAdmin = 'SUPER_ADMIN',
 }
-// Set for the user roles
-export const userRolesSet = new Set<UserRole>([
+// Array of user roles
+export const USER_ROLES = [
   UserRole.Basic,
   UserRole.Manager,
   UserRole.Regulator,
   UserRole.Driver,
   UserRole.SuperAdmin,
   UserRole.Admin,
-]);
+];
+// Array of user roles that is associated with a cooperative
+export const COOPERATIVE_USER_ROLES = [
+  UserRole.Manager,
+  UserRole.Regulator,
+  UserRole.Driver,
+];
+// Array of user roles of users that are the application's administrators
+export const ADMIN_USER_ROLES = [UserRole.SuperAdmin, UserRole.Admin];
