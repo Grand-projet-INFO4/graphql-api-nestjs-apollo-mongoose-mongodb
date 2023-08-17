@@ -1,7 +1,7 @@
 import { Validate } from 'class-validator';
 
 import { UniqueUserFieldValidator } from '../validator';
-import { User } from '@prisma/client';
+import { User } from '../schema';
 
 /**
  * Decorator that checks if a property is unique for a field across the users collection

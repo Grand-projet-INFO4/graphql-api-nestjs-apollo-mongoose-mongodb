@@ -24,3 +24,40 @@ export function getDateEdgeTimes(date: string): [string, string] {
 export function addDurationFromNow(duration: number): Date {
   return new Date(Date.now() + duration * 1000);
 }
+
+// Regular expression for a time only string in a hh:mm format
+export const timeRegexp = /^\d{2}:\d{2}$/;
+
+/**
+ * Checks if a string value complies to a valid time only format (hh:mm)
+ *
+ * @param value The string value
+ */
+export function isTimeOnlyFormat(value: string) {
+  return timeRegexp.test(value);
+}
+
+/**
+ * Substracts the current date some given amount of time
+ *
+ * @param amount The amount of time to substract
+ * @param unit The unit of the substracted amount of time
+ * @return The substracted date
+ */
+export function substractNowDate(amount: number, unit: 'month' | 'hour'): Date {
+  // Milliseconds multiplier
+  let msMultiplier: number;
+  switch (unit) {
+    case 'hour':
+      msMultiplier = 60 * 60 * 1000;
+      break;
+    case 'month':
+      msMultiplier = 30 * 24 * 60 * 60 * 1000;
+      break;
+
+    default:
+      msMultiplier = 1;
+      break;
+  }
+  return new Date(Date.now() - amount * msMultiplier);
+}

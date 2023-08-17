@@ -4,6 +4,7 @@ import { InjectConnection, InjectModel } from '@nestjs/mongoose';
 import { WithMongoId } from 'src/common/types/mongo-id';
 import { CitySeeder, CitySeederPayload } from '../city/city.seeder';
 import { Connection, mongo } from 'mongoose';
+import { modelCollectionExists } from 'src/common/helpers/mongo.helper';
 
 export type HighwaySeederPayload = WithMongoId<
   Omit<Highway, 'cities'> & { cities: CitySeederPayload[] }
@@ -27,9 +28,10 @@ export class HighwaySeeder implements Seeder {
   }
 
   async drop() {
+    if (!(await modelCollectionExists(this.highwayModel))) return;
     const session = await this.connection.startSession();
     session.startTransaction();
-    await this.highwayModel.db.dropCollection('highways');
+    await this.connection.db.dropCollection('highways');
     await session.commitTransaction();
     console.log('Cleared the `highways` collection ...');
   }
@@ -120,6 +122,19 @@ export class HighwaySeeder implements Seeder {
         },
         {
           _id: new mongo.ObjectId(),
+          no: '5',
+          cities: [
+            cityNameMap.get('Toamasina'),
+            cityNameMap.get('Mahavelona'),
+            cityNameMap.get('Fenoarivo Atsinanana'),
+            cityNameMap.get('Soanierana Ivongo'),
+            cityNameMap.get('Mananara Avaratra'),
+            cityNameMap.get('Maroantsetra'),
+          ],
+          distance: 402,
+        },
+        {
+          _id: new mongo.ObjectId(),
           no: '5a',
           cities: [
             cityNameMap.get('Ambilobe'),
@@ -159,6 +174,16 @@ export class HighwaySeeder implements Seeder {
             cityNameMap.get('Toliara'),
           ],
           distance: 956,
+        },
+        {
+          _id: new mongo.ObjectId(),
+          no: '11a',
+          cities: [
+            cityNameMap.get('Antsampanana'),
+            cityNameMap.get('Vatomandry'),
+            cityNameMap.get('Mahanoro'),
+          ],
+          distance: 204,
         },
         {
           _id: new mongo.ObjectId(),

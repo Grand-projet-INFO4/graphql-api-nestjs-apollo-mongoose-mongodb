@@ -7,7 +7,7 @@ import {
 } from '@casl/ability';
 import { AnyObject } from '@casl/ability/dist/types/types';
 import { ForbiddenException } from '@nestjs/common';
-import { User } from '@prisma/client';
+import { User } from '../user/schema';
 
 // Enum of all the general actions that users can perform
 export enum UserAction {

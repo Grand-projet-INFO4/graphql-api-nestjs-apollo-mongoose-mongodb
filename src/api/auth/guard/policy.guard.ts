@@ -3,7 +3,7 @@ import { Reflector } from '@nestjs/core';
 import { Observable } from 'rxjs';
 
 import { PolicyDefinition, UserAction } from '../auth.policy';
-import { User } from '@prisma/client';
+import { User } from 'src/api/user/schema';
 
 export interface PolicyDefinitionConstructor<T extends PolicyDefinition> {
   new (): T;

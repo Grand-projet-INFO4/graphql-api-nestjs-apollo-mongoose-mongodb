@@ -39,11 +39,7 @@ export class Highway {
 export const highwaySchema = SchemaFactory.createForClass(Highway);
 
 // Indexes
-highwaySchema.index({ 'city._id': 1 });
-highwaySchema.index({ 'city.cityName': 1 });
-highwaySchema.index({ 'city.region._id': 1 });
-highwaySchema.index({ 'city.region.regionName': 1 });
-highwaySchema.index({ 'city.region.province': 1 });
+highwaySchema.index({ city_id: 1 });
 // Full text index
 highwaySchema.index(
   {
@@ -54,7 +50,10 @@ highwaySchema.index(
   },
   {
     weights: {
-      no: 2,
+      no: 4,
+      'city.cityName': 3,
+      'city.region.regionName': 2,
+      'city.region.province': 1,
     },
   },
 );

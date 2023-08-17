@@ -14,6 +14,16 @@ import { isProductionEnvironment } from './common/helpers/environment.helper';
 import { CityModule } from './api/city/city.module';
 import { RedisModule } from './redis/redis.module';
 import { HighwayModule } from './api/highway/highway.module';
+import { CooperativeModule } from './api/cooperative/cooperative.module';
+import { SocialMediaModule } from './api/social-media/social-media.module';
+import { BusStationModule } from './api/bus-station/bus-station.module';
+import { PhotoModule } from './api/photo/photo.module';
+import { ParkingLotModule } from './api/parking-lot/parking-lot.module';
+import { VehicleModule } from './api/vehicle/vehicle.module';
+import { CarModelModule } from './api/car-model/car-model.module';
+import { TrackingDeviceModule } from './api/tracking-device/tracking-device.module';
+import { DriverModule } from './api/driver/driver.module';
+import { RouteModule } from './api/route/route.module';
 
 @Module({
   controllers: [AppController],
@@ -36,6 +46,16 @@ import { HighwayModule } from './api/highway/highway.module';
     CityModule,
     RedisModule,
     HighwayModule,
+    CooperativeModule,
+    SocialMediaModule,
+    BusStationModule,
+    PhotoModule,
+    ParkingLotModule,
+    VehicleModule,
+    CarModelModule,
+    TrackingDeviceModule,
+    DriverModule,
+    RouteModule,
   ],
 })
 export class AppModule {}

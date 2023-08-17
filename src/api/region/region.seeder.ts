@@ -5,6 +5,7 @@ import { InjectConnection, InjectModel } from '@nestjs/mongoose';
 
 import { Region, RegionModel } from './schema';
 import { WithMongoId } from 'src/common/types/mongo-id';
+import { modelCollectionExists } from 'src/common/helpers/mongo.helper';
 
 type RegionsPerProvince = {
   province: string;
@@ -37,6 +38,7 @@ export class RegionSeeder implements Seeder {
   }
 
   async drop() {
+    if (!(await modelCollectionExists(this.regionModel))) return;
     const session = await this.connection.startSession();
     session.startTransaction();
     await this.connection.db.dropCollection('regions');

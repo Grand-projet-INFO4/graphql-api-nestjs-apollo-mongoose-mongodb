@@ -6,6 +6,7 @@ import { Connection, mongo } from 'mongoose';
 import { City, CityModel } from './schema';
 import { RegionSeeder, RegionSeederPayload } from '../region/region.seeder';
 import { InjectConnection, InjectModel } from '@nestjs/mongoose';
+import { modelCollectionExists } from 'src/common/helpers/mongo.helper';
 
 export type CitySeederPayload = WithMongoId<
   Omit<City, 'region'> & {
@@ -33,6 +34,7 @@ export class CitySeeder implements Seeder {
   }
 
   async drop() {
+    if (!(await modelCollectionExists(this.cityModel))) return;
     const session = await this.connection.startSession();
     session.startTransaction();
     await this.connection.db.dropCollection('cities');
@@ -114,7 +116,7 @@ export class CitySeeder implements Seeder {
         },
         {
           _id: new mongo.ObjectId(),
-          cityName: 'Fenoarivo Atsinana',
+          cityName: 'Fenoarivo Atsinanana',
           alt: 'Fénérive Est',
           region: regionNameMap.get('Analanjirofo'),
           weight: 3,
@@ -266,6 +268,18 @@ export class CitySeeder implements Seeder {
           _id: new mongo.ObjectId(),
           cityName: 'Vohibinany',
           alt: 'Brickaville',
+          region: regionNameMap.get('Atsinanana'),
+          weight: 2,
+        },
+        {
+          _id: new mongo.ObjectId(),
+          cityName: 'Vatomandry',
+          region: regionNameMap.get('Atsinanana'),
+          weight: 2,
+        },
+        {
+          _id: new mongo.ObjectId(),
+          cityName: 'Mahanoro',
           region: regionNameMap.get('Atsinanana'),
           weight: 2,
         },
@@ -432,6 +446,12 @@ export class CitySeeder implements Seeder {
           _id: new mongo.ObjectId(),
           cityName: 'Mahavelona',
           alt: 'Foulpointe',
+          region: regionNameMap.get('Atsinanana'),
+          weight: 1,
+        },
+        {
+          _id: new mongo.ObjectId(),
+          cityName: 'Antsampanana',
           region: regionNameMap.get('Atsinanana'),
           weight: 1,
         },

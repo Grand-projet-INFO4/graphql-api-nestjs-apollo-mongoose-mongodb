@@ -1,0 +1,469 @@
+[
+  {
+    "cooperativeSlug": "trans-vatsi",
+    "drivers": [
+      {
+        "firstName": "Franklin",
+        "lastName": "RABEARISOA",
+        "email": "rabfrank@gmail.com",
+        "phones": ["0325847659"],
+        "license": {
+          "licenseId": "86465123135165161",
+          "categories": ["A", "B", "C", "D", "E"]
+        },
+        "hiredMonthsAgo": 36,
+        "latestTripHoursAgo": 12,
+        "vehiclePlateId": "4538 TBJ"
+      },
+      {
+        "firstName": "Princy",
+        "lastName": "RAKOTOVAO",
+        "email": "rakprincy@gmail.com",
+        "phones": ["0389678514"],
+        "license": {
+          "licenseId": "87444684654684654",
+          "categories": ["A", "B", "C", "D", "E"]
+        },
+        "hiredMonthsAgo": 24,
+        "latestTripHoursAgo": 12,
+        "vehiclePlateId": "8593 TBS"
+      },
+      {
+        "firstName": "Tsiky",
+        "lastName": "NAMBINITSOA",
+        "email": "nambtsiky@gmail.com",
+        "phones": ["0336928703"],
+        "license": {
+          "licenseId": "89456412315112311",
+          "categories": ["A", "B", "C", "D", "E"]
+        },
+        "hiredMonthsAgo": 23,
+        "latestTripHoursAgo": 10,
+        "vehiclePlateId": "3338 TAL"
+      },
+      {
+        "firstName": "Fenosoa",
+        "lastName": "RAKOTONDRASOA",
+        "email": "rakfenosoa@gmail.com",
+        "phones": ["0325689735"],
+        "license": {
+          "licenseId": "84321654186412316",
+          "categories": ["A", "B", "C", "D", "E"]
+        },
+        "hiredMonthsAgo": 23,
+        "latestTripHoursAgo": 11,
+        "vehiclePlateId": "1838 TAV"
+      },
+      {
+        "firstName": "Fitiavana",
+        "lastName": "ANDRIANARISOA",
+        "email": "andriafitiavana@gmail.com",
+        "phones": ["0328967417"],
+        "license": {
+          "licenseId": "85323461316546789",
+          "categories": ["A", "B", "C", "D", "E"]
+        },
+        "hiredMonthsAgo": 6,
+        "latestTripHoursAgo": 10,
+        "vehiclePlateId": "5638 TAN"
+      },
+      {
+        "firstName": "Mickael",
+        "lastName": "ANDRIAKOTOSOA",
+        "email": "andriamickael@gmail.com",
+        "phones": ["0347802006"],
+        "license": {
+          "licenseId": "85616565165165474",
+          "categories": ["A", "B", "C", "D", "E"]
+        },
+        "hiredMonthsAgo": 6,
+        "latestTripHoursAgo": 10,
+        "vehiclePlateId": "9527 TAK"
+      },
+      {
+        "firstName": "Tahiriniaina",
+        "lastName": "RABESANDRATANA",
+        "email": "rabetahiry@gmail.com",
+        "phones": ["0340056801"],
+        "license": {
+          "licenseId": "89715616516165165",
+          "categories": ["A", "B", "C", "D", "E"]
+        },
+        "hiredMonthsAgo": 14,
+        "latestTripHoursAgo": 16,
+        "vehiclePlateId": "5838 TAR"
+      },
+      {
+        "firstName": "Rivosoa",
+        "lastName": "ANDRIMANJAKA",
+        "email": "andriama.rivo@gmail.com",
+        "phones": ["0330296322"],
+        "license": {
+          "licenseId": "89745464654151651",
+          "categories": ["A", "B", "C", "D", "E"]
+        },
+        "hiredMonthsAgo": 14,
+        "latestTripHoursAgo": 16,
+        "vehiclePlateId": "1238 TBA"
+      }
+    ]
+  },
+  {
+    "cooperativeSlug": "kofmad",
+    "drivers": [
+      {
+        "firstName": "Vincent",
+        "lastName": "RAKOTONIRINA",
+        "email": "rakoto.vincent@gmail.com",
+        "phones": ["0321056954"],
+        "license": {
+          "licenseId": "82516513131651560",
+          "categories": ["A", "B", "C", "D", "E"]
+        },
+        "hiredMonthsAgo": 48,
+        "latestTripHoursAgo": 16,
+        "vehiclePlateId": "3180 ME"
+      },
+      {
+        "firstName": "Zatovo",
+        "lastName": "BAKONIRINA",
+        "email": "bako.zatovo@gmail.com",
+        "phones": ["0329633302"],
+        "license": {
+          "licenseId": "89160531651031546",
+          "categories": ["A", "B", "C", "D", "E"]
+        },
+        "hiredMonthsAgo": 32,
+        "latestTripHoursAgo": 12,
+        "vehiclePlateId": "2675 MF"
+      },
+      {
+        "firstName": "Marcelo",
+        "lastName": "MALALANIRINA",
+        "email": "malala.marcelo@gmail.com",
+        "phones": ["0380806033"],
+        "license": {
+          "licenseId": "89798465115615668",
+          "categories": ["A", "B", "C", "D", "E"]
+        },
+        "hiredMonthsAgo": 32,
+        "latestTripHoursAgo": 12,
+        "vehiclePlateId": "1882 TBS"
+      },
+      {
+        "firstName": "Lovasoa",
+        "lastName": "RANDRIAMANJAKA",
+        "email": "randria.lovasoa@gmail.com",
+        "phones": ["0332314790"],
+        "license": {
+          "licenseId": "87156065160689425",
+          "categories": ["A", "B", "C", "D", "E"]
+        },
+        "hiredMonthsAgo": 9,
+        "latestTripHoursAgo": 9,
+        "vehiclePlateId": "4219 ME"
+      },
+      {
+        "firstName": "Heriniaina",
+        "lastName": "ANDRIATSARAFARA",
+        "email": "andria.heriniaina@gmail.com",
+        "phones": ["0342036910"],
+        "license": {
+          "licenseId": "89565106510154550",
+          "categories": ["A", "B", "C", "D", "E"]
+        },
+        "hiredMonthsAgo": 26,
+        "latestTripHoursAgo": 13,
+        "vehiclePlateId": "5826 MT"
+      },
+      {
+        "firstName": "Mathieu",
+        "lastName": "SOLOFONIRINA",
+        "email": "solofo.mathieu@gmail.com",
+        "phones": ["0387402366"],
+        "license": {
+          "licenseId": "85616598651986061",
+          "categories": ["A", "B", "C", "D", "E"]
+        },
+        "hiredMonthsAgo": 26,
+        "latestTripHoursAgo": 15,
+        "vehiclePlateId": "7303 TBR"
+      },
+      {
+        "firstName": "Bryan",
+        "lastName": "RANDRIANARISON",
+        "email": "randria.bryan@gmail.com",
+        "phones": ["0323600211"],
+        "license": {
+          "licenseId": "85165171658054606",
+          "categories": ["A", "B", "C", "D", "E"]
+        },
+        "hiredMonthsAgo": 25,
+        "latestTripHoursAgo": 17,
+        "vehiclePlateId": "8586 TBH"
+      },
+      {
+        "firstName": "Kiady",
+        "lastName": "RANDRIAMANALINA",
+        "email": "randriamanalina.kiady@gmail.com",
+        "phones": ["0320364578"],
+        "license": {
+          "licenseId": "88956156105616510",
+          "categories": ["A", "B", "C", "D", "E"]
+        },
+        "hiredMonthsAgo": 11,
+        "latestTripHoursAgo": 10,
+        "vehiclePlateId": "7683 ME"
+      }
+    ]
+  },
+  {
+    "cooperativeSlug": "kofimanga-plus",
+    "drivers": [
+      {
+        "firstName": "Fanasina",
+        "lastName": "RAVONIA",
+        "email": "ravonia.fanasina@example.com",
+        "phones": ["0321122334"],
+        "license": {
+          "licenseId": "98412131680665480",
+          "categories": ["A", "B", "C", "D", "E"]
+        },
+        "hiredMonthsAgo": 8,
+        "latestTripHoursAgo": 5,
+        "vehiclePlateId": "2946 TBK"
+      },
+      {
+        "firstName": "Barisoa",
+        "lastName": "FANJAKA",
+        "email": "fanjaka.barisoa@example.com",
+        "phones": ["0345566778"],
+        "license": {
+          "licenseId": "23456789012345678",
+          "categories": ["A", "B", "C", "D", "E"]
+        },
+        "hiredMonthsAgo": 16,
+        "latestTripHoursAgo": 12,
+        "vehiclePlateId": "6511 TAR"
+      },
+      {
+        "firstName": "Vonia",
+        "lastName": "ANDRIAMBOLOLONA",
+        "email": "vonia.andriambololona@example.com",
+        "phones": ["0339988776"],
+        "license": {
+          "licenseId": "34567890123456789",
+          "categories": ["A", "B", "C", "D", "E"]
+        },
+        "hiredMonthsAgo": 24,
+        "latestTripHoursAgo": 2,
+        "vehiclePlateId": "8261 TBK"
+      },
+      {
+        "firstName": "Tiana",
+        "lastName": "RAZAFIMAHATRATRA",
+        "email": "tiana.razafimahatratra@example.com",
+        "phones": ["0321122334"],
+        "license": {
+          "licenseId": "45678901234567890",
+          "categories": ["A", "B", "C", "D", "E"]
+        },
+        "hiredMonthsAgo": 36,
+        "latestTripHoursAgo": 8,
+        "vehiclePlateId": "9733 TBM"
+      },
+      {
+        "firstName": "Faly",
+        "lastName": "RANDRIAMAMONJY",
+        "email": "faly.randriamamonjy@example.com",
+        "phones": ["0345566778"],
+        "license": {
+          "licenseId": "56789012345678901",
+          "categories": ["A", "B", "C", "D", "E"]
+        },
+        "hiredMonthsAgo": 48,
+        "latestTripHoursAgo": 15,
+        "vehiclePlateId": "9692 TBM"
+      },
+      {
+        "firstName": "Marina",
+        "lastName": "RASOANINDRAINY",
+        "email": "marina.rasoanindrainy@example.com",
+        "phones": ["0321987654"],
+        "license": {
+          "licenseId": "21650489498489165",
+          "categories": ["A", "B", "C", "D", "E"]
+        },
+        "hiredMonthsAgo": 10,
+        "latestTripHoursAgo": 7,
+        "vehiclePlateId": "8700 TBD"
+      }
+    ]
+  },
+  {
+    "cooperativeSlug": "transam_plus",
+    "drivers": [
+      {
+        "firstName": "Zara",
+        "lastName": "RANDRIAMANANA",
+        "email": "zara.randriamanana@example.com",
+        "phones": ["0321122334"],
+        "license": {
+          "licenseId": "84416165186456165",
+          "categories": ["A", "B", "C", "D", "E"]
+        },
+        "hiredMonthsAgo": 8,
+        "latestTripHoursAgo": 5,
+        "vehiclePlateId": "5869 TBP"
+      },
+      {
+        "firstName": "Aina",
+        "lastName": "RAKOTONDRANARY",
+        "email": "aina.rakotondranary@example.com",
+        "phones": ["0345566778"],
+        "license": {
+          "licenseId": "98891119516519800",
+          "categories": ["A", "B", "C", "D", "E"]
+        },
+        "hiredMonthsAgo": 16,
+        "latestTripHoursAgo": 12,
+        "vehiclePlateId": "9635 TDB"
+      },
+      {
+        "firstName": "Tojo",
+        "lastName": "RAJAONARIMANANA",
+        "email": "tojo.rajaonarimanana@example.com",
+        "phones": ["0339988776"],
+        "license": {
+          "licenseId": "78978048949842942",
+          "categories": ["A", "B", "C", "D", "E"]
+        },
+        "hiredMonthsAgo": 24,
+        "latestTripHoursAgo": 2,
+        "vehiclePlateId": "9836 TAR"
+      },
+      {
+        "firstName": "Mamy",
+        "lastName": "RANDRIANOMENA",
+        "email": "mamy.randrianomena@example.com",
+        "phones": ["0321122334"],
+        "license": {
+          "licenseId": "89109848940484021",
+          "categories": ["A", "B", "C", "D", "E"]
+        },
+        "hiredMonthsAgo": 36,
+        "latestTripHoursAgo": 8,
+        "vehiclePlateId": "1348 TP"
+      }
+    ]
+  },
+  {
+    "cooperativeSlug": "soatrans_plus",
+    "drivers": [
+      {
+        "firstName": "Zara",
+        "lastName": "ANDRIATSIFERANA",
+        "email": "zara.andriatsiferana@example.com",
+        "phones": ["0321122334"],
+        "license": {
+          "licenseId": "12345678901234567",
+          "categories": ["A", "B", "C", "D", "E"]
+        },
+        "hiredMonthsAgo": 8,
+        "latestTripHoursAgo": 5,
+        "vehiclePlateId": "0577 TBV"
+      },
+      {
+        "firstName": "Aina",
+        "lastName": "RAKOTONDRAVONJY",
+        "email": "aina.rakotondravonjy@example.com",
+        "phones": ["0345566778"],
+        "license": {
+          "licenseId": "89479841206498448",
+          "categories": ["A", "B", "C", "D", "E"]
+        },
+        "hiredMonthsAgo": 16,
+        "latestTripHoursAgo": 12,
+        "vehiclePlateId": "9171 TBM"
+      },
+      {
+        "firstName": "Tojo",
+        "lastName": "RAJAONARIVELO",
+        "email": "tojo.rajaonarivelo@example.com",
+        "phones": ["0339988776"],
+        "license": {
+          "licenseId": "89409848945987362",
+          "categories": ["A", "B", "C", "D", "E"]
+        },
+        "hiredMonthsAgo": 24,
+        "latestTripHoursAgo": 2,
+        "vehiclePlateId": "1724 TBS"
+      },
+      {
+        "firstName": "Mamy",
+        "lastName": "RANDRIAHASINA",
+        "email": "mamy.randriahasina@example.com",
+        "phones": ["0321122334"],
+        "license": {
+          "licenseId": "98409848941651654",
+          "categories": ["A", "B", "C", "D", "E"]
+        },
+        "hiredMonthsAgo": 36,
+        "latestTripHoursAgo": 8,
+        "vehiclePlateId": "5402 TBN"
+      },
+      {
+        "firstName": "Lova",
+        "lastName": "RANDRIAMASINJAKA",
+        "email": "lova.randriamasinjaka@example.com",
+        "phones": ["0345566778"],
+        "license": {
+          "licenseId": "98409845029849845",
+          "categories": ["A", "B", "C", "D", "E"]
+        },
+        "hiredMonthsAgo": 48,
+        "latestTripHoursAgo": 15,
+        "vehiclePlateId": "7677 TBP"
+      },
+      {
+        "firstName": "Sitraka",
+        "lastName": "RAZAFIMAHARO",
+        "email": "sitraka.razafimaharo@example.com",
+        "phones": ["0321987654"],
+        "license": {
+          "licenseId": "67890123456789012",
+          "categories": ["A", "B", "C", "D", "E"]
+        },
+        "hiredMonthsAgo": 10,
+        "latestTripHoursAgo": 7,
+        "vehiclePlateId": "8465 TBA"
+      },
+      {
+        "firstName": "Marina",
+        "lastName": "RASOANAIVO",
+        "email": "marina.rasoanaivo@example.com",
+        "phones": ["0321987654"],
+        "license": {
+          "licenseId": "98716516518115610",
+          "categories": ["A", "B", "C", "D", "E"]
+        },
+        "hiredMonthsAgo": 10,
+        "latestTripHoursAgo": 7,
+        "vehiclePlateId": "9852 TAM"
+      },
+      {
+        "firstName": "Feno",
+        "lastName": "RAZAFIMANANTSOA",
+        "email": "feno.razafimanantsoa@example.com",
+        "phones": ["0321122334"],
+        "license": {
+          "licenseId": "70149844890465489",
+          "categories": ["A", "B", "C", "D", "E"]
+        },
+        "hiredMonthsAgo": 36,
+        "latestTripHoursAgo": 8,
+        "vehiclePlateId": "1368 TPA"
+      }
+    ]
+  }
+]

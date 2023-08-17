@@ -5,6 +5,7 @@ import { Connection, mongo } from 'mongoose';
 import { CitySeeder, CitySeederPayload } from '../city/city.seeder';
 import { WithMongoId } from 'src/common/types/mongo-id';
 import { UserRole } from './user.constants';
+import { modelCollectionExists } from 'src/common/helpers/mongo.helper';
 
 export type UserSeederPayload = WithMongoId<
   Omit<User, 'city'> & {
@@ -33,6 +34,7 @@ export class UserSeeder implements Seeder {
   }
 
   async drop() {
+    if (!(await modelCollectionExists(this.userModel))) return;
     const session = await this.connection.startSession();
     session.startTransaction();
     await this.connection.db.dropCollection('users');

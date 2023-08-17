@@ -24,14 +24,14 @@ export class User {
   @Prop({ type: String, required: true, unique: true })
   email: string;
 
-  @Prop({ type: String, unique: true })
+  @Prop({ type: String, unique: true, sparse: true })
   phone?: string;
 
   @Prop({ type: String, required: true })
   password: string;
 
   @Prop({
-    type: { type: [String], required: true, enum: USER_ROLES },
+    type: [{ type: String, required: true, enum: USER_ROLES }],
     required: true,
   })
   roles: UserRole[];

@@ -8,14 +8,14 @@ import {
 
 @Schema({ timestamps: true })
 export class City {
-  @Prop({ type: String, required: true, index: true })
+  @Prop({ type: String, required: true })
   cityName: string;
 
   /**
    * Alternative city name
    * Some cities of madagascar have an alternative name inherited from the french colonialism
    */
-  @Prop({ type: String, index: true })
+  @Prop({ type: String })
   alt?: string;
 
   /**
@@ -37,6 +37,9 @@ export class City {
 
 export const citySchema = SchemaFactory.createForClass(City);
 
+// Indexes
+citySchema.index({ 'region._id': 1 });
+citySchema.index({ 'region.regionName': 1 });
 // Text search index
 citySchema.index(
   {
@@ -52,10 +55,6 @@ citySchema.index(
     },
   },
 );
-// Indexes on the region and province
-citySchema.index({ 'region._id': 1 });
-citySchema.index({ 'region.regionName': 1 });
-citySchema.index({ 'region.province': 1 });
 
 export type CityDocument = HydratedDocument<City>;
 export type CityModel = Model<City>;
