@@ -249,7 +249,6 @@ export class HighwaySeeder implements Seeder {
             cityNameMap.get('Ambositra'),
             cityNameMap.get('Ambatofinandrahana'),
             cityNameMap.get('Malaimbandy'),
-            cityNameMap.get('Morondava'),
           ],
           distance: 460,
         },

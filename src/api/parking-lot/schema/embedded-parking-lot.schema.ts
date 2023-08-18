@@ -18,7 +18,7 @@ import {
   weekOpenHoursSchema,
 } from 'src/common/schemas/week-open-hours.schema';
 
-@Schema({ autoCreate: false, timestamps: false })
+@Schema({ autoCreate: false })
 export class EmbeddedParkingLot {
   @Prop({ type: String, required: true })
   address: string;

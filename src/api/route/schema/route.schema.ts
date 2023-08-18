@@ -1,7 +1,12 @@
-import { Prop, Schema } from '@nestjs/mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { HydratedDocument, Model } from 'mongoose';
 import { Types, Schema as MongooseSchema } from 'mongoose';
+
 import { Cooperative, CooperativeDocument } from 'src/api/cooperative/schema';
 import { ParkingLot, ParkingLotDocument } from 'src/api/parking-lot/schema';
+
+// Routes collection name
+export const ROUTE_COLLECTION = 'routes';
 
 @Schema({ timestamps: true })
 export class Route {
@@ -54,3 +59,11 @@ export class Route {
   })
   parkingLots: Types.ObjectId[] | ParkingLotDocument[];
 }
+
+export const routeSchema = SchemaFactory.createForClass(Route);
+
+// Indexes
+routeSchema.index({ cooperative: 1, parkingLots: 1 });
+
+export type RouteDocument = HydratedDocument<Route>;
+export type RouteModel = Model<Route>;

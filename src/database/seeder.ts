@@ -29,6 +29,8 @@ import { CarModel, carModelSchema } from 'src/api/car-model/schema';
 import { Vehicle, vehicleSchema } from 'src/api/vehicle/schema';
 import { Driver, driverSchema } from 'src/api/driver/schema';
 import { DriverSeeder } from 'src/api/driver/driver.seeder';
+import { RouteSeeder } from 'src/api/route/route.seeder';
+import { Route, routeSchema } from 'src/api/route/schema';
 
 seeder({
   imports: [
@@ -58,6 +60,7 @@ seeder({
     ]),
     MongooseModule.forFeature([{ name: Vehicle.name, schema: vehicleSchema }]),
     MongooseModule.forFeature([{ name: Driver.name, schema: driverSchema }]),
+    MongooseModule.forFeature([{ name: Route.name, schema: routeSchema }]),
   ],
 }).run([
   UserSeeder,
@@ -72,4 +75,5 @@ seeder({
   CarModelSeeder,
   VehicleSeeder,
   DriverSeeder,
+  RouteSeeder,
 ]);

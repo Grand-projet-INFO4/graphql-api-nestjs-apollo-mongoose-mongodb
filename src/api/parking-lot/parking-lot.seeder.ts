@@ -313,7 +313,7 @@ export class ParkingLotSeeder implements Seeder {
                 tzOffset: 3,
               },
               phones: ['0388727742', '0384449445'],
-              busStation: busStationSlugMap.get('gare-routiere-moramanga')._id,
+              busStation: busStationSlugMap.get('gare-routiere-ambalabako')._id,
             },
             {
               _id: new mongo.ObjectId(),
@@ -345,6 +345,19 @@ export class ParkingLotSeeder implements Seeder {
               phones: ['0346610949'],
               busStation: busStationSlugMap.get('gare-routiere-fenerive-est')
                 ._id,
+            },
+            {
+              _id: new mongo.ObjectId(),
+              city: cityNameMap.get('Mahajanga'),
+              address: 'Avenue Barday, Mahajanga, Madagascar',
+              position: new GeoJSONPoint([46.327103, -17.84474775115543]),
+              openHours: {
+                opensAt: '06:30',
+                closesAt: '18:00',
+                tzOffset: 3,
+              },
+              phones: ['0324954914', '0332194876'],
+              busStation: busStationSlugMap.get('gare-routiere-aranta')._id,
             },
           ],
         },
