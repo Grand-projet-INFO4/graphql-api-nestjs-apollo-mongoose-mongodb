@@ -11,6 +11,9 @@ import { substractNowDate } from 'src/common/utils/date-time.utils';
 import * as driverSeeds from '../../../seed/driver.seed.json';
 import { modelCollectionExists } from 'src/common/helpers/mongo.helper';
 import { InjectConnection, InjectModel } from '@nestjs/mongoose';
+import { TripDriverSeed } from './driver';
+import { TripSeeder } from '../trip/trip.seeder';
+import { TripStatus } from '../trip/trip.constants';
 
 export type DriverSeederPayload = WithMongoId<
   ReplaceFields<
@@ -36,7 +39,6 @@ type CooperativeDriversSeed = {
     | 'latestTripAt'
   > & {
     hiredMonthsAgo: number;
-    latestTripHoursAgo: number;
     username?: string;
     ongoingTripId?: string;
     vehiclePlateId?: string;
@@ -50,6 +52,16 @@ export class DriverSeeder implements Seeder {
   // Map of driver first name and last name combination key and driver seed data value singleton
   private static driverMap: Map<string, DriverSeederPayload> | null = null;
 
+  // Map of driver id key and driver seed data value singleton
+  private static driverMapById: Map<string, DriverSeederPayload> | null = null;
+
+  // Map of cooperative id key and cooperative drivers seed data value singleton
+  private static coopDriversMap: Map<string, DriverSeederPayload[]> | null =
+    null;
+
+  // The count of the seeded drivers
+  private static driverSeedsCount: number;
+
   constructor(
     @InjectModel(Driver.name) private driverModel: DriverModel,
     @InjectConnection() private connection: Connection,
@@ -58,12 +70,7 @@ export class DriverSeeder implements Seeder {
   async seed() {
     const session = await this.connection.startSession();
     session.startTransaction();
-    try {
-      await this.driverModel.insertMany(DriverSeeder.getDrivers());
-    } catch (e) {
-      console.log({ error: e.message });
-      throw new Error();
-    }
+    await this.driverModel.insertMany(DriverSeeder.getDrivers());
     await session.commitTransaction();
     console.log('Seeded the `' + DRIVER_COLLECTION + '` collection ...');
   }
@@ -96,17 +103,13 @@ export class DriverSeeder implements Seeder {
             email: coopDriver.email,
             phones: coopDriver.phones,
             license: coopDriver.license,
+            latestTripAt: DriverSeeder.getLatestTripDateFromNow(),
             cooperative: cooperativeMap.get(seed.cooperativeSlug)._id,
           };
           coopDriver.hiredMonthsAgo &&
             (driver.hiredAt = substractNowDate(
               coopDriver.hiredMonthsAgo,
               'month',
-            ));
-          coopDriver.latestTripHoursAgo &&
-            (driver.latestTripAt = substractNowDate(
-              coopDriver.latestTripHoursAgo,
-              'hour',
             ));
           coopDriver.username &&
             (driver.user = userMap.get(coopDriver.username)._id);
@@ -122,14 +125,32 @@ export class DriverSeeder implements Seeder {
       }
       DriverSeeder.drivers = drivers;
       const vehicleMap = VehicleSeeder.getVehicleMap();
+      const ongoingTripsIdsIterator = TripSeeder.createTripsIdsGenerator(
+        TripStatus.Ongoing,
+      )();
       for (const driver of drivers) {
         const vehiclePlateId = vehiclePlateIdMap.get(driver._id.toString());
+        driver.ongoingTrip = ongoingTripsIdsIterator.next()
+          .value as mongo.BSON.ObjectId;
         if (vehiclePlateId) {
           driver.vehicle = vehicleMap.get(vehiclePlateId)._id;
         }
       }
     }
     return DriverSeeder.drivers;
+  }
+
+  /**
+   * Gets the appropriate latest trip date-time for all drivers depending on the current date-time during which the seed occurs
+   */
+  static getLatestTripDateFromNow(): Date {
+    const now = new Date();
+    if (now.getHours() < 18) {
+      now.setDate(now.getDate() - 1);
+    }
+    now.setHours(18);
+    now.setMinutes(0);
+    return now;
   }
 
   /**
@@ -169,5 +190,75 @@ export class DriverSeeder implements Seeder {
       lastName: keys.lastName,
     });
     return DriverSeeder.getDriverMap().get(key);
+  }
+
+  /**
+   * Getter for the driver map by id singleton
+   */
+  static getDriverMapById() {
+    if (!DriverSeeder.driverMapById) {
+      const driverMapById = new Map<string, DriverSeederPayload>();
+      for (const driver of DriverSeeder.getDrivers()) {
+        driverMapById.set(driver._id.toString(), driver);
+      }
+      DriverSeeder.driverMapById = driverMapById;
+    }
+    return DriverSeeder.driverMapById;
+  }
+
+  /**
+   * Getter for the cooperative drivers map singleton
+   */
+  static getCoopDriversMap() {
+    if (!DriverSeeder.coopDriversMap) {
+      const coopDriversMap = new Map<string, DriverSeederPayload[]>();
+      let prevCooperativeId: string, prevCoopDrivers: DriverSeederPayload[];
+      for (const driver of DriverSeeder.getDrivers()) {
+        const cooperativeId = driver.cooperative.toString();
+        let coopDrivers: DriverSeederPayload[];
+        if (!prevCooperativeId || cooperativeId !== prevCooperativeId) {
+          coopDrivers = [];
+          coopDriversMap.set(cooperativeId, coopDrivers);
+        } else {
+          coopDrivers = prevCoopDrivers;
+        }
+        coopDrivers.push(driver);
+        prevCooperativeId = cooperativeId;
+        prevCoopDrivers = coopDrivers;
+      }
+      DriverSeeder.coopDriversMap = coopDriversMap;
+    }
+    return DriverSeeder.coopDriversMap;
+  }
+
+  /**
+   * Getter for the count of the drivers seed data
+   */
+  static getDriverSeedsCount() {
+    if (!DriverSeeder.driverSeedsCount) {
+      let count = 0;
+      const seedsOptions = driverSeeds as CooperativeDriversSeed[];
+      for (const option of seedsOptions) {
+        count += option.drivers.length;
+      }
+      DriverSeeder.driverSeedsCount = count;
+    }
+    return DriverSeeder.driverSeedsCount;
+  }
+
+  /**
+   * Parses a driver seed payload into its trip driver seed version
+   */
+  static parseTripDriverSeed(driver: DriverSeederPayload): TripDriverSeed {
+    const tripDriver: TripDriverSeed = {
+      _id: driver._id,
+      firstName: driver.firstName,
+      lastName: driver.lastName,
+      license: driver.license,
+      phones: driver.phones,
+      hiredAt: driver.hiredAt,
+    };
+    driver.latestTripAt && (tripDriver.latestTripAt = driver.latestTripAt);
+    return tripDriver;
   }
 }

@@ -10,6 +10,8 @@ import { modelCollectionExists } from 'src/common/helpers/mongo.helper';
 import { CooperativeSeeder } from '../cooperative/cooperative.seeder';
 import { ParkingLotSeeder } from '../parking-lot/parking-lot.seeder';
 import * as routeSeeds from '../../../seed/route.seed.json';
+import { EmbeddedRouteSeed } from './route';
+import { EmbeddedParkingLotSeed } from '../parking-lot/parking-lot';
 
 export type RouteSeederPayload = WithMongoId<
   ReplaceFields<
@@ -33,6 +35,12 @@ type CooperativeRoutesSeedOptions = {
 export class RouteSeeder implements Seeder {
   // Routes seed data singleton
   private static routes: RouteSeederPayload[] | null = null;
+
+  // Map of cooperative id key and cooperative routes value singleton
+  private static cooperativeRoutesMap: Map<
+    string,
+    RouteSeederPayload[]
+  > | null = null;
 
   constructor(
     @InjectModel(Route.name) private routeModel: RouteModel,
@@ -92,5 +100,51 @@ export class RouteSeeder implements Seeder {
       RouteSeeder.routes = routes;
     }
     return RouteSeeder.routes;
+  }
+
+  /**
+   * Getter for the cooperative routes map singleton
+   */
+  static getCooperativeRoutesMap() {
+    if (!RouteSeeder.cooperativeRoutesMap) {
+      const cooperativeRoutesMap = new Map<string, RouteSeederPayload[]>();
+      let prevCooperativeId: string, prevCoopRoutes: RouteSeederPayload[];
+      for (const route of RouteSeeder.getRoutes()) {
+        const cooperativeId = route.cooperative.toString();
+        let coopRoutes: RouteSeederPayload[];
+        if (!prevCooperativeId || cooperativeId !== prevCooperativeId) {
+          coopRoutes = [];
+          cooperativeRoutesMap.set(cooperativeId, coopRoutes);
+        } else {
+          coopRoutes = prevCoopRoutes;
+        }
+        coopRoutes.push(route);
+        prevCooperativeId = cooperativeId;
+        prevCoopRoutes = coopRoutes;
+      }
+      RouteSeeder.cooperativeRoutesMap = cooperativeRoutesMap;
+    }
+    return RouteSeeder.cooperativeRoutesMap;
+  }
+
+  /**
+   * Parses a route seed data into its emebedded route seed data version
+   */
+  static parseEmbeddedRouteSeed(route: RouteSeederPayload): EmbeddedRouteSeed {
+    return {
+      _id: route._id,
+      approxDuration: route.approxDuration,
+      distance: route.distance,
+      fee: route.fee,
+      highways: route.highways,
+      maxDuration: route.maxDuration,
+      cooperative: route.cooperative,
+      parkingLots: route.parkingLots.map<EmbeddedParkingLotSeed>((id) => {
+        const parkingLotMap = ParkingLotSeeder.getParkingLotMapById();
+        return ParkingLotSeeder.parseEmbeddedParkingLotSeed(
+          parkingLotMap.get(id.toString()),
+        );
+      }),
+    };
   }
 }

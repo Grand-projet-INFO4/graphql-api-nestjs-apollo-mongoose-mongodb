@@ -12,7 +12,6 @@
           "categories": ["A", "B", "C", "D", "E"]
         },
         "hiredMonthsAgo": 36,
-        "latestTripHoursAgo": 12,
         "vehiclePlateId": "4538 TBJ"
       },
       {
@@ -25,7 +24,6 @@
           "categories": ["A", "B", "C", "D", "E"]
         },
         "hiredMonthsAgo": 24,
-        "latestTripHoursAgo": 12,
         "vehiclePlateId": "8593 TBS"
       },
       {
@@ -38,7 +36,6 @@
           "categories": ["A", "B", "C", "D", "E"]
         },
         "hiredMonthsAgo": 23,
-        "latestTripHoursAgo": 10,
         "vehiclePlateId": "3338 TAL"
       },
       {
@@ -51,7 +48,6 @@
           "categories": ["A", "B", "C", "D", "E"]
         },
         "hiredMonthsAgo": 23,
-        "latestTripHoursAgo": 11,
         "vehiclePlateId": "1838 TAV"
       },
       {
@@ -64,7 +60,6 @@
           "categories": ["A", "B", "C", "D", "E"]
         },
         "hiredMonthsAgo": 6,
-        "latestTripHoursAgo": 10,
         "vehiclePlateId": "5638 TAN"
       },
       {
@@ -77,7 +72,6 @@
           "categories": ["A", "B", "C", "D", "E"]
         },
         "hiredMonthsAgo": 6,
-        "latestTripHoursAgo": 10,
         "vehiclePlateId": "9527 TAK"
       },
       {
@@ -90,7 +84,6 @@
           "categories": ["A", "B", "C", "D", "E"]
         },
         "hiredMonthsAgo": 14,
-        "latestTripHoursAgo": 16,
         "vehiclePlateId": "5838 TAR"
       },
       {
@@ -103,7 +96,6 @@
           "categories": ["A", "B", "C", "D", "E"]
         },
         "hiredMonthsAgo": 14,
-        "latestTripHoursAgo": 16,
         "vehiclePlateId": "1238 TBA"
       }
     ]
@@ -121,7 +113,6 @@
           "categories": ["A", "B", "C", "D", "E"]
         },
         "hiredMonthsAgo": 48,
-        "latestTripHoursAgo": 16,
         "vehiclePlateId": "3180 ME"
       },
       {
@@ -134,7 +125,6 @@
           "categories": ["A", "B", "C", "D", "E"]
         },
         "hiredMonthsAgo": 32,
-        "latestTripHoursAgo": 12,
         "vehiclePlateId": "2675 MF"
       },
       {
@@ -147,7 +137,6 @@
           "categories": ["A", "B", "C", "D", "E"]
         },
         "hiredMonthsAgo": 32,
-        "latestTripHoursAgo": 12,
         "vehiclePlateId": "1882 TBS"
       },
       {
@@ -160,7 +149,6 @@
           "categories": ["A", "B", "C", "D", "E"]
         },
         "hiredMonthsAgo": 9,
-        "latestTripHoursAgo": 9,
         "vehiclePlateId": "4219 ME"
       },
       {
@@ -173,7 +161,6 @@
           "categories": ["A", "B", "C", "D", "E"]
         },
         "hiredMonthsAgo": 26,
-        "latestTripHoursAgo": 13,
         "vehiclePlateId": "5826 MT"
       },
       {
@@ -186,7 +173,6 @@
           "categories": ["A", "B", "C", "D", "E"]
         },
         "hiredMonthsAgo": 26,
-        "latestTripHoursAgo": 15,
         "vehiclePlateId": "7303 TBR"
       },
       {
@@ -199,7 +185,6 @@
           "categories": ["A", "B", "C", "D", "E"]
         },
         "hiredMonthsAgo": 25,
-        "latestTripHoursAgo": 17,
         "vehiclePlateId": "8586 TBH"
       },
       {
@@ -212,7 +197,6 @@
           "categories": ["A", "B", "C", "D", "E"]
         },
         "hiredMonthsAgo": 11,
-        "latestTripHoursAgo": 10,
         "vehiclePlateId": "7683 ME"
       }
     ]
@@ -230,7 +214,6 @@
           "categories": ["A", "B", "C", "D", "E"]
         },
         "hiredMonthsAgo": 8,
-        "latestTripHoursAgo": 5,
         "vehiclePlateId": "2946 TBK"
       },
       {
@@ -243,7 +226,6 @@
           "categories": ["A", "B", "C", "D", "E"]
         },
         "hiredMonthsAgo": 16,
-        "latestTripHoursAgo": 12,
         "vehiclePlateId": "6511 TAR"
       },
       {
@@ -256,7 +238,6 @@
           "categories": ["A", "B", "C", "D", "E"]
         },
         "hiredMonthsAgo": 24,
-        "latestTripHoursAgo": 2,
         "vehiclePlateId": "8261 TBK"
       },
       {
@@ -269,7 +250,6 @@
           "categories": ["A", "B", "C", "D", "E"]
         },
         "hiredMonthsAgo": 36,
-        "latestTripHoursAgo": 8,
         "vehiclePlateId": "9733 TBM"
       },
       {
@@ -282,7 +262,6 @@
           "categories": ["A", "B", "C", "D", "E"]
         },
         "hiredMonthsAgo": 48,
-        "latestTripHoursAgo": 15,
         "vehiclePlateId": "9692 TBM"
       },
       {
@@ -295,7 +274,6 @@
           "categories": ["A", "B", "C", "D", "E"]
         },
         "hiredMonthsAgo": 10,
-        "latestTripHoursAgo": 7,
         "vehiclePlateId": "8700 TBD"
       }
     ]
@@ -313,7 +291,6 @@
           "categories": ["A", "B", "C", "D", "E"]
         },
         "hiredMonthsAgo": 8,
-        "latestTripHoursAgo": 5,
         "vehiclePlateId": "5869 TBP"
       },
       {
@@ -326,7 +303,6 @@
           "categories": ["A", "B", "C", "D", "E"]
         },
         "hiredMonthsAgo": 16,
-        "latestTripHoursAgo": 12,
         "vehiclePlateId": "9635 TDB"
       },
       {
@@ -339,7 +315,6 @@
           "categories": ["A", "B", "C", "D", "E"]
         },
         "hiredMonthsAgo": 24,
-        "latestTripHoursAgo": 2,
         "vehiclePlateId": "9836 TAR"
       },
       {
@@ -352,7 +327,6 @@
           "categories": ["A", "B", "C", "D", "E"]
         },
         "hiredMonthsAgo": 36,
-        "latestTripHoursAgo": 8,
         "vehiclePlateId": "1348 TP"
       }
     ]
@@ -370,7 +344,6 @@
           "categories": ["A", "B", "C", "D", "E"]
         },
         "hiredMonthsAgo": 8,
-        "latestTripHoursAgo": 5,
         "vehiclePlateId": "0577 TBV"
       },
       {
@@ -383,7 +356,6 @@
           "categories": ["A", "B", "C", "D", "E"]
         },
         "hiredMonthsAgo": 16,
-        "latestTripHoursAgo": 12,
         "vehiclePlateId": "9171 TBM"
       },
       {
@@ -396,7 +368,6 @@
           "categories": ["A", "B", "C", "D", "E"]
         },
         "hiredMonthsAgo": 24,
-        "latestTripHoursAgo": 2,
         "vehiclePlateId": "1724 TBS"
       },
       {
@@ -409,7 +380,6 @@
           "categories": ["A", "B", "C", "D", "E"]
         },
         "hiredMonthsAgo": 36,
-        "latestTripHoursAgo": 8,
         "vehiclePlateId": "5402 TBN"
       },
       {
@@ -422,7 +392,6 @@
           "categories": ["A", "B", "C", "D", "E"]
         },
         "hiredMonthsAgo": 48,
-        "latestTripHoursAgo": 15,
         "vehiclePlateId": "7677 TBP"
       },
       {
@@ -435,7 +404,6 @@
           "categories": ["A", "B", "C", "D", "E"]
         },
         "hiredMonthsAgo": 10,
-        "latestTripHoursAgo": 7,
         "vehiclePlateId": "8465 TBA"
       },
       {
@@ -448,7 +416,6 @@
           "categories": ["A", "B", "C", "D", "E"]
         },
         "hiredMonthsAgo": 10,
-        "latestTripHoursAgo": 7,
         "vehiclePlateId": "9852 TAM"
       },
       {
@@ -461,7 +428,6 @@
           "categories": ["A", "B", "C", "D", "E"]
         },
         "hiredMonthsAgo": 36,
-        "latestTripHoursAgo": 8,
         "vehiclePlateId": "1368 TPA"
       }
     ]

@@ -7,21 +7,11 @@ import {
 } from 'mongoose';
 
 import {
-  EmbeddedPhotoDocument,
-  embeddedPhotoSchema,
-} from 'src/api/photo/schema';
-import {
   VehicleState,
-  VehicleStatus,
   plateIdRegExp,
   rearSeatRegExp,
   vehicleStates,
-  vehicleStatuses,
 } from '../vehicle.constants';
-import {
-  EmbeddedTrackingDeviceDocument,
-  embeddedTrackingDeviceSchema,
-} from 'src/api/tracking-device/schema/embedded-tracking-device.schema';
 import {
   EmbeddedCarModelDocument,
   embeddedCarModelSchema,
@@ -31,18 +21,13 @@ import {
   VehicleSeatsCount,
   vehicleSeatsCountSchema,
 } from './vehicle-seats-count.schema';
-import { type DriverDocument } from 'src/api/driver/schema';
 
-// Vehicles collection name
-export const VEHICLE_COLLECTION = 'vehicles';
-
-@Schema({ timestamps: true })
-export class Vehicle {
+@Schema({ autoCreate: false })
+export class EmbeddedVehicle {
   // (Numéro d'immatriculation de la plaque)
   @Prop({
     type: String,
     required: true,
-    unique: true,
     validate(value: string) {
       return plateIdRegExp.test(value);
     },
@@ -50,33 +35,11 @@ export class Vehicle {
   plateId: string;
 
   @Prop({
-    type: MongooseSchema.ObjectId,
-  })
-  mainPhotoId?: Types.ObjectId;
-
-  @Prop({
-    type: [{ type: embeddedPhotoSchema, required: true }],
-  })
-  photos?: EmbeddedPhotoDocument[];
-
-  @Prop({
-    type: String,
-    required: true,
-    enum: vehicleStatuses,
-  })
-  status: VehicleStatus;
-
-  @Prop({
     type: String,
     required: true,
     enum: vehicleStates,
   })
   state: VehicleState;
-
-  @Prop({
-    type: embeddedTrackingDeviceSchema,
-  })
-  tracker?: EmbeddedTrackingDeviceDocument;
 
   @Prop({
     type: embeddedCarModelSchema,
@@ -113,26 +76,10 @@ export class Vehicle {
     index: true,
   })
   cooperative: Types.ObjectId | CooperativeDocument;
-
-  @Prop({
-    type: MongooseSchema.ObjectId,
-    ref: 'Trip',
-  })
-  ongoingTrip?: Types.ObjectId;
-
-  // Assigned drivers ids
-  @Prop({
-    type: [{ type: MongooseSchema.ObjectId, required: true }],
-    ref: 'Driver',
-  })
-  drivers?: Types.ObjectId[] | DriverDocument[];
 }
 
-export const vehicleSchema = SchemaFactory.createForClass(Vehicle);
+export const embeddedVehicleSchema =
+  SchemaFactory.createForClass(EmbeddedVehicle);
 
-// Indexes
-vehicleSchema.index({ 'tracker.position': '2dsphere' }, { sparse: true });
-vehicleSchema.index({ plateId: 'text' });
-
-export type VehicleDocument = HydratedDocument<Vehicle>;
-export type VehicleModel = Model<Vehicle>;
+export type EmbeddedVehicleDocument = HydratedDocument<EmbeddedVehicle>;
+export type EmbeddedVehicleModel = Model<EmbeddedVehicle>;

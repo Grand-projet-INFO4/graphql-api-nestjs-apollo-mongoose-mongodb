@@ -9,11 +9,14 @@ export const PHOTO_COLLECTION = 'photos';
 
 @Schema({ timestamps: true, discriminatorKey: PHOTO_DISCRIMINATOR_KEY })
 export class Photo {
-  @Prop({ type: String, required: true, unique: true })
+  @Prop({ type: String, required: true })
   filename: string;
 
   @Prop()
   description?: string;
+
+  @Prop({ type: String, required: true })
+  extension: string;
 }
 
 export const photoSchema = SchemaFactory.createForClass(Photo);

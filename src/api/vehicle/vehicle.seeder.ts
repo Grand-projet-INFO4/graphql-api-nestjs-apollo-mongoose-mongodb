@@ -13,6 +13,9 @@ import { EmbeddedCarModelSeed } from '../car-model/car-model';
 import { VehicleState, VehicleStatus } from './vehicle.constants';
 import { CooperativeSeeder } from '../cooperative/cooperative.seeder';
 import { DriverSeeder } from '../driver/driver.seeder';
+import { EmbeddedVehicleSeed } from './vehicle';
+import { TripSeeder } from '../trip/trip.seeder';
+import { TripStatus } from '../trip/trip.constants';
 
 export type VehicleSeederPayload = WithMongoId<
   ReplaceFields<
@@ -75,6 +78,10 @@ export class VehicleSeeder implements Seeder {
 
   // Map of vehicle plate id key and vehicle seed data value singleton
   private static vehicleMap: Map<string, VehicleSeederPayload> | null = null;
+
+  // Map of vehicle id key and vehicles value singleton
+  private static vehicleMapById: Map<string, VehicleSeederPayload> | null =
+    null;
 
   constructor(
     @InjectModel(Vehicle.name) private vehicleModel: VehicleModel,
@@ -972,11 +979,16 @@ export class VehicleSeeder implements Seeder {
         }
       }
       VehicleSeeder.vehicles = vehicles;
+      const ongoingTripsIdsIterator = TripSeeder.createTripsIdsGenerator(
+        TripStatus.Ongoing,
+      )();
       for (const vehicle of vehicles) {
         const driversKeysItems = driversKeysMap.get(vehicle._id.toString());
         vehicle.drivers = driversKeysItems.map<mongo.BSON.ObjectId>(
           (keys) => DriverSeeder.getDriverSeedFromMap(keys)._id,
         );
+        vehicle.ongoingTrip = ongoingTripsIdsIterator.next()
+          .value as mongo.BSON.ObjectId;
       }
     }
     return VehicleSeeder.vehicles;
@@ -994,5 +1006,38 @@ export class VehicleSeeder implements Seeder {
       VehicleSeeder.vehicleMap = vehicleMap;
     }
     return VehicleSeeder.vehicleMap;
+  }
+
+  /**
+   * Getter for the vehicle map by id singleton
+   */
+  static getVehicleMapById() {
+    if (!VehicleSeeder.vehicleMapById) {
+      const vehicleMapById = new Map<string, VehicleSeederPayload>();
+      for (const vehicle of VehicleSeeder.getVehicles()) {
+        vehicleMapById.set(vehicle._id.toString(), vehicle);
+      }
+      VehicleSeeder.vehicleMapById = vehicleMapById;
+    }
+    return VehicleSeeder.vehicleMapById;
+  }
+
+  /**
+   * Parses a vehicle seed into its embedded vehicle seed version
+   */
+  static parseEmbeddedVehicleSeed(
+    vehicle: VehicleSeederPayload,
+  ): EmbeddedVehicleSeed {
+    const embeddedVehicle: EmbeddedVehicleSeed = {
+      _id: vehicle._id,
+      model: vehicle.model,
+      plateId: vehicle.plateId,
+      seatsCount: vehicle.seatsCount,
+      state: vehicle.state,
+      cooperative: vehicle.cooperative,
+    };
+    vehicle.removedSeats &&
+      (embeddedVehicle.removedSeats = vehicle.removedSeats);
+    return embeddedVehicle;
   }
 }

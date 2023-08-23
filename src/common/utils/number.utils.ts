@@ -10,5 +10,12 @@ export function getRandomInteger(to: number, from = 1) {
       'The `from` argument must be smaller that the `to` arguement',
     );
   }
-  return Math.floor(Math.random() * to) + from;
+  return Math.floor(Math.random() * (to - from + 1)) + from;
+}
+
+/**
+ * Gets a random boolean value between 0 and 1
+ */
+export function getRandomBoolean(): 0 | 1 {
+  return Math.round(Math.random()) as 0 | 1;
 }

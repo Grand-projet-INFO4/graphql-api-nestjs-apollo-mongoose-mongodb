@@ -15,7 +15,6 @@ export class CooperativePhoto {
 
   @Prop({
     type: MongooseSchema.ObjectId,
-    required: true,
     index: true,
     sparse: true,
   })
@@ -28,4 +27,4 @@ export const cooperativePhotoSchema =
 export type CooperativePhotoDocument = HydratedDocument<
   Photo & CooperativePhoto
 >;
-export type CooperativeModel = Model<Photo & CooperativePhoto>;
+export type CooperativePhotoModel = Model<Photo & CooperativePhoto>;

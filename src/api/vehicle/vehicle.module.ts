@@ -1,7 +1,12 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 
-import { Vehicle, vehicleSchema } from './schema';
+import {
+  EmbeddedVehicle,
+  Vehicle,
+  embeddedVehicleSchema,
+  vehicleSchema,
+} from './schema';
 
 const vehicleMongooseModule = MongooseModule.forFeature([
   {
@@ -10,8 +15,15 @@ const vehicleMongooseModule = MongooseModule.forFeature([
   },
 ]);
 
+const embeddedVehicleMongooseModule = MongooseModule.forFeature([
+  {
+    name: EmbeddedVehicle.name,
+    schema: embeddedVehicleSchema,
+  },
+]);
+
 @Module({
-  imports: [vehicleMongooseModule],
-  exports: [vehicleMongooseModule],
+  imports: [vehicleMongooseModule, embeddedVehicleMongooseModule],
+  exports: [vehicleMongooseModule, embeddedVehicleMongooseModule],
 })
 export class VehicleModule {}

@@ -15,6 +15,8 @@ import { BusStationSeeder } from '../bus-station/bus-station.seeder';
 import { ReplaceFields } from 'src/common/types/utils';
 import { GeoJSONPoint } from 'src/common/schemas/geojson-point.schema';
 import { PhotoSeeder } from '../photo/photo.seeder';
+import { EmbeddedParkingLotSeed } from './parking-lot';
+import { City, CityModel } from '../city/schema';
 
 export type ParkingLotSeederPayload = WithMongoId<
   ReplaceFields<
@@ -37,12 +39,19 @@ export class ParkingLotSeeder implements Seeder {
   // The parking lots seed data singleton
   private static parkingLots: ParkingLotSeederPayload[] | null = null;
 
-  // Map of cooperative id - parking lot address combination and parking lot seed data singleton
+  // Map of cooperative id - parking lot address combination and parking lot seed data value singleton
   private static parkingLotMap: Map<string, ParkingLotSeederPayload> | null =
     null;
 
+  // Map of parking lot id key and parking lot seed data value singleton
+  private static parkingLotMapById: Map<
+    string,
+    ParkingLotSeederPayload
+  > | null = null;
+
   constructor(
     @InjectModel(ParkingLot.name) private parkingLotModel: ParkingLotModel,
+    @InjectModel(City.name) private cityModel: CityModel,
     @InjectConnection() private connection: Connection,
   ) {}
 
@@ -557,5 +566,40 @@ export class ParkingLotSeeder implements Seeder {
       address: keys.address,
     });
     return ParkingLotSeeder.getParkingLotMap().get(key);
+  }
+
+  /**
+   * Parses a parking lot seed into its embedded parking seed version
+   */
+  static parseEmbeddedParkingLotSeed(
+    parkingLotSeed: ParkingLotSeederPayload,
+  ): EmbeddedParkingLotSeed {
+    const embeddedParkingLotSeed: EmbeddedParkingLotSeed = {
+      _id: parkingLotSeed._id,
+      address: parkingLotSeed.address,
+      city: parkingLotSeed.city,
+      openHours: parkingLotSeed.openHours,
+      position: parkingLotSeed.position,
+      cooperative: parkingLotSeed.cooperative,
+    };
+    parkingLotSeed.locationHint &&
+      (embeddedParkingLotSeed.locationHint = parkingLotSeed.locationHint);
+    parkingLotSeed.busStation &&
+      (embeddedParkingLotSeed.busStation = parkingLotSeed.busStation);
+    return embeddedParkingLotSeed;
+  }
+
+  /**
+   * Getter for the parking lot seed data map by id singleton
+   */
+  static getParkingLotMapById() {
+    if (!ParkingLotSeeder.parkingLotMapById) {
+      const parkingLotsMap = new Map<string, ParkingLotSeederPayload>();
+      for (const parkingLot of ParkingLotSeeder.getParkingLots()) {
+        parkingLotsMap.set(parkingLot._id.toString(), parkingLot);
+      }
+      ParkingLotSeeder.parkingLotMapById = parkingLotsMap;
+    }
+    return ParkingLotSeeder.parkingLotMapById;
   }
 }

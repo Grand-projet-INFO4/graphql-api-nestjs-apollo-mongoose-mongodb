@@ -3,6 +3,7 @@ import { Connection, mongo } from 'mongoose';
 
 import {
   CooperativePhoto,
+  CooperativePhotoModel,
   PHOTO_COLLECTION,
   Photo,
   PhotoModel,
@@ -33,7 +34,6 @@ export type CooperativePhotoSeederPayload = WithMongoId<
       filename: string;
       parkingLotId?: mongo.BSON.ObjectId;
       cooperativeId: mongo.BSON.ObjectId;
-      extension: string;
     }
   >
 >;
@@ -53,13 +53,15 @@ export class PhotoSeeder implements Seeder {
 
   constructor(
     @InjectModel(Photo.name) private photoModel: PhotoModel,
+    @InjectModel(CooperativePhoto.name)
+    private cooperativephotoModel: CooperativePhotoModel,
     @InjectConnection() private connection: Connection,
   ) {}
 
   async seed() {
     const session = await this.connection.startSession();
     session.startTransaction();
-    await this.photoModel.insertMany(PhotoSeeder.getPhotos());
+    await this.cooperativephotoModel.insertMany(PhotoSeeder.getPhotos());
     await session.commitTransaction();
     console.log(`Seeded the \`${PHOTO_COLLECTION}\` collection ...`);
   }
@@ -420,7 +422,6 @@ export class PhotoSeeder implements Seeder {
             _id: new mongo.ObjectId(),
             filename: photo,
             cooperativeId: coopPhotosOptions.cooperativeId,
-            extension: CooperativePhoto.name,
           });
         }
         const coopParkingLotPhotoAddressMapMapKey =
@@ -445,7 +446,6 @@ export class PhotoSeeder implements Seeder {
               _id: photo._id,
               filename: photo.filename,
               cooperativeId: coopPhotosOptions.cooperativeId,
-              extension: CooperativePhoto.name,
             };
             photos.push(plPhoto);
             const parkingLotPhotoAddressMapKey = plPhoto._id.toString();

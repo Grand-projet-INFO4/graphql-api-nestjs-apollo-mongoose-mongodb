@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "@casl/ability": "^6.4.0",
+    "@faker-js/faker": "^8.0.2",
     "@nestjs/apollo": "^10.2.0",
     "@nestjs/axios": "^2.0.0",
     "@nestjs/common": "^9.0.0",

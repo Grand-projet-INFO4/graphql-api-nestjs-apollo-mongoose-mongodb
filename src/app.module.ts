@@ -10,7 +10,7 @@ import { GqlConfigService } from './graphql/gql-config.service';
 import { DataloaderModule } from './dataloader/dataloader.module';
 import { AuthModule } from './api/auth/auth.module';
 import { RegionModule } from './api/region/region.module';
-import { isProductionEnvironment } from './common/helpers/environment.helper';
+// import { isProductionEnvironment } from './common/helpers/environment.helper';
 import { CityModule } from './api/city/city.module';
 import { RedisModule } from './redis/redis.module';
 import { HighwayModule } from './api/highway/highway.module';
@@ -24,6 +24,9 @@ import { CarModelModule } from './api/car-model/car-model.module';
 import { TrackingDeviceModule } from './api/tracking-device/tracking-device.module';
 import { DriverModule } from './api/driver/driver.module';
 import { RouteModule } from './api/route/route.module';
+import { PlannedTripModule } from './api/planned-trip/planned-trip.module';
+import { BookingModule } from './api/booking/booking.module';
+import { TripModule } from './api/trip/trip.module';
 
 @Module({
   controllers: [AppController],
@@ -37,7 +40,7 @@ import { RouteModule } from './api/route/route.module';
       isGlobal: true,
     }),
     MongooseModule.forRoot(process.env.DATABASE_URL as string, {
-      autoIndex: !isProductionEnvironment(process.env.NODE_ENV),
+      // autoIndex: !isProductionEnvironment(process.env.NODE_ENV),
     }),
     UserModule,
     DataloaderModule,
@@ -56,6 +59,9 @@ import { RouteModule } from './api/route/route.module';
     TrackingDeviceModule,
     DriverModule,
     RouteModule,
+    PlannedTripModule,
+    BookingModule,
+    TripModule,
   ],
 })
 export class AppModule {}

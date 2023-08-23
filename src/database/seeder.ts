@@ -21,7 +21,12 @@ import {
   parkingLotSchema,
 } from 'src/api/parking-lot/schema/parking-lot.schema';
 import { ParkingLotSeeder } from 'src/api/parking-lot/parking-lot.seeder';
-import { Photo, photoSchema } from 'src/api/photo/schema';
+import {
+  CooperativePhoto,
+  Photo,
+  cooperativePhotoSchema,
+  photoSchema,
+} from 'src/api/photo/schema';
 import { PhotoSeeder } from 'src/api/photo/photo.seeder';
 import { CarModelSeeder } from 'src/api/car-model/car-model.seeder';
 import { VehicleSeeder } from 'src/api/vehicle/vehicle.seeder';
@@ -31,49 +36,84 @@ import { Driver, driverSchema } from 'src/api/driver/schema';
 import { DriverSeeder } from 'src/api/driver/driver.seeder';
 import { RouteSeeder } from 'src/api/route/route.seeder';
 import { Route, routeSchema } from 'src/api/route/schema';
+import { Booking, bookingSchema } from 'src/api/booking/schema';
+import { BookingSeeder } from 'src/api/booking/booking.seeder';
+import { PlannedTripSeeder } from 'src/api/planned-trip/planned-trip.seeder';
+import { PlannedTrip, plannedTripSchema } from 'src/api/planned-trip/schema';
+import { TripSeeder } from 'src/api/trip/trip.seeder';
+import { Trip, tripSchema } from 'src/api/trip/schema';
 
-seeder({
-  imports: [
-    ConfigModule.forRoot({
-      isGlobal: true,
-    }),
-    MongooseModule.forRoot(process.env.DATABASE_URL as string),
-    MongooseModule.forFeature([{ name: Region.name, schema: regionSchema }]),
-    MongooseModule.forFeature([{ name: City.name, schema: citySchema }]),
-    MongooseModule.forFeature([{ name: User.name, schema: userSchema }]),
-    MongooseModule.forFeature([{ name: Highway.name, schema: highwaySchema }]),
-    MongooseModule.forFeature([
-      { name: SocialMedia.name, schema: socialMediaSchema },
-    ]),
-    MongooseModule.forFeature([
-      { name: Cooperative.name, schema: cooperativeSchema },
-    ]),
-    MongooseModule.forFeature([
-      { name: BusStation.name, schema: busStationSchema },
-    ]),
-    MongooseModule.forFeature([
-      { name: ParkingLot.name, schema: parkingLotSchema },
-    ]),
-    MongooseModule.forFeature([{ name: Photo.name, schema: photoSchema }]),
-    MongooseModule.forFeature([
-      { name: CarModel.name, schema: carModelSchema },
-    ]),
-    MongooseModule.forFeature([{ name: Vehicle.name, schema: vehicleSchema }]),
-    MongooseModule.forFeature([{ name: Driver.name, schema: driverSchema }]),
-    MongooseModule.forFeature([{ name: Route.name, schema: routeSchema }]),
-  ],
-}).run([
-  UserSeeder,
-  RegionSeeder,
-  CitySeeder,
-  HighwaySeeder,
-  SocialMediaSeeder,
-  CooperativeSeeder,
-  BusStationSeeder,
-  ParkingLotSeeder,
-  PhotoSeeder,
-  CarModelSeeder,
-  VehicleSeeder,
-  DriverSeeder,
-  RouteSeeder,
-]);
+try {
+  seeder({
+    imports: [
+      ConfigModule.forRoot({
+        isGlobal: true,
+      }),
+      MongooseModule.forRoot(process.env.DATABASE_URL as string),
+      MongooseModule.forFeature([{ name: Region.name, schema: regionSchema }]),
+      MongooseModule.forFeature([{ name: City.name, schema: citySchema }]),
+      MongooseModule.forFeature([{ name: User.name, schema: userSchema }]),
+      MongooseModule.forFeature([
+        { name: Highway.name, schema: highwaySchema },
+      ]),
+      MongooseModule.forFeature([
+        { name: SocialMedia.name, schema: socialMediaSchema },
+      ]),
+      MongooseModule.forFeature([
+        { name: Cooperative.name, schema: cooperativeSchema },
+      ]),
+      MongooseModule.forFeature([
+        { name: BusStation.name, schema: busStationSchema },
+      ]),
+      MongooseModule.forFeature([
+        { name: ParkingLot.name, schema: parkingLotSchema },
+      ]),
+      MongooseModule.forFeature([
+        {
+          name: Photo.name,
+          schema: photoSchema,
+          discriminators: [
+            {
+              name: CooperativePhoto.name,
+              schema: cooperativePhotoSchema,
+            },
+          ],
+        },
+      ]),
+      MongooseModule.forFeature([
+        { name: CarModel.name, schema: carModelSchema },
+      ]),
+      MongooseModule.forFeature([
+        { name: Vehicle.name, schema: vehicleSchema },
+      ]),
+      MongooseModule.forFeature([{ name: Driver.name, schema: driverSchema }]),
+      MongooseModule.forFeature([{ name: Route.name, schema: routeSchema }]),
+      MongooseModule.forFeature([
+        { name: Booking.name, schema: bookingSchema },
+      ]),
+      MongooseModule.forFeature([
+        { name: PlannedTrip.name, schema: plannedTripSchema },
+      ]),
+      MongooseModule.forFeature([{ name: Trip.name, schema: tripSchema }]),
+    ],
+  }).run([
+    UserSeeder,
+    RegionSeeder,
+    CitySeeder,
+    HighwaySeeder,
+    SocialMediaSeeder,
+    CooperativeSeeder,
+    BusStationSeeder,
+    ParkingLotSeeder,
+    PhotoSeeder,
+    CarModelSeeder,
+    VehicleSeeder,
+    DriverSeeder,
+    RouteSeeder,
+    TripSeeder,
+    PlannedTripSeeder,
+    BookingSeeder,
+  ]);
+} catch (error) {
+  console.log('Error: ' + error.message);
+}
