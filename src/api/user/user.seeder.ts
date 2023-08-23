@@ -1,17 +1,20 @@
 import { InjectConnection, InjectModel } from '@nestjs/mongoose';
 import { Seeder } from 'nestjs-seeder';
-import { User, UserModel } from './schema';
 import { Connection, mongo } from 'mongoose';
+
+import { User, UserModel } from './schema';
 import { CitySeeder, CitySeederPayload } from '../city/city.seeder';
 import { WithMongoId } from 'src/common/types/mongo-id';
-import { UserRole } from './user.constants';
 import { modelCollectionExists } from 'src/common/helpers/mongo.helper';
+import * as userSeedsOptions from '../../../seed/user.seed.json';
 
 export type UserSeederPayload = WithMongoId<
   Omit<User, 'city'> & {
     city?: CitySeederPayload;
   }
 >;
+
+type UserSeedOptions = Omit<User, 'city'> & { cityName: string };
 
 export class UserSeeder implements Seeder {
   // Users seed data as a singleton
@@ -47,105 +50,25 @@ export class UserSeeder implements Seeder {
    */
   static getUsers(): UserSeederPayload[] {
     if (!UserSeeder.users) {
-      const users: UserSeederPayload[] = [
-        {
+      const cityMap = CitySeeder.getCityNameMap();
+      const usersSeedsOptions = userSeedsOptions as UserSeedOptions[];
+      const users = usersSeedsOptions.map<UserSeederPayload>((options) => {
+        const user: UserSeederPayload = {
           _id: new mongo.ObjectId(),
-          firstName: 'John',
-          lastName: 'Doe',
-          username: 'johndoe',
-          photo: 'johndoe.jpg',
-          email: 'johndoe@gmail.com',
-          password:
-            '$2b$10$kZl2CGCDgFA9y7YXADJu5engg5tN0lNM.kBjHm97KZKhgUEnUwFGu', // Clear text: password
-          city: CitySeeder.getCityNameMap().get('Antananarivo'),
-          roles: [UserRole.Basic, UserRole.SuperAdmin],
-        },
-        {
-          _id: new mongo.ObjectId(),
-          firstName: 'Tolojanahary Fenomanantsoa',
-          lastName: 'RABEFALY',
-          username: 'amazing_tool',
-          photo: 'tolotra.jpg',
-          email: 'tolotrarabefaly@gmail.com',
-          phone: '+261324924506',
-          password:
-            '$2b$10$kZl2CGCDgFA9y7YXADJu5engg5tN0lNM.kBjHm97KZKhgUEnUwFGu', // Clear text: password
-          city: CitySeeder.getCityNameMap().get('Antananarivo'),
-          roles: [UserRole.Basic, UserRole.Admin],
-        },
-        {
-          _id: new mongo.ObjectId(),
-          firstName: 'Ny Aina Fitiavana',
-          lastName: 'RABARIMAHEFA',
-          username: 'bari.69877',
-          photo: 'fitiavana.jpg',
-          email: 'fitiavanarabariahefa@gmail.com',
-          password:
-            '$2b$10$kZl2CGCDgFA9y7YXADJu5engg5tN0lNM.kBjHm97KZKhgUEnUwFGu', // Clear text: password
-          city: CitySeeder.getCityNameMap().get('Antananarivo'),
-          roles: [UserRole.Basic, UserRole.Admin],
-        },
-        {
-          _id: new mongo.ObjectId(),
-          firstName: 'Kiadiniaina Estello',
-          lastName: 'MAHANDRIARIVELO',
-          username: 'kiadyestello.4561',
-          photo: 'kiady.jpg',
-          email: 'kiadyestello@gmail.com',
-          password:
-            '$2b$10$kZl2CGCDgFA9y7YXADJu5engg5tN0lNM.kBjHm97KZKhgUEnUwFGu', // Clear text: password
-          city: CitySeeder.getCityNameMap().get('Antananarivo'),
-          roles: [UserRole.Basic, UserRole.Admin],
-        },
-        {
-          _id: new mongo.ObjectId(),
-          firstName: 'Dimbinirina Martin',
-          lastName: 'ANDRIANOMENJANAHARY',
-          username: 'thintin.X',
-          photo: 'martin.jpg',
-          email: 'thintin@gmail.com',
-          password:
-            '$2b$10$kZl2CGCDgFA9y7YXADJu5engg5tN0lNM.kBjHm97KZKhgUEnUwFGu', // Clear text: password
-          city: CitySeeder.getCityNameMap().get('Antananarivo'),
-          roles: [UserRole.Basic, UserRole.Admin],
-        },
-        {
-          _id: new mongo.ObjectId(),
-          firstName: 'Cédrick',
-          lastName: 'TARIKA',
-          username: 'ced.rick',
-          photo: 'cedric.jpg',
-          email: 'tarikacedrick@gmail.com',
-          password:
-            '$2b$10$kZl2CGCDgFA9y7YXADJu5engg5tN0lNM.kBjHm97KZKhgUEnUwFGu', // Clear text: password
-          city: CitySeeder.getCityNameMap().get('Antananarivo'),
-          roles: [UserRole.Basic, UserRole.Admin],
-        },
-        {
-          _id: new mongo.ObjectId(),
-          firstName: 'Ranto Billy',
-          lastName: 'ANDRIANARIVELO',
-          username: 'ranto.billy',
-          photo: 'billy.jpg',
-          email: 'rantobilly@gmail.com',
-          password:
-            '$2b$10$kZl2CGCDgFA9y7YXADJu5engg5tN0lNM.kBjHm97KZKhgUEnUwFGu', // Clear text: password
-          city: CitySeeder.getCityNameMap().get('Antananarivo'),
-          roles: [UserRole.Basic, UserRole.Admin],
-        },
-        {
-          _id: new mongo.ObjectId(),
-          firstName: 'Tanjona Harintsarobidy',
-          lastName: 'RAJAOLIARIBENJA',
-          username: '_tanjona_',
-          photo: 'tanjona.jpg',
-          email: 'tanjonaharints@gmail.com',
-          password:
-            '$2b$10$kZl2CGCDgFA9y7YXADJu5engg5tN0lNM.kBjHm97KZKhgUEnUwFGu', // Clear text: password
-          city: CitySeeder.getCityNameMap().get('Antananarivo'),
-          roles: [UserRole.Basic, UserRole.Admin],
-        },
-      ];
+          firstName: options.firstName,
+          lastName: options.lastName,
+          username: options.username,
+          email: options.email,
+          password: options.password,
+          roles: options.roles,
+        };
+        options.phone && (user.phone = options.phone);
+        options.photo && (user.photo = options.photo);
+        if (options.cityName) {
+          user.city = cityMap.get(options.cityName);
+        }
+        return user;
+      });
       UserSeeder.users = users;
     }
     return UserSeeder.users;

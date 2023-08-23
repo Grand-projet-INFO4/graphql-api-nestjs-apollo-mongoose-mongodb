@@ -1,0 +1,335 @@
+[
+  {
+    "weight": 5,
+    "cities": [
+      {
+        "cityName": "Antananarivo",
+        "alt": "Tananarive",
+        "regionName": "Analamanga"
+      }
+    ]
+  },
+  {
+    "weight": 4,
+    "cities": [
+      {
+        "cityName": "Toamasina",
+        "alt": "Tamatave",
+        "regionName": "Atsinanana"
+      },
+      {
+        "cityName": "Toliara",
+        "alt": "Tuléar",
+        "regionName": "Atsimo Andrefana"
+      },
+      {
+        "cityName": "Mahajanga",
+        "alt": "Majunga",
+        "regionName": "Boeny"
+      },
+      {
+        "cityName": "Fianarantsoa",
+        "regionName": "Haute Matsiatra"
+      },
+      {
+        "cityName": "Antsiranana",
+        "alt": "Diego-Suarez",
+        "regionName": "Diana"
+      }
+    ]
+  },
+  {
+    "weight": 3,
+    "cities": [
+      {
+        "cityName": "Antsirabe",
+        "regionName": "Vakinankaratra"
+      },
+      {
+        "cityName": "Miarinarivo",
+        "regionName": "Itasy"
+      },
+      {
+        "cityName": "Tsiroanomandidy",
+        "regionName": "Bongolava"
+      },
+      {
+        "cityName": "Ambatondrazaka",
+        "regionName": "Alaotra-Mangoro"
+      },
+      {
+        "cityName": "Fenoarivo Atsinanana",
+        "alt": "Fénérive Est",
+        "regionName": "Analanjirofo"
+      },
+      {
+        "cityName": "Antsohihy",
+        "regionName": "Sofia"
+      },
+      {
+        "cityName": "Maevatanàna",
+        "regionName": "Betsiboka"
+      },
+      {
+        "cityName": "Maintirano",
+        "regionName": "Melaky"
+      },
+      {
+        "cityName": "Taolagnaro",
+        "alt": "Fort-Dauphin",
+        "regionName": "Anosy"
+      },
+      {
+        "cityName": "Ambovombe",
+        "regionName": "Androy"
+      },
+      {
+        "cityName": "Morondava",
+        "regionName": "Menabe"
+      },
+      {
+        "cityName": "Ambositra",
+        "regionName": "Amoron'i Mania"
+      },
+      {
+        "cityName": "Mananjary",
+        "regionName": "Vatovavy"
+      },
+      {
+        "cityName": "Manakara",
+        "regionName": "Fitovinany"
+      },
+      {
+        "cityName": "Farafangana",
+        "regionName": "Atsimo Atsinanana"
+      },
+      {
+        "cityName": "Ihosy",
+        "regionName": "Ihorombe"
+      },
+      {
+        "cityName": "Sambava",
+        "regionName": "Sava"
+      }
+    ]
+  },
+  {
+    "weight": 2,
+    "cities": [
+      {
+        "cityName": "Ambanja",
+        "regionName": "Diana"
+      },
+      {
+        "cityName": "Ambilobe",
+        "regionName": "Diana"
+      },
+      {
+        "cityName": "Vohimarina",
+        "alt": "Vohémar",
+        "regionName": "Sava"
+      },
+      {
+        "cityName": "Antalaha",
+        "regionName": "Sava"
+      },
+      {
+        "cityName": "Mampikony",
+        "regionName": "Sofia"
+      },
+      {
+        "cityName": "Boriziny",
+        "alt": "Port-Bergé",
+        "regionName": "Sofia"
+      },
+      {
+        "cityName": "Befandriana Avaratra",
+        "alt": "Befandriana Nord",
+        "regionName": "Sofia"
+      },
+      {
+        "cityName": "Mandritsara",
+        "regionName": "Sofia"
+      },
+      {
+        "cityName": "Andilamena",
+        "regionName": "Alaotra-Mangoro"
+      },
+      {
+        "cityName": "Amparafaravola",
+        "regionName": "Alaotra-Mangoro"
+      },
+      {
+        "cityName": "Moramanga",
+        "regionName": "Alaotra-Mangoro"
+      },
+      {
+        "cityName": "Vohibinany",
+        "alt": "Brickaville",
+        "regionName": "Atsinanana"
+      },
+      {
+        "cityName": "Vatomandry",
+        "regionName": "Atsinanana"
+      },
+      {
+        "cityName": "Mahanoro",
+        "regionName": "Atsinanana"
+      },
+      {
+        "cityName": "Soanierana Ivongo",
+        "regionName": "Analanjirofo"
+      },
+      {
+        "cityName": "Mananara Avaratra",
+        "alt": "Mananara Nord",
+        "regionName": "Analanjirofo"
+      },
+      {
+        "cityName": "Maroantsetra",
+        "regionName": "Analanjirofo"
+      },
+      {
+        "cityName": "Arivonimamo",
+        "regionName": "Itasy"
+      },
+      {
+        "cityName": "Ankazobe",
+        "regionName": "Analamanga"
+      },
+      {
+        "cityName": "Manjakandriana",
+        "regionName": "Analamanga"
+      },
+      {
+        "cityName": "Anjozorobe",
+        "regionName": "Analamanga"
+      },
+      {
+        "cityName": "Ambatolampy",
+        "regionName": "Vakinankaratra"
+      },
+      {
+        "cityName": "Ambatofinandrahana",
+        "regionName": "Amoron'i Mania"
+      },
+      {
+        "cityName": "Ambohimahasoa",
+        "regionName": "Haute Matsiatra"
+      },
+      {
+        "cityName": "Ifanadiana",
+        "regionName": "Vatovavy"
+      },
+      {
+        "cityName": "Manakara",
+        "regionName": "Fitovinany"
+      },
+      {
+        "cityName": "Vohipeno",
+        "regionName": "Fitovinany"
+      },
+      {
+        "cityName": "Vangaindrano",
+        "regionName": "Atsimo Atsinanana"
+      },
+      {
+        "cityName": "Ambalavao",
+        "regionName": "Haute Matsiatra"
+      },
+      {
+        "cityName": "Sakaraha",
+        "regionName": "Atsimo Andrefana"
+      },
+      {
+        "cityName": "Miandrivazo",
+        "regionName": "Menabe"
+      },
+      {
+        "cityName": "Betroka",
+        "regionName": "Anosy"
+      },
+      {
+        "cityName": "Ambovombe",
+        "regionName": "Androy"
+      },
+      {
+        "cityName": "Amboasary-Atsimo",
+        "regionName": "Anosy"
+      }
+    ]
+  },
+  {
+    "weight": 1,
+    "cities": [
+      {
+        "cityName": "Imerintsiatosika",
+        "regionName": "Itasy"
+      },
+      {
+        "cityName": "Analavory",
+        "regionName": "Itasy"
+      },
+      {
+        "cityName": "Belobaka",
+        "regionName": "Bongolava"
+      },
+      {
+        "cityName": "Ankadinondry Sakay",
+        "alt": "Babetville",
+        "regionName": "Bongolava"
+      },
+      {
+        "cityName": "Ampefy",
+        "regionName": "Itasy"
+      },
+      {
+        "cityName": "Ambondromamy",
+        "regionName": "Boeny"
+      },
+      {
+        "cityName": "Mahavelona",
+        "alt": "Foulpointe",
+        "regionName": "Atsinanana"
+      },
+      {
+        "cityName": "Antsampanana",
+        "regionName": "Atsinanana"
+      },
+      {
+        "cityName": "Amboavory",
+        "regionName": "Alaotra-Mangoro"
+      },
+      {
+        "cityName": "Tanambe",
+        "regionName": "Alaotra-Mangoro"
+      },
+      {
+        "cityName": "Vohidiala",
+        "regionName": "Alaotra-Mangoro"
+      },
+      {
+        "cityName": "Amboasary-Gara",
+        "alt": "Amboasary Gare",
+        "regionName": "Alaotra-Mangoro"
+      },
+      {
+        "cityName": "Morarano-Gara",
+        "alt": "Morarano Gare",
+        "regionName": "Alaotra-Mangoro"
+      },
+      {
+        "cityName": "Malaimbandy",
+        "regionName": "Menabe"
+      },
+      {
+        "cityName": "Vohiparara",
+        "regionName": "Haute Matsiatra"
+      },
+      {
+        "cityName": "Irondro",
+        "regionName": "Fitovinany"
+      }
+    ]
+  }
+]

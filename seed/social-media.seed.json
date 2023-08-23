@@ -1,0 +1,22 @@
+[
+  {
+    "platform": "FACEBOOK",
+    "url": "https://www.facebook.com/",
+    "logo": "facebook_logo.svg"
+  },
+  {
+    "platform": "INSTAGRAM",
+    "url": "https://www.instagram.com/",
+    "logo": "instagram_logo.svg"
+  },
+  {
+    "platform": "TWITTER",
+    "url": "https://twitter.com/",
+    "logo": "twitter_logo.svg"
+  },
+  {
+    "platform": "TIKTOK",
+    "url": "https://www.tiktok.com",
+    "logo": "tiktok_logo.svg"
+  }
+]
