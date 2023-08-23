@@ -1,0 +1,225 @@
+[
+  {
+    "cooperativeSlug": "trans-vatsi",
+    "routes": [
+      {
+        "parkingLotsAddresses": [
+          "Rue Dr Raboto Raphael, Manjakaray, Antananarivo, Madagascar",
+          "Boulevard d'Andovoranto, Toamasina, Madagascar"
+        ],
+        "fee": 35000,
+        "approxDuration": 8,
+        "maxDuration": 9,
+        "distance": 367,
+        "highways": ["2"]
+      }
+    ]
+  },
+  {
+    "cooperativeSlug": "kofmad",
+    "routes": [
+      {
+        "parkingLotsAddresses": [
+          "Gare routière MAKI, Andohatapenaka, Antananarivo, Madagascar",
+          "Gare routière Scama, Antsiranana, Madagascar"
+        ],
+        "fee": 120000,
+        "approxDuration": 21,
+        "maxDuration": 24,
+        "distance": 1110,
+        "highways": ["6", "4"]
+      },
+      {
+        "parkingLotsAddresses": [
+          "Gare routière MAKI, Andohatapenaka, Antananarivo, Madagascar",
+          "Avenue Barday, Mahajanga, Madagascar"
+        ],
+        "fee": 45000,
+        "approxDuration": 11,
+        "maxDuration": 12,
+        "distance": 570,
+        "highways": ["4"]
+      },
+      {
+        "parkingLotsAddresses": [
+          "Fasan'ny karàna, Antananarivo, Madagascar",
+          "Gare routière du Sud, Fianarantsoa, Madagascar"
+        ],
+        "fee": 35000,
+        "approxDuration": 10,
+        "maxDuration": 11,
+        "distance": 405,
+        "highways": ["7"]
+      },
+      {
+        "parkingLotsAddresses": [
+          "Fasan'ny karàna, Antananarivo, Madagascar",
+          "Gare routière, Morondava, Madagascar"
+        ],
+        "fee": 55000,
+        "approxDuration": 16,
+        "maxDuration": 17,
+        "distance": 680,
+        "highways": ["7", "34", "35"]
+      },
+      {
+        "parkingLotsAddresses": [
+          "Fasan'ny karàna, Antananarivo, Madagascar",
+          "Gare routière du Nord, Manakara, Madagascar"
+        ],
+        "fee": 40000,
+        "approxDuration": 12,
+        "maxDuration": 13,
+        "distance": 570,
+        "highways": ["7", "25"]
+      },
+      {
+        "parkingLotsAddresses": [
+          "Fasan'ny karàna, Antananarivo, Madagascar",
+          "Gare routière, Toliara, Madagascar"
+        ],
+        "fee": 75000,
+        "approxDuration": 20,
+        "maxDuration": 21,
+        "distance": 956,
+        "highways": ["7"]
+      }
+    ]
+  },
+  {
+    "cooperativeSlug": "kofimanga-plus",
+    "routes": [
+      {
+        "parkingLotsAddresses": [
+          "Gare routière Maki, Antananarivo, Madagascar",
+          "Avenue Barday, Mahajanga, Madagascar"
+        ],
+        "fee": 45000,
+        "approxDuration": 11,
+        "maxDuration": 12,
+        "distance": 570,
+        "highways": ["4"]
+      },
+      {
+        "parkingLotsAddresses": [
+          "Gare routière Maki, Antananarivo, Madagascar",
+          "Gare routière, Fenoarivo Atsinanana, Madagascar"
+        ],
+        "fee": 50000,
+        "approxDuration": 11,
+        "maxDuration": 12,
+        "distance": 451,
+        "highways": ["2", "5"]
+      },
+      {
+        "parkingLotsAddresses": [
+          "Gare routière Maki, Antananarivo, Madagascar",
+          "Gare routière Ambalabako, Ambatondrazaka, Madagascar"
+        ],
+        "fee": 30000,
+        "approxDuration": 7,
+        "maxDuration": 8,
+        "distance": 274,
+        "highways": ["2", "44"]
+      },
+      {
+        "parkingLotsAddresses": [
+          "Rue Dr Raboto Raphael, Manjakaray, Antananarivo, Madagascar",
+          "Gare routière Tanamabo V, Toamasina, Madagascar"
+        ],
+        "fee": 35000,
+        "approxDuration": 8,
+        "maxDuration": 9,
+        "distance": 367,
+        "highways": ["2"]
+      },
+      {
+        "parkingLotsAddresses": [
+          "Gare routière Ampasampito, Antananarivo, Madagascar",
+          "Gare routière Moramanga, Moramanga, Madagascar"
+        ],
+        "fee": 35000,
+        "approxDuration": 3,
+        "maxDuration": 4,
+        "distance": 115,
+        "highways": ["2"]
+      }
+    ]
+  },
+  {
+    "cooperativeSlug": "transam_plus",
+    "routes": [
+      {
+        "parkingLotsAddresses": [
+          "Ankadindramamy, Antananarivo, Madagascar",
+          "Galàna Ambanimaso, Ambatolampy, Madagascar"
+        ],
+        "fee": 35000,
+        "approxDuration": 2.5,
+        "maxDuration": 3,
+        "distance": 68,
+        "highways": ["7"]
+      },
+      {
+        "parkingLotsAddresses": [
+          "Ankadindramamy, Antananarivo, Madagascar",
+          "Gare routière Tanambao V, Toamasina, Madagascar"
+        ],
+        "fee": 30000,
+        "approxDuration": 8,
+        "maxDuration": 9,
+        "distance": 367,
+        "highways": ["2"]
+      }
+    ]
+  },
+  {
+    "cooperativeSlug": "soatrans_plus",
+    "routes": [
+      {
+        "parkingLotsAddresses": [
+          "Station Galàna Andrefan'Ambohijanahary, Antananarivo, Madagascar",
+          "Avenue Maréchal Foch, Antsirabe, Madagascar"
+        ],
+        "fee": 20000,
+        "approxDuration": 4.5,
+        "maxDuration": 5,
+        "distance": 171,
+        "highways": ["2"]
+      },
+      {
+        "parkingLotsAddresses": [
+          "Station Galàna Andrefan'Ambohijanahary, Antananarivo, Madagascar",
+          "Enceinte Pietra (Ex Sofia), Ambalakisoa, Fianarantsoa, Madagascar"
+        ],
+        "fee": 40000,
+        "approxDuration": 10,
+        "maxDuration": 11,
+        "distance": 405,
+        "highways": ["7"]
+      },
+      {
+        "parkingLotsAddresses": [
+          "Avenue Maréchal Foch, Antsirabe, Madagascar",
+          "Enceinte Anjara Hôtel Ambalanomby, Rue de Morondava Centre, Morondava, Madagascar"
+        ],
+        "fee": 45000,
+        "approxDuration": 11,
+        "maxDuration": 12,
+        "distance": 484,
+        "highways": ["34", "35"]
+      },
+      {
+        "parkingLotsAddresses": [
+          "Enceinte Anjara Hôtel Ambalanomby, Rue de Morondava Centre, Morondava, Madagascar",
+          "Annexe Hôtel La Vanille, Ankofafa, Manakara, Madagascar"
+        ],
+        "fee": 30000,
+        "approxDuration": 6,
+        "maxDuration": 7,
+        "distance": 254,
+        "highways": ["34", "35"]
+      }
+    ]
+  }
+]

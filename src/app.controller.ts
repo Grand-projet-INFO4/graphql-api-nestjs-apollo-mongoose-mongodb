@@ -1,12 +1,12 @@
 import { Controller, Get } from '@nestjs/common';
-import { AppService } from './app.service';
 
-@Controller()
+@Controller('')
 export class AppController {
-  constructor(private readonly appService: AppService) {}
-
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  @Get('')
+  index(): string {
+    return `
+    <h1>This is the Zaha-dia app's backend.</h1>
+    <p>If you want to access the resources, please point the routes available.</p>
+  `;
   }
 }
