@@ -45,5 +45,5 @@ diagrams/*.drawio.dtmp
 docs/~*.docx
 docs/*.tmp
 
-# Mongo IDs logger helper
-# gen-mongo-ids.mjs
+# Static images
+public/images/*
