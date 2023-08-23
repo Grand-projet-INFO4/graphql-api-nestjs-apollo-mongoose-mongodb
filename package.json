@@ -109,5 +109,8 @@
   },
   "prisma": {
     "seed": "ts-node prisma/seeder.ts"
+  },
+  "engines": {
+    "node": ">=16.0.0"
   }
 }
