@@ -1,0 +1,83 @@
+[
+  {
+    "firstName": "John",
+    "lastName": "Doe",
+    "username": "johndoe",
+    "photo": "johndoe.jpg",
+    "email": "johndoe@gmail.com",
+    "password": "$2b$10$kZl2CGCDgFA9y7YXADJu5engg5tN0lNM.kBjHm97KZKhgUEnUwFGu",
+    "cityName": "Antananarivo",
+    "roles": ["BASIC", "SUPER_ADMIN"]
+  },
+  {
+    "firstName": "Tolojanahary Fenomanantsoa",
+    "lastName": "RABEFALY",
+    "username": "amazing_tool",
+    "photo": "tolotra.jpg",
+    "email": "tolotrarabefaly@gmail.com",
+    "phone": "+261324924506",
+    "password": "$2b$10$kZl2CGCDgFA9y7YXADJu5engg5tN0lNM.kBjHm97KZKhgUEnUwFGu",
+    "cityName": "Antananarivo",
+    "roles": ["BASIC", "ADMIN"]
+  },
+  {
+    "firstName": "Ny Aina Fitiavana",
+    "lastName": "RABARIMAHEFA",
+    "username": "bari.69877",
+    "photo": "fitiavana.jpg",
+    "email": "fitiavanarabariahefa@gmail.com",
+    "password": "$2b$10$kZl2CGCDgFA9y7YXADJu5engg5tN0lNM.kBjHm97KZKhgUEnUwFGu",
+    "cityName": "Antananarivo",
+    "roles": ["BASIC", "ADMIN"]
+  },
+  {
+    "firstName": "Kiadiniaina Estello",
+    "lastName": "MAHANDRIARIVELO",
+    "username": "kiadyestello.4561",
+    "photo": "kiady.jpg",
+    "email": "kiadyestello@gmail.com",
+    "password": "$2b$10$kZl2CGCDgFA9y7YXADJu5engg5tN0lNM.kBjHm97KZKhgUEnUwFGu",
+    "cityName": "Antananarivo",
+    "roles": ["BASIC", "ADMIN"]
+  },
+  {
+    "firstName": "Dimbinirina Martin",
+    "lastName": "ANDRIANOMENJANAHARY",
+    "username": "thintin.X",
+    "photo": "martin.jpg",
+    "email": "thintin@gmail.com",
+    "password": "$2b$10$kZl2CGCDgFA9y7YXADJu5engg5tN0lNM.kBjHm97KZKhgUEnUwFGu",
+    "cityName": "Antananarivo",
+    "roles": ["BASIC", "ADMIN"]
+  },
+  {
+    "firstName": "Cédrick",
+    "lastName": "TARIKA",
+    "username": "ced.rick",
+    "photo": "cedric.jpg",
+    "email": "tarikacedrick@gmail.com",
+    "password": "$2b$10$kZl2CGCDgFA9y7YXADJu5engg5tN0lNM.kBjHm97KZKhgUEnUwFGu",
+    "cityName": "Antananarivo",
+    "roles": ["BASIC", "ADMIN"]
+  },
+  {
+    "firstName": "Ranto Billy",
+    "lastName": "ANDRIANARIVELO",
+    "username": "ranto.billy",
+    "photo": "billy.jpg",
+    "email": "rantobilly@gmail.com",
+    "password": "$2b$10$kZl2CGCDgFA9y7YXADJu5engg5tN0lNM.kBjHm97KZKhgUEnUwFGu",
+    "cityName": "Antananarivo",
+    "roles": ["BASIC", "ADMIN"]
+  },
+  {
+    "firstName": "Tanjona Harintsarobidy",
+    "lastName": "RAJAOLIARIBENJA",
+    "username": "_tanjona_",
+    "photo": "tanjona.jpg",
+    "email": "tanjonaharints@gmail.com",
+    "password": "$2b$10$kZl2CGCDgFA9y7YXADJu5engg5tN0lNM.kBjHm97KZKhgUEnUwFGu",
+    "cityName": "Antananarivo",
+    "roles": ["BASIC", "ADMIN"]
+  }
+]

@@ -1,0 +1,101 @@
+[
+  {
+    "province": "Antananarivo",
+    "regions": [
+      {
+        "regionName": "Analamanga"
+      },
+      {
+        "regionName": "Bongolava"
+      },
+      {
+        "regionName": "Itasy"
+      },
+      {
+        "regionName": "Vakinankaratra"
+      }
+    ]
+  },
+  {
+    "province": "Mahajanga",
+    "regions": [
+      {
+        "regionName": "Sofia"
+      },
+      {
+        "regionName": "Boeny"
+      },
+      {
+        "regionName": "Melaky"
+      },
+      {
+        "regionName": "Betsiboka"
+      }
+    ]
+  },
+  {
+    "province": "Toamasina",
+    "regions": [
+      {
+        "regionName": "Atsinanana"
+      },
+      {
+        "regionName": "Alaotra-Mangoro"
+      },
+      {
+        "regionName": "Analanjirofo"
+      }
+    ]
+  },
+  {
+    "province": "Antsiranana",
+    "regions": [
+      {
+        "regionName": "Sava"
+      },
+      {
+        "regionName": "Diana"
+      }
+    ]
+  },
+  {
+    "province": "Toliara",
+    "regions": [
+      {
+        "regionName": "Anosy"
+      },
+      {
+        "regionName": "Androy"
+      },
+      {
+        "regionName": "Atsimo Andrefana"
+      },
+      {
+        "regionName": "Menabe"
+      }
+    ]
+  },
+  {
+    "province": "Fianarantsoa",
+    "regions": [
+      {
+        "regionName": "Haute Matsiatra"
+      },
+      {
+        "regionName": "Amoron'i Mania"
+      },
+      {
+        "regionName": "Atsimo Atsinanana"
+      },
+      {
+        "regionName": "Vatovavy"
+      },
+      {
+        "regionName": "Fitovinany"
+      },
+      {
+        "regionName": "Ihorombe"
+      }
+    ]
+  }
+]

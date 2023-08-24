@@ -17,6 +17,7 @@ import { GeoJSONPoint } from 'src/common/schemas/geojson-point.schema';
 import { PhotoSeeder } from '../photo/photo.seeder';
 import { EmbeddedParkingLotSeed } from './parking-lot';
 import { City, CityModel } from '../city/schema';
+import * as parkingLotsByCooperativeSeedOptions from '../../../seed/parking-lot.seed.json';
 
 export type ParkingLotSeederPayload = WithMongoId<
   ReplaceFields<
@@ -30,9 +31,19 @@ export type ParkingLotSeederPayload = WithMongoId<
   >
 >;
 
-type CooperativeParkingLotSeed = {
-  cooperativeId: mongo.BSON.ObjectId;
-  parkingLots: Omit<ParkingLotSeederPayload, 'cooperative'>[];
+type ParkingLotsByCooperativeSeedOptions = {
+  cooperativeSlug: string;
+  parkingLots: ReplaceFields<
+    Omit<
+      ParkingLotSeederPayload,
+      '_id' | 'cooperative' | 'city' | 'busStation' | 'mainPhoto'
+    >,
+    {
+      cityName: string;
+      position: [number, number];
+      busStationSlug?: string;
+    }
+  >[];
 };
 
 export class ParkingLotSeeder implements Seeder {
@@ -81,431 +92,27 @@ export class ParkingLotSeeder implements Seeder {
       const cooperativeSlugMap = CooperativeSeeder.getCooperativesSlugMap();
       const busStationSlugMap = BusStationSeeder.getBusStationSlugMap();
       const parkingLots: ParkingLotSeederPayload[] = [];
-      const data: CooperativeParkingLotSeed[] = [
-        {
-          cooperativeId: cooperativeSlugMap.get('trans-vatsi')._id,
-          parkingLots: [
-            {
-              _id: new mongo.ObjectId(),
-              city: cityNameMap.get('Antananarivo'),
-              address:
-                'Rue Dr Raboto Raphael, Manjakaray, Antananarivo, Madagascar',
-              position: new GeoJSONPoint([
-                47.532035437419175, -18.892228774319,
-              ]),
-              openHours: {
-                opensAt: '06:00',
-                closesAt: '19:00',
-                tzOffset: 3,
-              },
-              phones: ['0340419098'],
-            },
-            {
-              _id: new mongo.ObjectId(),
-              city: cityNameMap.get('Toamasina'),
-              address: "Boulevard d'Andovoranto, Toamasina, Madagascar",
-              locationHint: `En face de l'hôtel Beryl`,
-              position: new GeoJSONPoint([
-                49.404341282158974, -18.149423071732233,
-              ]),
-              openHours: {
-                opensAt: '06:00',
-                closesAt: '19:00',
-                tzOffset: 3,
-              },
-              phones: ['0340419098'],
-            },
-          ],
-        },
-        {
-          cooperativeId: cooperativeSlugMap.get('kofmad')._id,
-          parkingLots: [
-            {
-              _id: new mongo.ObjectId(),
-              city: cityNameMap.get('Antananarivo'),
-              address:
-                'Gare routière MAKI, Andohatapenaka, Antananarivo, Madagascar',
-              locationHint: 'Box 66',
-              position: new GeoJSONPoint([
-                47.49623596424636, -18.897706583027308,
-              ]),
-              openHours: {
-                opensAt: '06:00',
-                closesAt: '19:00',
-                tzOffset: 3,
-              },
-              phones: ['0327004079', '0387446891'],
-              busStation: busStationSlugMap.get('gare-routiere-maki')._id,
-            },
-            {
-              _id: new mongo.ObjectId(),
-              city: cityNameMap.get('Antananarivo'),
-              address: "Fasan'ny karàna, Antananarivo, Madagascar",
-              position: new GeoJSONPoint([
-                47.51584465461535, -18.946165926868513,
-              ]),
-              openHours: {
-                opensAt: '06:00',
-                closesAt: '19:00',
-                tzOffset: 3,
-              },
-              phones: ['0327004079', '0387446891'],
-              busStation: busStationSlugMap.get('fasankarana')._id,
-            },
-            {
-              _id: new mongo.ObjectId(),
-              city: cityNameMap.get('Mahajanga'),
-              address: 'Avenue Barday, Mahajanga, Madagascar',
-              position: new GeoJSONPoint([
-                47.515919756476, -18.945980733225966,
-              ]),
-              openHours: {
-                opensAt: '06:00',
-                closesAt: '19:00',
-                tzOffset: 3,
-              },
-              phones: ['0327004079', '0387446891'],
-              busStation: busStationSlugMap.get('gare-routiere-aranta')._id,
-            },
-            {
-              _id: new mongo.ObjectId(),
-              city: cityNameMap.get('Antsiranana'),
-              address: 'Gare routière Scama, Antsiranana, Madagascar',
-              position: new GeoJSONPoint([49.2946676, -12.3232363]),
-              openHours: {
-                opensAt: '06:00',
-                closesAt: '19:00',
-                tzOffset: 3,
-              },
-              phones: ['0327004079', '0387446891'],
-              busStation: busStationSlugMap.get('gare-routiere-antsiranana')
-                ._id,
-            },
-            {
-              _id: new mongo.ObjectId(),
-              city: cityNameMap.get('Fianarantsoa'),
-              address: 'Gare routière du Sud, Fianarantsoa, Madagascar',
-              position: new GeoJSONPoint([47.0905985, -21.4526948]),
-              openHours: {
-                opensAt: '06:00',
-                closesAt: '19:00',
-                tzOffset: 3,
-              },
-              phones: ['0327004079', '0387446891'],
-              busStation: busStationSlugMap.get(
-                'gare-routiere-sud-fianarantsoa',
-              )._id,
-            },
-            {
-              _id: new mongo.ObjectId(),
-              city: cityNameMap.get('Morondava'),
-              address: 'Gare routière, Morondava, Madagascar',
-              position: new GeoJSONPoint([
-                44.2763490472111, -20.29071693843428,
-              ]),
-              openHours: {
-                opensAt: '06:00',
-                closesAt: '19:00',
-                tzOffset: 3,
-              },
-              phones: ['0327004079', '0387446891'],
-              busStation: busStationSlugMap.get('gare-routiere-morondava')._id,
-            },
-            {
-              _id: new mongo.ObjectId(),
-              city: cityNameMap.get('Manakara'),
-              address: 'Gare routière du Nord, Manakara, Madagascar',
-              position: new GeoJSONPoint([
-                48.01372617246953, -22.130919817993785,
-              ]),
-              openHours: {
-                opensAt: '06:00',
-                closesAt: '19:00',
-                tzOffset: 3,
-              },
-              phones: ['0327004079', '0387446891'],
-              busStation: busStationSlugMap.get('gare-routiere-nord-manakara')
-                ._id,
-            },
-            {
-              _id: new mongo.ObjectId(),
-              city: cityNameMap.get('Toliara'),
-              address: 'Gare routière, Toliara, Madagascar',
-              locationHint: 'En face station shell',
-              position: new GeoJSONPoint([43.6809469, -23.3546801]),
-              openHours: {
-                opensAt: '06:00',
-                closesAt: '19:00',
-                tzOffset: 3,
-              },
-              phones: ['0327004079', '0387446891'],
-              busStation: busStationSlugMap.get('gare-routiere-toliara')._id,
-            },
-          ],
-        },
-        {
-          cooperativeId: cooperativeSlugMap.get('kofimanga-plus')._id,
-          parkingLots: [
-            {
-              _id: new mongo.ObjectId(),
-              city: cityNameMap.get('Antananarivo'),
-              address: 'Gare routière Maki, Antananarivo, Madagascar',
-              locationHint: 'Box 22',
-              position: new GeoJSONPoint([
-                47.49653637165035, -18.897919744097468,
-              ]),
-              openHours: {
-                opensAt: '06:30',
-                closesAt: '18:00',
-                tzOffset: 3,
-              },
-              phones: ['0346928615', '0346610949'],
-              busStation: busStationSlugMap.get('gare-routiere-maki')._id,
-            },
-            {
-              _id: new mongo.ObjectId(),
-              city: cityNameMap.get('Antananarivo'),
-              address:
-                'Rue Dr Raboto Raphael, Manjakaray, Antananarivo, Madagascar',
-              locationHint: 'En face du poste de police',
-              position: new GeoJSONPoint([
-                47.53218410851329, -18.891850160386436,
-              ]),
-              openHours: {
-                opensAt: '06:30',
-                closesAt: '18:00',
-                tzOffset: 3,
-              },
-              phones: ['0341726063'],
-            },
-            {
-              _id: new mongo.ObjectId(),
-              city: cityNameMap.get('Antananarivo'),
-              address: 'Gare routière Ampasampito, Antananarivo, Madagascar',
-              position: new GeoJSONPoint([
-                47.49653637165035, -18.897919744097468,
-              ]),
-              openHours: {
-                opensAt: '06:30',
-                closesAt: '18:00',
-                tzOffset: 3,
-              },
-              phones: ['0341726063'],
-              busStation: busStationSlugMap.get('gare-routiere-ampasampito')
-                ._id,
-            },
-            {
-              _id: new mongo.ObjectId(),
-              city: cityNameMap.get('Moramanga'),
-              address: 'Gare routière Moramanga, Moramanga, Madagascar',
-              position: new GeoJSONPoint([
-                48.23035910436591, -18.947718953637974,
-              ]),
-              openHours: {
-                opensAt: '06:30',
-                closesAt: '18:00',
-                tzOffset: 3,
-              },
-              phones: ['0388727742', '0384449445'],
-              busStation: busStationSlugMap.get('gare-routiere-moramanga')._id,
-            },
-            {
-              _id: new mongo.ObjectId(),
-              city: cityNameMap.get('Ambatondrazaka'),
-              address: 'Gare routière Ambalabako, Ambatondrazaka, Madagascar',
-              position: new GeoJSONPoint([
-                48.42283697174949, -17.84474775115543,
-              ]),
-              openHours: {
-                opensAt: '06:30',
-                closesAt: '18:00',
-                tzOffset: 3,
-              },
-              phones: ['0388727742', '0384449445'],
-              busStation: busStationSlugMap.get('gare-routiere-ambalabako')._id,
-            },
-            {
-              _id: new mongo.ObjectId(),
-              city: cityNameMap.get('Toamasina'),
-              address: 'Gare routière Tanamabo V, Toamasina, Madagascar',
-              position: new GeoJSONPoint([
-                49.40542918476411, -18.15007613032585,
-              ]),
-              openHours: {
-                opensAt: '06:30',
-                closesAt: '18:00',
-                tzOffset: 3,
-              },
-              phones: ['0340401026', '0349168085'],
-              busStation: busStationSlugMap.get('gare-routiere-tanambao-5')._id,
-            },
-            {
-              _id: new mongo.ObjectId(),
-              city: cityNameMap.get('Fenoarivo Atsinanana'),
-              address: 'Gare routière, Fenoarivo Atsinanana, Madagascar',
-              position: new GeoJSONPoint([
-                49.412006217462476, -17.383070815979043,
-              ]),
-              openHours: {
-                opensAt: '06:30',
-                closesAt: '18:00',
-                tzOffset: 3,
-              },
-              phones: ['0346610949'],
-              busStation: busStationSlugMap.get('gare-routiere-fenerive-est')
-                ._id,
-            },
-            {
-              _id: new mongo.ObjectId(),
-              city: cityNameMap.get('Mahajanga'),
-              address: 'Avenue Barday, Mahajanga, Madagascar',
-              position: new GeoJSONPoint([46.327103, -17.84474775115543]),
-              openHours: {
-                opensAt: '06:30',
-                closesAt: '18:00',
-                tzOffset: 3,
-              },
-              phones: ['0324954914', '0332194876'],
-              busStation: busStationSlugMap.get('gare-routiere-aranta')._id,
-            },
-          ],
-        },
-        {
-          cooperativeId: cooperativeSlugMap.get('transam_plus')._id,
-          parkingLots: [
-            {
-              _id: new mongo.ObjectId(),
-              city: cityNameMap.get('Antananarivo'),
-              address: 'Ankadindramamy, Antananarivo, Madagascar',
-              position: new GeoJSONPoint([
-                47.557932513257455, -18.891674483248963,
-              ]),
-              locationHint: 'En face de Pizzamania',
-              openHours: {
-                opensAt: '07:00',
-                closesAt: '18:00',
-                tzOffset: 3,
-              },
-              phones: ['0342712227'],
-            },
-            {
-              _id: new mongo.ObjectId(),
-              city: cityNameMap.get('Ambatolampy'),
-              address: 'Galàna Ambanimaso, Ambatolampy, Madagascar',
-              position: new GeoJSONPoint([
-                47.440508435955564, -19.3808383577153,
-              ]),
-              openHours: {
-                opensAt: '07:00',
-                closesAt: '18:00',
-                tzOffset: 3,
-              },
-              phones: ['0381166481'],
-            },
-            {
-              _id: new mongo.ObjectId(),
-              city: cityNameMap.get('Toamasina'),
-              address: 'Gare routière Tanambao V, Toamasina, Madagascar',
-              locationHint: 'Derrière station shell',
-              position: new GeoJSONPoint([
-                49.40649666638811, -18.15013985914179,
-              ]),
-              openHours: {
-                opensAt: '07:00',
-                closesAt: '18:00',
-                tzOffset: 3,
-              },
-              phones: ['0382512227'],
-              busStation: busStationSlugMap.get('gare-routiere-tanambao-5')._id,
-            },
-          ],
-        },
-        {
-          cooperativeId: cooperativeSlugMap.get('soatrans_plus')._id,
-          parkingLots: [
-            {
-              _id: new mongo.ObjectId(),
-              city: cityNameMap.get('Antananarivo'),
-              address:
-                "Station Galàna Andrefan'Ambohijanahary, Antananarivo, Madagascar",
-              position: new GeoJSONPoint([
-                47.52104105950984, -18.921057256800477,
-              ]),
-              openHours: {
-                opensAt: '07:00',
-                closesAt: '18:00',
-                tzOffset: 3,
-              },
-              phones: ['0321190500', '0321190507'],
-            },
-            {
-              _id: new mongo.ObjectId(),
-              city: cityNameMap.get('Antsirabe'),
-              address: 'Avenue Maréchal Foch, Antsirabe, Madagascar',
-              position: new GeoJSONPoint([
-                47.0343814963102, -19.864435551346194,
-              ]),
-              openHours: {
-                opensAt: '07:00',
-                closesAt: '18:00',
-                tzOffset: 3,
-              },
-              phones: ['0321198481', '0342025119'],
-            },
-            {
-              _id: new mongo.ObjectId(),
-              city: cityNameMap.get('Fianarantsoa'),
-              address:
-                'Enceinte Pietra (Ex Sofia), Ambalakisoa, Fianarantsoa, Madagascar',
-              position: new GeoJSONPoint([
-                47.09715223035554, -21.44072154588424,
-              ]),
-              openHours: {
-                opensAt: '07:00',
-                closesAt: '18:00',
-                tzOffset: 3,
-              },
-              phones: ['0320377702', '0343477702'],
-            },
-            {
-              _id: new mongo.ObjectId(),
-              city: cityNameMap.get('Morondava'),
-              address:
-                'Enceinte Anjara Hôtel Ambalanomby, Rue de Morondava Centre, Morondava, Madagascar',
-              position: new GeoJSONPoint([
-                47.0343814963102, -19.864435551346194,
-              ]),
-              openHours: {
-                opensAt: '07:00',
-                closesAt: '18:00',
-                tzOffset: 3,
-              },
-              phones: ['0321192829', '0343433301'],
-            },
-            {
-              _id: new mongo.ObjectId(),
-              city: cityNameMap.get('Manakara'),
-              address:
-                'Annexe Hôtel La Vanille, Ankofafa, Manakara, Madagascar',
-              position: new GeoJSONPoint([
-                48.012745432273235, -22.147589025695424,
-              ]),
-              openHours: {
-                opensAt: '07:00',
-                closesAt: '18:00',
-                tzOffset: 3,
-              },
-              phones: ['0320531777', '0386409611'],
-            },
-          ],
-        },
-      ];
-      for (const entry of data) {
-        for (const parkingLot of entry.parkingLots) {
-          parkingLots.push({
-            ...parkingLot,
-            cooperative: entry.cooperativeId,
-          });
+      const parkingLotsByCooperativeSeedsOptions =
+        parkingLotsByCooperativeSeedOptions as ParkingLotsByCooperativeSeedOptions[];
+      for (const options of parkingLotsByCooperativeSeedsOptions) {
+        for (const parkingLotSeed of options.parkingLots) {
+          const parkingLot: ParkingLotSeederPayload = {
+            _id: new mongo.ObjectId(),
+            address: parkingLotSeed.address,
+            openHours: parkingLotSeed.openHours,
+            phones: parkingLotSeed.phones,
+            position: new GeoJSONPoint(parkingLotSeed.position),
+            city: cityNameMap.get(parkingLotSeed.cityName),
+            cooperative: cooperativeSlugMap.get(options.cooperativeSlug)._id,
+          };
+          parkingLotSeed.locationHint &&
+            (parkingLot.locationHint = parkingLotSeed.locationHint);
+          if (parkingLotSeed.busStationSlug) {
+            parkingLot.busStation = busStationSlugMap.get(
+              parkingLotSeed.busStationSlug,
+            )._id;
+          }
+          parkingLots.push(parkingLot);
         }
       }
       ParkingLotSeeder.parkingLots = parkingLots;

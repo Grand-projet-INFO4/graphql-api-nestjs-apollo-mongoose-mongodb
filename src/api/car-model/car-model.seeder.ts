@@ -9,6 +9,7 @@ import {
 } from '../car-model/schema';
 import { WithMongoId } from 'src/common/types/mongo-id';
 import { modelCollectionExists } from 'src/common/helpers/mongo.helper';
+import * as carModelSeedOptions from '../../../seed/car-model.seed.json';
 
 export type CardModelSeederPayload = WithMongoId<CarModel>;
 
@@ -47,58 +48,14 @@ export class CarModelSeeder implements Seeder {
    */
   static getCarModels() {
     if (!CarModelSeeder.carModels) {
-      const carModels: CardModelSeederPayload[] = [
-        {
-          _id: new mongo.ObjectId(),
-          brand: 'Mercedes-benz',
-          modelName: 'Sprinter 312 d',
-        },
-        {
-          _id: new mongo.ObjectId(),
-          brand: 'Mercedes-benz',
-          modelName: 'Sprinter 311 cdi',
-        },
-        {
-          _id: new mongo.ObjectId(),
-          brand: 'Mercedes-benz',
-          modelName: 'Sprinter 413 cdi',
-        },
-        {
-          _id: new mongo.ObjectId(),
-          brand: 'Mercedes-benz',
-          modelName: 'Sprinter 419 cdi',
-        },
-        {
-          _id: new mongo.ObjectId(),
-          brand: 'Mercedes-benz',
-          modelName: 'Sprinter 524 cdi',
-        },
-        {
-          _id: new mongo.ObjectId(),
-          brand: 'Volkswagen',
-          modelName: 'Crafter',
-        },
-        {
-          _id: new mongo.ObjectId(),
-          brand: 'VDL Bova',
-          modelName: 'Futura',
-        },
-        {
-          _id: new mongo.ObjectId(),
-          brand: 'Neoplan',
-          modelName: 'N 316 K',
-        },
-        {
-          _id: new mongo.ObjectId(),
-          brand: 'Neoplan',
-          modelName: 'Skyliner',
-        },
-        {
-          _id: new mongo.ObjectId(),
-          brand: 'Toyota',
-          modelName: 'HiAce Premio 2.8',
-        },
-      ];
+      const carModelsSeedOptions = carModelSeedOptions as CarModel[];
+      const carModels: CardModelSeederPayload[] =
+        carModelsSeedOptions.map<CardModelSeederPayload>((options) => {
+          return {
+            _id: new mongo.ObjectId(),
+            ...options,
+          };
+        });
       CarModelSeeder.carModels = carModels;
     }
     return CarModelSeeder.carModels;

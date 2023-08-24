@@ -1,0 +1,173 @@
+[
+  {
+    "no": "1",
+    "cityNames": [
+      "Antananarivo",
+      "Imerintsiatosika",
+      "Arivonimamo",
+      "Miarinarivo",
+      "Analavory",
+      "Belobaka",
+      "Tsiroanomandidy"
+    ],
+    "distance": 149
+  },
+  {
+    "no": "1a",
+    "cityNames": ["Tsiroanomandidy", "Maintirano"]
+  },
+  {
+    "no": "1b",
+    "cityNames": ["Analavory", "Ankadinondry Sakay", "Tsiroanomandidy"],
+    "distance": 94
+  },
+  {
+    "no": "2",
+    "cityNames": [
+      "Antananarivo",
+      "Manjakandriana",
+      "Moramanga",
+      "Vohibinany",
+      "Toamasina"
+    ],
+    "distance": 367
+  },
+  {
+    "no": "3",
+    "cityNames": ["Antananarivo", "Anjozorobe"],
+    "distance": 91
+  },
+  {
+    "no": "3a",
+    "cityNames": [
+      "Vohidiala",
+      "Amparafaravola",
+      "Tanambe",
+      "Amboavory",
+      "Andilamena"
+    ],
+    "distance": 180
+  },
+  {
+    "no": "4",
+    "cityNames": [
+      "Antananarivo",
+      "Ankazobe",
+      "Maevatanàna",
+      "Ambondromamy",
+      "Mahajanga"
+    ],
+    "distance": 570
+  },
+  {
+    "no": "5",
+    "cityNames": [
+      "Toamasina",
+      "Mahavelona",
+      "Fenoarivo Atsinanana",
+      "Soanierana Ivongo",
+      "Mananara Avaratra",
+      "Maroantsetra"
+    ],
+    "distance": 402
+  },
+  {
+    "no": "5a",
+    "cityNames": ["Ambilobe", "Sambava", "Vohimarina", "Antalaha"],
+    "distance": 406
+  },
+  {
+    "no": "6",
+    "cityNames": [
+      "Ambondromamy",
+      "Mampikony",
+      "Boriziny",
+      "Antsohihy",
+      "Ambanja",
+      "Ambilobe",
+      "Antsiranana"
+    ],
+    "distance": 706
+  },
+  {
+    "no": "7",
+    "cityNames": [
+      "Antananarivo",
+      "Ambatolampy",
+      "Antsirabe",
+      "Ambositra",
+      "Ambohimahasoa",
+      "Fianarantsoa",
+      "Ambalavao",
+      "Ihosy",
+      "Sakaraha",
+      "Toliara"
+    ],
+    "distance": 956
+  },
+  {
+    "no": "11a",
+    "cityNames": ["Antsampanana", "Vatomandry", "Mahanoro"],
+    "distance": 204
+  },
+  {
+    "no": "12",
+    "cityNames": [
+      "Irondro",
+      "Manakara",
+      "Vohipeno",
+      "Farafangana",
+      "Vangaindrano"
+    ],
+    "distance": 300
+  },
+  {
+    "no": "13",
+    "cityNames": [
+      "Ihosy",
+      "Betroka",
+      "Ambovombe",
+      "Amboasary-Atsimo",
+      "Taolagnaro"
+    ],
+    "distance": 493
+  },
+  {
+    "no": "25",
+    "cityNames": [
+      "Ambohimahasoa",
+      "Vohiparara",
+      "Ifanadiana",
+      "Irondro",
+      "Mananjary"
+    ],
+    "distance": 165
+  },
+  {
+    "no": "32",
+    "cityNames": ["Antsohihy", "Befandriana Avaratra", "Mandritsara"],
+    "distance": 200
+  },
+  {
+    "no": "34",
+    "cityNames": ["Antsirabe", "Miandrivazo", "Malaimbandy", "Morondava"],
+    "distance": 368
+  },
+  {
+    "no": "35",
+    "cityNames": ["Ambositra", "Ambatofinandrahana", "Malaimbandy"],
+    "distance": 460
+  },
+  {
+    "no": "44",
+    "cityNames": [
+      "Moramanga",
+      "Morarano-Gara",
+      "Amboasary-Gara",
+      "Vohidiala",
+      "Ambatondrazaka",
+      "Amboavory"
+    ],
+    "distance": 228
+  }
+]

@@ -1,0 +1,191 @@
+[
+  {
+    "stationName": "Gare routière fasan'ny karàna",
+    "slug": "fasankarana",
+    "cityName": "Antananarivo",
+    "street": "Route digue fasan'ny karàna Ankadimbahoaka, Antananarivo, Madagascar",
+    "position": [47.51573736625678, -18.9458462774446],
+    "highways": ["1", "1a", "1b", "7", "12", "13", "25", "34", "35"],
+    "photos": [
+      "fasanny-karana(1).webp",
+      "zotra-nasionaly.webp",
+      "fasanny-karana.webp",
+      "fasankarana.jpg",
+      "Taxibrousse-8-1000x525.jpg",
+      "mini-bus-depo-a-antananarivo-madagascar-a5fhkc.jpg",
+      "stationnement_0.jpg"
+    ],
+    "mainPhoto": "fasanny-karana(1).webp"
+  },
+  {
+    "stationName": "Gare routière Maki",
+    "slug": "gare-routiere-maki",
+    "cityName": "Antananarivo",
+    "street": "Route digue Andohatapenaka, Antananarivo, Madagascar",
+    "position": [47.496054, -18.898222],
+    "highways": ["2", "4", "5", "6", "5a", "32", "44"],
+    "photos": [
+      "150272511_3837168923008388_2387244086463493217_n.jpg",
+      "69720071_2518046824920611_3188775001213894656_n.jpg",
+      "71529145_2581966015195358_8532281553768677376_n.jpg",
+      "71546894_2581966125195347_8907844231549157376_n.jpg",
+      "71563895_2581966021862024_1567434497765408768_n.jpg",
+      "71949495_2581966005195359_69884263276740608_n.jpg",
+      "73294815_2641670059224953_1316290837797142528_n.jpg"
+    ],
+    "mainPhoto": "150272511_3837168923008388_2387244086463493217_n.jpg"
+  },
+  {
+    "stationName": "Gare routière de l'Est",
+    "slug": "gare-routiere-ampasampito",
+    "cityName": "Antananarivo",
+    "street": "Jovenna Ampasampito, Antananarivo, Madagascar",
+    "position": [47.548932, -18.893833],
+    "highways": ["2", "5", "11a"],
+    "photos": [
+      "P_20191221_082319.jpg",
+      "P_20191221_082340.jpg",
+      "P_20191221_082349.jpg",
+      "24585629_22KbuiWi5MIal4fiVjCvKjTt3CuNXtpFfgpU1eHgKRU.jpg",
+      "3592298_Mq047C7yg0XE9mRHPcTSwO9iGAcK6p_34ZLmFO62MyU.jpg",
+      "24585629_g0e6KoOXUiifPrrr7_G1bVDkqNOVRJt71_Fv0fMi36U.jpg"
+    ],
+    "mainPhoto": "P_20191221_082319.jpg"
+  },
+  {
+    "stationName": "Gare routière d'Aranta",
+    "slug": "gare-routiere-aranta",
+    "cityName": "Mahajanga",
+    "street": "Avenue Barday, Mahajanga, Madagascar",
+    "position": [46.32691279558178, -15.721833425717419],
+    "highways": ["4", "6", "5a"],
+    "photos": [
+      "aranta-2.PNG",
+      "Capture-25.png",
+      "6356192_orig.jpg",
+      "1-97-990x556.png",
+      "aranta-1.PNG",
+      "aranta-3.PNG"
+    ],
+    "mainPhoto": "aranta-2.PNG"
+  },
+  {
+    "stationName": "Gare routière Jovenna Antsiranana",
+    "slug": "gare-routiere-antsiranana",
+    "cityName": "Antsiranana",
+    "street": "Scama, Antsiranana, Madagascar",
+    "position": [49.294825265425224, -12.3228863961827],
+    "highways": ["4", "6", "5a"],
+    "photos": [
+      "nouvelle-gare-routiere-toujours-inoccupee-fit-640x480.jpg",
+      "50536356_501070063751769_3269709974825074688_n.jpg",
+      "gare-routiere-d-antsiranana-fit-640x360.jpg",
+      "nouvelle-gare-routiere-antsiranana.jpg"
+    ],
+    "mainPhoto": "nouvelle-gare-routiere-toujours-inoccupee-fit-640x480.jpg"
+  },
+  {
+    "stationName": "Gare routière du Sud Fianarantsoa",
+    "slug": "gare-routiere-sud-fianarantsoa",
+    "cityName": "Fianarantsoa",
+    "street": "RN7 Ankazondrano, Fianarantsoa, Madagascar",
+    "position": [47.09031222741544, -21.452205146287877],
+    "highways": ["7", "12", "13", "25", "34", "35"],
+    "photos": [
+      "82250668_1336237236547833_8282611394000453632_n.jpg",
+      "station-de-bus-a-fianarantsoa-madagacar-ax9mgn.jpg",
+      "69668821.jpg",
+      "2021-12-14.jpg",
+      "2023-07-05.jpg",
+      "2021-12-14(1).jpg"
+    ],
+    "mainPhoto": "82250668_1336237236547833_8282611394000453632_n.jpg"
+  },
+  {
+    "stationName": "Gare routière du Nord Manakara",
+    "slug": "gare-routiere-nord-manakara",
+    "cityName": "Manakara",
+    "street": "Mangarivotra, Manakara, Madagascar",
+    "position": [48.01353841805343, -22.130930998769113],
+    "highways": ["7", "12", "25"],
+    "photos": [
+      "manakara-station.PNG",
+      "manakara-station-2.PNG",
+      "manakara-station-1.PNG"
+    ],
+    "mainPhoto": "manakara-station.PNG"
+  },
+  {
+    "stationName": "Gare routière Toliara",
+    "slug": "gare-routiere-toliara",
+    "cityName": "Toliara",
+    "street": "Route d'interêt général, Toliara, Madagascar",
+    "position": [43.680890598763874, -23.35476249473319],
+    "highways": ["7", "13", "34", "35"],
+    "photos": [
+      "les-gens-et-les-bagages-dans-un-taxi-brousse-taxi-brousse-a-toliara-toliary-tulear-atsimo-andrefana-au-sud-ouest-de-madagascar-bp0g21.jpg",
+      "taxi-brousse-taxi-brousse-a-toliara-toliary-tulear-atsimo-andrefana-au-sud-ouest-de-madagascar-bp0g61.jpg",
+      "madagascar-toliara-taxi-brousse-pousse-pousse-et-camion-brousse-d5h69j.jpg",
+      "taxi-brousse-depot-a-toliara-montrant-differents-types-de-transport-y-compris-les-camions-les-rickshaws-tirees-a-la-main-et-les-taxis-atsimo-andrefana-madagascar-ddjhr3.jpg"
+    ],
+    "mainPhoto": "les-gens-et-les-bagages-dans-un-taxi-brousse-taxi-brousse-a-toliara-toliary-tulear-atsimo-andrefana-au-sud-ouest-de-madagascar-bp0g21.jpg"
+  },
+  {
+    "stationName": "Gare routière Morondava",
+    "slug": "gare-routiere-morondava",
+    "cityName": "Morondava",
+    "street": "Rue principale, Morondava, Madagascar",
+    "position": [44.27646, -20.2908751],
+    "highways": ["7", "34", "35"]
+  },
+  {
+    "stationName": "Gare routière Tanambao V",
+    "slug": "gare-routiere-tanambao-5",
+    "cityName": "Toamasina",
+    "street": "Boulevard d'Andovoranto, Toamasina, Madagascar",
+    "position": [49.4056437615076, -18.15042276034348],
+    "highways": ["2", "3a", "5", "11a", "44"],
+    "photos": ["jkljjlkjlkj.PNG", "jfdslkfjdlskfjlk.PNG", "ghfhfghjjotrh.PNG"],
+    "mainPhoto": "jfdslkfjdlskfjlk.PNG"
+  },
+  {
+    "stationName": "Gare routière Fenoarivo Atsinanana",
+    "slug": "gare-routiere-fenerive-est",
+    "cityName": "Fenoarivo Atsinanana",
+    "street": "Mahavelonkely, Fenoarivo Atsinanana, Madagascar",
+    "position": [49.4117829, -17.3830036],
+    "highways": ["2", "3a", "5", "11a", "44"]
+  },
+  {
+    "stationName": "Gare routière Moramanga",
+    "slug": "gare-routiere-moramanga",
+    "cityName": "Moramanga",
+    "street": "Route axe sud, Moramanga, Madagascar",
+    "position": [48.22998356780619, -18.94790672697453],
+    "highways": ["2", "3a", "5", "11a", "44"],
+    "photos": [
+      "2023-06-14.jpg",
+      "2023-06-14(3).jpg",
+      "2023-06-14(2).jpg",
+      "2023-06-14(1).jpg",
+      "2023-06-14(4).jpg"
+    ],
+    "mainPhoto": "2023-06-14.jpg"
+  },
+  {
+    "stationName": "Gare routière Ambalabako",
+    "slug": "gare-routiere-ambalabako",
+    "cityName": "Ambatondrazaka",
+    "street": "RN44 Ambalabako, Ambatondrazaka, Madagascar",
+    "position": [48.42270956682009, -17.84508476912953],
+    "highways": ["2", "3a", "5", "11a", "44"],
+    "photos": [
+      "2022-05-22.jpg",
+      "42841632.jpg",
+      "IMG_0923.JPG",
+      "119517634_201484561335907_7070859348638938949_n.jpg",
+      "119644342_201484484669248_7027626185759991950_n.jpg"
+    ],
+    "mainPhoto": "2022-05-22.jpg"
+  }
+]

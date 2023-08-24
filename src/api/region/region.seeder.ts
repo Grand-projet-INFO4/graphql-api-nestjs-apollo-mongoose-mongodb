@@ -6,6 +6,7 @@ import { InjectConnection, InjectModel } from '@nestjs/mongoose';
 import { Region, RegionModel } from './schema';
 import { WithMongoId } from 'src/common/types/mongo-id';
 import { modelCollectionExists } from 'src/common/helpers/mongo.helper';
+import * as regionsByProvinceSeedsOptions from '../../../seed/region.seed.json';
 
 type RegionsPerProvince = {
   province: string;
@@ -50,107 +51,8 @@ export class RegionSeeder implements Seeder {
   static getRegions(): RegionSeederPayload[] {
     if (!RegionSeeder.regions) {
       const regions: RegionSeederPayload[] = [];
-      const provincesWithRegions: RegionsPerProvince[] = [
-        {
-          province: 'Antananarivo',
-          regions: [
-            {
-              regionName: 'Analamanga',
-            },
-            {
-              regionName: 'Bongolava',
-            },
-            {
-              regionName: 'Itasy',
-            },
-            {
-              regionName: 'Vakinankaratra',
-            },
-          ],
-        },
-        {
-          province: 'Mahajanga',
-          regions: [
-            {
-              regionName: 'Sofia',
-            },
-            {
-              regionName: 'Boeny',
-            },
-            {
-              regionName: 'Melaky',
-            },
-            {
-              regionName: 'Betsiboka',
-            },
-          ],
-        },
-        {
-          province: 'Toamasina',
-          regions: [
-            {
-              regionName: 'Atsinanana',
-            },
-            {
-              regionName: 'Alaotra-Mangoro',
-            },
-            {
-              regionName: 'Analanjirofo',
-            },
-          ],
-        },
-        {
-          province: 'Antsiranana',
-          regions: [
-            {
-              regionName: 'Sava',
-            },
-            {
-              regionName: 'Diana',
-            },
-          ],
-        },
-        {
-          province: 'Toliara',
-          regions: [
-            {
-              regionName: 'Anosy',
-            },
-            {
-              regionName: 'Androy',
-            },
-            {
-              regionName: 'Atsimo Andrefana',
-            },
-            {
-              regionName: 'Menabe',
-            },
-          ],
-        },
-        {
-          province: 'Fianarantsoa',
-          regions: [
-            {
-              regionName: 'Haute Matsiatra',
-            },
-            {
-              regionName: "Amoron'i Mania",
-            },
-            {
-              regionName: 'Atsimo Atsinanana',
-            },
-            {
-              regionName: 'Vatovavy',
-            },
-            {
-              regionName: 'Fitovinany',
-            },
-            {
-              regionName: 'Ihorombe',
-            },
-          ],
-        },
-      ];
+      const provincesWithRegions: RegionsPerProvince[] =
+        regionsByProvinceSeedsOptions;
       provincesWithRegions.forEach(({ province, regions: _regions }) => {
         _regions.forEach(({ regionName }) => {
           regions.push({
