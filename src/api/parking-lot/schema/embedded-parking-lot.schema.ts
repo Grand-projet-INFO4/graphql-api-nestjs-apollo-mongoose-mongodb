@@ -1,10 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import {
-  HydratedDocument,
-  Model,
-  Types,
-  Schema as MongooseSchema,
-} from 'mongoose';
+import { HydratedDocument, Types, Schema as MongooseSchema } from 'mongoose';
 
 import { BusStation, BusStationDocument } from 'src/api/bus-station/schema';
 import { CityDocument, embeddedCitySchema } from 'src/api/city/schema';
@@ -49,4 +44,3 @@ export const embeddedParkingLotSchema =
   SchemaFactory.createForClass(EmbeddedParkingLot);
 
 export type EmbeddedParkingLotDocument = HydratedDocument<EmbeddedParkingLot>;
-export type EmbeddedParkingLotModel = Model<EmbeddedParkingLot>;

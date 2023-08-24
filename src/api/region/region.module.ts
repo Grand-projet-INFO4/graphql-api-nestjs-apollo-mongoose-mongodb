@@ -1,12 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 
-import {
-  EmbeddedRegion,
-  Region,
-  embeddedRegionSchema,
-  regionSchema,
-} from './schema';
+import { Region, regionSchema } from './schema';
 
 const regionMongooseModule = MongooseModule.forFeature([
   {
@@ -15,16 +10,9 @@ const regionMongooseModule = MongooseModule.forFeature([
   },
 ]);
 
-const embeddedRegionMongooseModule = MongooseModule.forFeature([
-  {
-    name: EmbeddedRegion.name,
-    schema: embeddedRegionSchema,
-  },
-]);
-
 @Module({
-  imports: [regionMongooseModule, embeddedRegionMongooseModule],
+  imports: [regionMongooseModule],
   providers: [],
-  exports: [regionMongooseModule, embeddedRegionMongooseModule],
+  exports: [regionMongooseModule],
 })
 export class RegionModule {}

@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument, Model } from 'mongoose';
+import { HydratedDocument } from 'mongoose';
 import { Types, Schema as MongooseSchema } from 'mongoose';
 
 import { Cooperative, CooperativeDocument } from 'src/api/cooperative/schema';
@@ -62,4 +62,3 @@ export class EmbeddedRoute {
 export const embeddedRouteSchema = SchemaFactory.createForClass(EmbeddedRoute);
 
 export type EmbeddedRouteDocument = HydratedDocument<EmbeddedRoute>;
-export type EmbeddedRouteModel = Model<EmbeddedRoute>;

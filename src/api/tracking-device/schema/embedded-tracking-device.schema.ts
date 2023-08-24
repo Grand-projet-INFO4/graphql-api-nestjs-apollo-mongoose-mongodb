@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument, Model } from 'mongoose';
+import { HydratedDocument } from 'mongoose';
 
 import {
   GeoJSONPoint,
@@ -30,4 +30,3 @@ export const embeddedTrackingDeviceSchema = SchemaFactory.createForClass(
 
 export type EmbeddedTrackingDeviceDocument =
   HydratedDocument<EmbeddedTrackingDevice>;
-export type EmbeddedTrackingDeviceModel = Model<EmbeddedTrackingDevice>;

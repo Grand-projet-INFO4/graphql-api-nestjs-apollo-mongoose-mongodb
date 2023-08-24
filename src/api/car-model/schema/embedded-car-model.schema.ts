@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument, Model } from 'mongoose';
+import { HydratedDocument } from 'mongoose';
 
 @Schema({ autoCreate: false })
 export class EmbeddedCarModel {
@@ -14,4 +14,3 @@ export const embeddedCarModelSchema =
   SchemaFactory.createForClass(EmbeddedCarModel);
 
 export type EmbeddedCarModelDocument = HydratedDocument<EmbeddedCarModel>;
-export type EmbeddedCarModelModel = Model<EmbeddedCarModel>;

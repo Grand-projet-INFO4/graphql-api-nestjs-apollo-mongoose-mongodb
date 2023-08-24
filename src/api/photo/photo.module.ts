@@ -1,12 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 
-import {
-  EmbeddedPhoto,
-  Photo,
-  embeddedPhotoSchema,
-  photoSchema,
-} from './schema';
+import { Photo, photoSchema } from './schema';
 import {
   CooperativePhoto,
   cooperativePhotoSchema,
@@ -22,12 +17,8 @@ const photoMongooseModule = MongooseModule.forFeature([
   },
 ]);
 
-const embeddedPhotoMongooseModule = MongooseModule.forFeature([
-  { name: EmbeddedPhoto.name, schema: embeddedPhotoSchema },
-]);
-
 @Module({
-  imports: [photoMongooseModule, embeddedPhotoMongooseModule],
-  exports: [photoMongooseModule, embeddedPhotoMongooseModule],
+  imports: [photoMongooseModule],
+  exports: [photoMongooseModule],
 })
 export class PhotoModule {}

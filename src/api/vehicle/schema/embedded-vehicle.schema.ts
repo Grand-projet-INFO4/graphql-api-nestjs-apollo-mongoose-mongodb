@@ -1,10 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import {
-  HydratedDocument,
-  Model,
-  Types,
-  Schema as MongooseSchema,
-} from 'mongoose';
+import { HydratedDocument, Types, Schema as MongooseSchema } from 'mongoose';
 
 import {
   VehicleState,
@@ -82,4 +77,3 @@ export const embeddedVehicleSchema =
   SchemaFactory.createForClass(EmbeddedVehicle);
 
 export type EmbeddedVehicleDocument = HydratedDocument<EmbeddedVehicle>;
-export type EmbeddedVehicleModel = Model<EmbeddedVehicle>;

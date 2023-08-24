@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Driver, TripDriver, driverSchema, tripDriverSchema } from './schema';
+import { Driver, driverSchema } from './schema';
 
 const driverMongooseModule = MongooseModule.forFeature([
   {
@@ -9,15 +9,8 @@ const driverMongooseModule = MongooseModule.forFeature([
   },
 ]);
 
-const tripDriverMongooseModule = MongooseModule.forFeature([
-  {
-    name: TripDriver.name,
-    schema: tripDriverSchema,
-  },
-]);
-
 @Module({
-  imports: [driverMongooseModule, tripDriverMongooseModule],
-  exports: [driverMongooseModule, tripDriverMongooseModule],
+  imports: [driverMongooseModule],
+  exports: [driverMongooseModule],
 })
 export class DriverModule {}

@@ -1,10 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import {
-  Types,
-  Schema as MongooseSchema,
-  HydratedDocument,
-  Model,
-} from 'mongoose';
+import { Types, Schema as MongooseSchema, HydratedDocument } from 'mongoose';
 
 import {
   BookingMode,
@@ -85,4 +80,3 @@ export const embeddedBookingSchema =
   SchemaFactory.createForClass(EmbeddedBooking);
 
 export type EmbeddedBookingDocument = HydratedDocument<EmbeddedBooking>;
-export type EmbeddedBookingModel = Model<EmbeddedBooking>;
