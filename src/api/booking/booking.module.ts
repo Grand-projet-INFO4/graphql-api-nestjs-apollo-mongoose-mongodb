@@ -1,12 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 
-import {
-  Booking,
-  EmbeddedBooking,
-  bookingSchema,
-  embeddedBookingSchema,
-} from './schema';
+import { Booking, bookingSchema } from './schema';
 
 const bookingMongooseModule = MongooseModule.forFeature([
   {
@@ -15,15 +10,8 @@ const bookingMongooseModule = MongooseModule.forFeature([
   },
 ]);
 
-const embededBookingMongooseModule = MongooseModule.forFeature([
-  {
-    name: EmbeddedBooking.name,
-    schema: embeddedBookingSchema,
-  },
-]);
-
 @Module({
-  imports: [bookingMongooseModule, embededBookingMongooseModule],
-  exports: [bookingMongooseModule, embededBookingMongooseModule],
+  imports: [bookingMongooseModule],
+  exports: [bookingMongooseModule],
 })
 export class BookingModule {}

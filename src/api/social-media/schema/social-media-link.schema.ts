@@ -1,9 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { HydratedDocument } from 'mongoose';
+
 import {
   SOCIAL_MEDIA_PLATFORMS,
   SocialMediaPlatform,
 } from '../social-media.constants';
-import { HydratedDocument, Model } from 'mongoose';
 
 /**
  * Embedded document for storing a user or cooperative's link to an existing social media platform
@@ -26,4 +27,3 @@ export const socialMediaLinkSchema =
   SchemaFactory.createForClass(SocialMediaLink);
 
 export type SocialMediaLinkDocument = HydratedDocument<SocialMediaLink>;
-export type SocialMediaLinkModel = Model<SocialMediaLink>;

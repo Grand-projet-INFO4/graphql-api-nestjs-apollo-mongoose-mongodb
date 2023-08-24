@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument, Model } from 'mongoose';
+import { HydratedDocument } from 'mongoose';
 
 @Schema({ timestamps: true, autoCreate: false })
 export class CooperativePreferences {
@@ -14,4 +14,3 @@ export const cooperativePreferencesSchema = SchemaFactory.createForClass(
 
 export type CooperativePreferencesDocument =
   HydratedDocument<CooperativePreferences>;
-export type CooperativePreferencesModel = Model<CooperativePreferences>;

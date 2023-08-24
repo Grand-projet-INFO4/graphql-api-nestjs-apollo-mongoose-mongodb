@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument, Model } from 'mongoose';
+import { HydratedDocument } from 'mongoose';
 
 @Schema({
   // Disable the collection auto-creation since this is intended to be an embedded document
@@ -17,4 +17,3 @@ export const embeddedRegionSchema =
   SchemaFactory.createForClass(EmbeddedRegion);
 
 export type EmbeddedRegionDocument = HydratedDocument<EmbeddedRegion>;
-export type EmbeddedRegionModel = Model<EmbeddedRegion>;

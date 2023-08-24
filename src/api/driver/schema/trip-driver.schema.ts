@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { DriverLicense, driverLicenseSchema } from './driver-license.schema';
-import { HydratedDocument, Model } from 'mongoose';
+import { HydratedDocument } from 'mongoose';
 
 @Schema({ timestamps: false, autoCreate: false })
 export class TripDriver {
@@ -26,4 +26,3 @@ export class TripDriver {
 export const tripDriverSchema = SchemaFactory.createForClass(TripDriver);
 
 export type TripDriverDocument = HydratedDocument<TripDriver>;
-export type TripDriverModel = Model<TripDriver>;

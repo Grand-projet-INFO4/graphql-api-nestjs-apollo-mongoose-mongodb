@@ -1,12 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 
-import {
-  EmbeddedTrackingDevice,
-  TrackingDevice,
-  embeddedTrackingDeviceSchema,
-  trackingDeviceSchema,
-} from './schema';
+import { TrackingDevice, trackingDeviceSchema } from './schema';
 
 export const trackingDeviceMongooseModule = MongooseModule.forFeature([
   {
@@ -15,15 +10,8 @@ export const trackingDeviceMongooseModule = MongooseModule.forFeature([
   },
 ]);
 
-export const embeddedTrackingDeviceMongooseModule = MongooseModule.forFeature([
-  {
-    name: EmbeddedTrackingDevice.name,
-    schema: embeddedTrackingDeviceSchema,
-  },
-]);
-
 @Module({
-  imports: [trackingDeviceMongooseModule, embeddedTrackingDeviceMongooseModule],
-  exports: [trackingDeviceMongooseModule, embeddedTrackingDeviceMongooseModule],
+  imports: [trackingDeviceMongooseModule],
+  exports: [trackingDeviceMongooseModule],
 })
 export class TrackingDeviceModule {}

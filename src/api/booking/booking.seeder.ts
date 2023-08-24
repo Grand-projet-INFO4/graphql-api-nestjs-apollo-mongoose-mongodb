@@ -170,9 +170,11 @@ export class BookingSeeder implements Seeder {
       const mode = [BookingMode.InPerson, BookingMode.Online][
         getRandomBoolean()
       ];
+      const bookedAtLatest = new Date(trip.startsAt);
+      bookedAtLatest.setHours(bookedAtLatest.getHours() - 12);
       const bookedAt = faker.date.recent({
         days: 5,
-        refDate: trip.startsAt,
+        refDate: bookedAtLatest,
       });
       const payment: Payment = {
         amount: trip.route.fee * seats.length,

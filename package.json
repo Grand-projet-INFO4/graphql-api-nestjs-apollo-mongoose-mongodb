@@ -12,7 +12,7 @@
     "seed:refresh": "node dist/src/database/seeder --refresh",
     "gen-mongo-ids": "node gen-mongo-ids.mjs",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "start": "node dist/src/main.js && npm run seed:refresh",
+    "start": "node dist/src/main.js",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
@@ -26,7 +26,6 @@
   },
   "dependencies": {
     "@casl/ability": "^6.4.0",
-    "@faker-js/faker": "^8.0.2",
     "@nestjs/apollo": "^10.2.0",
     "@nestjs/axios": "^2.0.0",
     "@nestjs/common": "^9.0.0",
@@ -58,6 +57,7 @@
     "rxjs": "^7.2.0"
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.0.2",
     "@nestjs/cli": "^9.0.0",
     "@nestjs/schematics": "^9.0.0",
     "@nestjs/testing": "^9.0.0",

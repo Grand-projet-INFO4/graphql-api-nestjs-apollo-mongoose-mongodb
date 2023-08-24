@@ -1,4 +1,16 @@
 import { Module } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
+import { ParkingLot, parkingLotSchema } from './schema';
 
-@Module({})
+const parkingLotModule = MongooseModule.forFeature([
+  {
+    name: ParkingLot.name,
+    schema: parkingLotSchema,
+  },
+]);
+
+@Module({
+  imports: [parkingLotModule],
+  exports: [parkingLotModule],
+})
 export class ParkingLotModule {}

@@ -10,7 +10,7 @@ import { GqlConfigService } from './graphql/gql-config.service';
 import { DataloaderModule } from './dataloader/dataloader.module';
 import { AuthModule } from './api/auth/auth.module';
 import { RegionModule } from './api/region/region.module';
-// import { isProductionEnvironment } from './common/helpers/environment.helper';
+import { isProductionEnvironment } from './common/helpers/environment.helper';
 import { CityModule } from './api/city/city.module';
 import { RedisModule } from './redis/redis.module';
 import { HighwayModule } from './api/highway/highway.module';
@@ -40,7 +40,7 @@ import { TripModule } from './api/trip/trip.module';
       isGlobal: true,
     }),
     MongooseModule.forRoot(process.env.DATABASE_URL as string, {
-      // autoIndex: !isProductionEnvironment(process.env.NODE_ENV),
+      autoIndex: !isProductionEnvironment(process.env.NODE_ENV),
     }),
     UserModule,
     DataloaderModule,

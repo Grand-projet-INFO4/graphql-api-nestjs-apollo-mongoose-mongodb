@@ -10,6 +10,9 @@ import { RedisClientConnectionOptions } from './redis';
       useFactory: (): RedisClientConnectionOptions => {
         return {
           url: process.env.REDIS_URL as string,
+          socket: {
+            connectTimeout: 50_000,
+          },
         };
       },
     },
