@@ -12,7 +12,7 @@
     "seed:refresh": "node dist/src/database/seeder --refresh",
     "gen-mongo-ids": "node gen-mongo-ids.mjs",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "start": "node dist/src/main.js && npm run seed:refresh",
+    "start": "node dist/src/main.js",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
