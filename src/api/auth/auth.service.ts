@@ -175,7 +175,7 @@ export class AuthService {
     payload.phone && (data.phone = payload.phone);
     // Setting an optional city
     if (payload.cityId) {
-      data.city = await this.cityService.toEmbeddedCityFromId(payload.cityId);
+      data.city = await this.cityService.getOne(payload.cityId);
     }
 
     const user = await this.userModel.create(data);
