@@ -1,5 +1,12 @@
+import { SanitizedDocument } from 'src/common/types/mongo-id';
 import { Region } from '../region/schema';
 import { User, UserDocument } from '../user/schema';
+import { ReplaceFields } from 'src/common/types/utils';
+import {
+  CooperativeAdmin,
+  CooperativeAdminDocument,
+} from '../cooperative-admin/schema';
+import { UserRole } from '../user/user.constants';
 
 export type TokenType = 'ACCESS' | 'REFRESH';
 
@@ -21,16 +28,48 @@ export interface AccessToken {
   expires_at: Date; // Expiry date-time
 }
 
-// Auth user from the request
-export type ReqAuthUser = UserDocument;
+// Shape of the auth user data considering the cooperative admin account fields differences based the role
+type AuthUserShape<TUser, TCooperativeAdmin> = TUser &
+  (
+    | { cooperativeRole: 'none' } // For typescript intellicense to work correctly
+    | {
+        cooperativeRole: UserRole.Manager;
+        coopManagerAccounts: TCooperativeAdmin[];
+      }
+    | {
+        cooperativeRole: UserRole.Regulator;
+        coopRegulatorAccount: TCooperativeAdmin;
+      }
+    | {
+        cooperativeRole: UserRole.Driver;
+        coopDriverAccount: TCooperativeAdmin;
+      }
+  );
 
-// Sanitized auth user document
+// Auth user from the request
+export type ReqAuthUser = AuthUserShape<UserDocument, CooperativeAdminDocument>;
+
+// Sanitized auth user data
+// The auth user data consists of the user data itself plus cooperative admins accounts data
 // The authenticated user data after a get the authenticated user request
 // Basically, all `_id` fields are replaced with `id`
-export type SanitizedAuthUser = Omit<User, 'password' | '_id' | 'city'> & {
-  id: string;
-  city?: Omit<City, '_id' | 'region'> & {
-    id: string;
-    region: Omit<Region, '_id'> & { id: string };
-  };
-};
+export type SanitizedUser = SanitizedDocument<
+  ReplaceFields<
+    Omit<User, 'password'>,
+    {
+      city?: SanitizedDocument<
+        ReplaceFields<
+          City,
+          {
+            region: SanitizedDocument<Region>;
+          }
+        >
+      >;
+    }
+  >
+>;
+export type SanitizedCooperativeAdmin = SanitizedDocument<CooperativeAdmin>;
+export type SanitizedAuthUser = AuthUserShape<
+  SanitizedUser,
+  SanitizedCooperativeAdmin
+>;

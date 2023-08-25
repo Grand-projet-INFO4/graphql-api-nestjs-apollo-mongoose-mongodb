@@ -7,9 +7,16 @@ import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { CityModule } from '../city/city.module';
 import { RedisModule } from 'src/redis/redis.module';
+import { CooperativeAdminModule } from '../cooperative-admin/cooperative-admin.module';
 
 @Module({
-  imports: [JwtModule.register({}), UserModule, CityModule, RedisModule],
+  imports: [
+    JwtModule.register({}),
+    UserModule,
+    CityModule,
+    RedisModule,
+    CooperativeAdminModule,
+  ],
   providers: [AccessTokenJwtStrategy, RefreshTokenJwtStrategy, AuthService],
   controllers: [AuthController],
 })

@@ -1,7 +1,13 @@
-import { ForbiddenException, Injectable, Inject } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Injectable,
+  Inject,
+  NotFoundException,
+} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService, JwtSignOptions } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/mongoose';
+import { Types } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 
 import type {
@@ -11,14 +17,20 @@ import type {
   AccessToken,
   ReqAuthUser,
   SanitizedAuthUser,
+  SanitizedUser,
+  SanitizedCooperativeAdmin,
 } from './auth';
 import { SignupDTO } from './dto';
 import { addDurationFromNow } from 'src/common/utils/date-time.utils';
 import { User, UserDocument, UserModel } from '../user/schema';
 import { UserService } from '../user/user.service';
-import { UserRole } from '../user/user.constants';
+import { COOPERATIVE_USER_ROLES, UserRole } from '../user/user.constants';
 import { CityService } from '../city/city.service';
 import { RedisClientInstance } from 'src/redis/redis';
+import {
+  CooperativeAdmin,
+  CooperativeAdminModel,
+} from '../cooperative-admin/schema';
 
 // Access token duration: 3 days
 export const ACCESS_TOKEN_DURATION = 15 * 60; // 15 minutes
@@ -28,6 +40,8 @@ export class AuthService {
   constructor(
     @InjectModel(User.name) private userModel: UserModel,
     private userService: UserService,
+    @InjectModel(CooperativeAdmin.name)
+    private cooperativeAdminModel: CooperativeAdminModel,
     private cityService: CityService,
     private config: ConfigService,
     private jwtService: JwtService,
@@ -82,10 +96,63 @@ export class AuthService {
   }
 
   /**
+   * Gets the authenticated user data that should be attached to requests
+   *
+   * @param id The user id
+   */
+  async getAuthUser(id: Types.ObjectId | string): Promise<ReqAuthUser> {
+    const user = await this.userModel.findById(id).lean();
+    if (!user) {
+      throw new NotFoundException('The authenticated user does not exist');
+    }
+    const cooperativeUserRole = user.roles.find((role) => {
+      return COOPERATIVE_USER_ROLES.includes(role);
+    });
+    if (cooperativeUserRole) {
+      const cooperativeAdminAccounts = await this.cooperativeAdminModel
+        .find({
+          user: user._id,
+        })
+        .lean();
+      switch (cooperativeUserRole) {
+        case UserRole.Manager: {
+          const authUser = {
+            ...user,
+            cooperativeRole: UserRole.Manager,
+            coopManagerAccounts: cooperativeAdminAccounts,
+          } as ReqAuthUser;
+          return authUser;
+        }
+        case UserRole.Regulator: {
+          const authUser = {
+            ...user,
+            cooperativeRole: UserRole.Regulator,
+            coopRegulatorAccount: cooperativeAdminAccounts[0],
+          } as ReqAuthUser;
+          return authUser;
+        }
+        case UserRole.Driver: {
+          const authUser = {
+            ...user,
+            cooperativeRole: UserRole.Driver,
+            coopDriverAccount: cooperativeAdminAccounts[0],
+          } as ReqAuthUser;
+          return authUser;
+        }
+      }
+    }
+    const authUser = {
+      ...user,
+      cooperativeRole: 'none',
+    } as ReqAuthUser;
+    return authUser;
+  }
+
+  /**
    * Sanitized auth user data to be sent on the client
    */
   sanitizeAuthUser(authUser: ReqAuthUser): SanitizedAuthUser {
-    const data: SanitizedAuthUser = {
+    const sanitizedUser: SanitizedUser = {
       id: authUser.id,
       firstName: authUser.firstName,
       lastName: authUser.lastName,
@@ -93,10 +160,10 @@ export class AuthService {
       email: authUser.email,
       roles: authUser.roles,
     };
-    authUser.phone && (data.phone = authUser.phone);
+    authUser.phone && (sanitizedUser.phone = authUser.phone);
     if (authUser.city) {
       const { city } = authUser;
-      data.city = {
+      sanitizedUser.city = {
         id: city.id,
         cityName: city.cityName,
         region: {
@@ -107,9 +174,47 @@ export class AuthService {
       };
     }
     if (authUser.photo) {
-      data.photo = this.userService.getPhotoURL(authUser.photo);
+      sanitizedUser.photo = this.userService.getPhotoURL(authUser.photo);
     }
-    return data;
+    switch (authUser.cooperativeRole) {
+      case UserRole.Manager: {
+        const sanitizedAuthUser = {
+          ...sanitizedUser,
+          cooperativeRole: UserRole.Manager,
+          coopManagerAccounts: authUser.coopManagerAccounts.map((account) => {
+            return { ...account, id: account.id } as SanitizedCooperativeAdmin;
+          }),
+        } as SanitizedAuthUser;
+        return sanitizedAuthUser;
+      }
+      case UserRole.Driver:
+      case UserRole.Regulator: {
+        const account =
+          authUser.cooperativeRole === UserRole.Driver
+            ? authUser.coopDriverAccount
+            : authUser.coopRegulatorAccount;
+        const accountTypeKey =
+          authUser.cooperativeRole === UserRole.Driver
+            ? 'coopDriverAccount'
+            : 'coopRegulatorAccount';
+        const sanitizedAuthUser = {
+          ...sanitizedUser,
+          cooperativeRole: authUser.cooperativeRole,
+          [accountTypeKey]: {
+            ...account,
+            id: account.id,
+          } as SanitizedCooperativeAdmin,
+        } as SanitizedAuthUser;
+        return sanitizedAuthUser;
+      }
+      default: {
+        const sanitizedAuthUser = {
+          ...sanitizedUser,
+          cooperativeRole: 'none',
+        } as SanitizedAuthUser;
+        return sanitizedAuthUser;
+      }
+    }
   }
 
   /**
