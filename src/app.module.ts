@@ -27,6 +27,7 @@ import { RouteModule } from './api/route/route.module';
 import { PlannedTripModule } from './api/planned-trip/planned-trip.module';
 import { BookingModule } from './api/booking/booking.module';
 import { TripModule } from './api/trip/trip.module';
+import { CooperativeAdminModule } from './api/cooperative-admin/cooperative-admin.module';
 
 @Module({
   controllers: [AppController],
@@ -62,6 +63,7 @@ import { TripModule } from './api/trip/trip.module';
     PlannedTripModule,
     BookingModule,
     TripModule,
+    CooperativeAdminModule,
   ],
 })
 export class AppModule {}
