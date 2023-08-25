@@ -42,6 +42,11 @@ import { PlannedTripSeeder } from 'src/api/planned-trip/planned-trip.seeder';
 import { PlannedTrip, plannedTripSchema } from 'src/api/planned-trip/schema';
 import { TripSeeder } from 'src/api/trip/trip.seeder';
 import { Trip, tripSchema } from 'src/api/trip/schema';
+import { CooperativeAdminSeeder } from 'src/api/cooperative-admin/cooperative-admin.seeder';
+import {
+  CooperativeAdmin,
+  cooperativeAdminSchema,
+} from 'src/api/cooperative-admin/schema';
 
 try {
   seeder({
@@ -95,6 +100,9 @@ try {
         { name: PlannedTrip.name, schema: plannedTripSchema },
       ]),
       MongooseModule.forFeature([{ name: Trip.name, schema: tripSchema }]),
+      MongooseModule.forFeature([
+        { name: CooperativeAdmin.name, schema: cooperativeAdminSchema },
+      ]),
     ],
   }).run([
     UserSeeder,
@@ -113,6 +121,7 @@ try {
     TripSeeder,
     PlannedTripSeeder,
     BookingSeeder,
+    CooperativeAdminSeeder,
   ]);
 } catch (error) {
   console.log('Error: ' + error.message);

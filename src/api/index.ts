@@ -2,6 +2,7 @@ import { BookingModule } from './booking/booking.module';
 import { BusStationModule } from './bus-station/bus-station.module';
 import { CarModelModule } from './car-model/car-model.module';
 import { CityModule } from './city/city.module';
+import { CooperativeAdminModule } from './cooperative-admin/cooperative-admin.module';
 import { CooperativeModule } from './cooperative/cooperative.module';
 import { DriverModule } from './driver/driver.module';
 import { HighwayModule } from './highway/highway.module';
@@ -36,4 +37,5 @@ export const apiModules = [
   PlannedTripModule,
   TripModule,
   BookingModule,
+  CooperativeAdminModule,
 ];
