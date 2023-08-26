@@ -1,7 +1,7 @@
 scalar Void
 scalar DateTime
 
-# Sort params
+# Sort params for queries
 input QuerySortParams {
   sortBy: String!
   order: QuerySortOrder!
@@ -10,4 +10,19 @@ input QuerySortParams {
 enum QuerySortOrder {
   asc
   desc
+}
+
+# Page based pagination params for queries
+input QueryPagePaginationParams {
+  page: Int!
+  limit: Int!
+}
+
+# Text search params for queries
+input QueryTextSearchParams {
+  # Partial substring match using RegExp
+  search: String
+
+  # Full-text search using Text index
+  text: String
 }

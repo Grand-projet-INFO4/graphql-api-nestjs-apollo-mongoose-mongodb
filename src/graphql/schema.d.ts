@@ -13,6 +13,11 @@ export enum QuerySortOrder {
     desc = "desc"
 }
 
+export interface GetCitiesQueryFilters {
+    regionId?: Nullable<string>;
+    weight?: Nullable<number>;
+}
+
 export interface GetRegionsQueryFilters {
     province?: Nullable<string>;
 }
@@ -20,6 +25,38 @@ export interface GetRegionsQueryFilters {
 export interface QuerySortParams {
     sortBy: string;
     order: QuerySortOrder;
+}
+
+export interface QueryPagePaginationParams {
+    page: number;
+    limit: number;
+}
+
+export interface QueryTextSearchParams {
+    search?: Nullable<string>;
+    text?: Nullable<string>;
+}
+
+export interface IQuery {
+    __typename?: 'IQuery';
+    cities(pagination: QueryPagePaginationParams, filters?: Nullable<GetCitiesQueryFilters>, textSearch?: Nullable<QueryTextSearchParams>, sort?: Nullable<QuerySortParams>): PagePaginatedCities | Promise<PagePaginatedCities>;
+    regions(filters?: Nullable<GetRegionsQueryFilters>, sort?: Nullable<QuerySortParams>): Region[] | Promise<Region[]>;
+    users(): User[] | Promise<User[]>;
+}
+
+export interface City {
+    __typename?: 'City';
+    id: string;
+    cityName: string;
+    region: Region;
+}
+
+export interface PagePaginatedCities {
+    __typename?: 'PagePaginatedCities';
+    page: number;
+    limit: number;
+    count: number;
+    items: City[];
 }
 
 export interface Cooperative {
@@ -32,12 +69,6 @@ export interface Region {
     id: string;
     regionName: string;
     province: string;
-}
-
-export interface IQuery {
-    __typename?: 'IQuery';
-    regions(filters?: Nullable<GetRegionsQueryFilters>, sort?: Nullable<QuerySortParams>): Region[] | Promise<Region[]>;
-    users(): User[] | Promise<User[]>;
 }
 
 export interface User {

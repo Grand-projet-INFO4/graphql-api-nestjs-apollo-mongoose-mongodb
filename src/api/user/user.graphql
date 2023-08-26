@@ -1,3 +1,11 @@
+# Queries ***************************************
+
+type Query {
+  users: [User!]!
+}
+
+# Types *****************************************
+
 type User {
   id: ID!
   firstName: String!
@@ -8,8 +16,4 @@ type User {
   phone: String!
   createdAt: DateTime!
   updatedAt: DateTime!
-}
-
-type Query {
-  users: [User!]!
 }

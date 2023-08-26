@@ -1,0 +1,30 @@
+# Queries ***************************************
+
+type Query {
+  cities(
+    pagination: QueryPagePaginationParams!
+    filters: GetCitiesQueryFilters
+    textSearch: QueryTextSearchParams
+    sort: QuerySortParams
+  ): PagePaginatedCities!
+}
+
+input GetCitiesQueryFilters {
+  regionId: ID
+  weight: Int
+}
+
+# Types ****************************************
+
+type City {
+  id: ID!
+  cityName: String!
+  region: Region!
+}
+
+type PagePaginatedCities {
+  page: Int!
+  limit: Int!
+  count: Int!
+  items: [City!]!
+}
