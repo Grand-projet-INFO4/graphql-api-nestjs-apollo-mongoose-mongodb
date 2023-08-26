@@ -8,6 +8,38 @@
 /* tslint:disable */
 /* eslint-disable */
 
+export enum QuerySortOrder {
+    asc = "asc",
+    desc = "desc"
+}
+
+export interface GetRegionsQueryFilters {
+    province?: Nullable<string>;
+}
+
+export interface QuerySortParams {
+    sortBy: string;
+    order: QuerySortOrder;
+}
+
+export interface Cooperative {
+    __typename?: 'Cooperative';
+    id?: Nullable<string>;
+}
+
+export interface Region {
+    __typename?: 'Region';
+    id: string;
+    regionName: string;
+    province: string;
+}
+
+export interface IQuery {
+    __typename?: 'IQuery';
+    regions(filters?: Nullable<GetRegionsQueryFilters>, sort?: Nullable<QuerySortParams>): Region[] | Promise<Region[]>;
+    users(): User[] | Promise<User[]>;
+}
+
 export interface User {
     __typename?: 'User';
     id: string;
@@ -19,11 +51,6 @@ export interface User {
     phone: string;
     createdAt: DateTime;
     updatedAt: DateTime;
-}
-
-export interface IQuery {
-    __typename?: 'IQuery';
-    users(): User[] | Promise<User[]>;
 }
 
 export type Void = any;

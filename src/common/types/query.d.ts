@@ -1,9 +1,16 @@
-export interface QueryParams {
-  sort?: string;
-  search?: string;
-}
+import { SortOrder } from 'mongoose';
 
-export interface PaginationParams extends QueryParams {
-  page?: number;
-  limit?: number;
-}
+export type SortParams = {
+  sortBy: string;
+  order: SortOrder;
+};
+
+export type PaginationParams<TCursor = Record<string, unknown>> =
+  | { limit: number; page: number }
+  | { limit: number; cursor: TCursor };
+
+export type SearchParams = {
+  search?: string;
+};
+
+export type BaseQueryParams = SortParams & PaginationParams & SearchParams;

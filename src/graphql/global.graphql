@@ -1,2 +1,13 @@
 scalar Void
 scalar DateTime
+
+# Sort params
+input QuerySortParams {
+  sortBy: String!
+  order: QuerySortOrder!
+}
+
+enum QuerySortOrder {
+  asc
+  desc
+}
