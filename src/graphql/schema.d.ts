@@ -40,6 +40,8 @@ export interface QueryTextSearchParams {
 export interface IQuery {
     __typename?: 'IQuery';
     cities(pagination: QueryPagePaginationParams, filters?: Nullable<GetCitiesQueryFilters>, textSearch?: Nullable<QueryTextSearchParams>, sort?: Nullable<QuerySortParams>): PagePaginatedCities | Promise<PagePaginatedCities>;
+    highways(textSearch?: Nullable<QueryTextSearchParams>, sort?: Nullable<QuerySortParams>): Highway[] | Promise<Highway[]>;
+    highway(identifier?: Nullable<string>): Highway | Promise<Highway>;
     regions(filters?: Nullable<GetRegionsQueryFilters>, sort?: Nullable<QuerySortParams>): Region[] | Promise<Region[]>;
     users(): User[] | Promise<User[]>;
 }
@@ -62,6 +64,14 @@ export interface PagePaginatedCities {
 export interface Cooperative {
     __typename?: 'Cooperative';
     id?: Nullable<string>;
+}
+
+export interface Highway {
+    __typename?: 'Highway';
+    id: string;
+    no: string;
+    cities: City[];
+    distance?: Nullable<number>;
 }
 
 export interface Region {

@@ -32,28 +32,26 @@ export class Highway {
   /**
    * Distance in kilometers of the highway
    */
-  @Prop({ type: Number })
+  @Prop({ type: Number, index: true, sparse: true })
   distance?: number;
 }
 
 export const highwaySchema = SchemaFactory.createForClass(Highway);
 
 // Indexes
-highwaySchema.index({ city_id: 1 });
-// Full text index
 highwaySchema.index(
   {
     no: 'text',
-    'city.cityName': 'text',
-    'city.region.regionName': 'text',
-    'city.region.province': 'text',
+    'cities.cityName': 'text',
+    'cities.region.regionName': 'text',
+    'cities.region.province': 'text',
   },
   {
     weights: {
       no: 4,
-      'city.cityName': 3,
-      'city.region.regionName': 2,
-      'city.region.province': 1,
+      'cities.cityName': 3,
+      'cities.region.regionName': 2,
+      'cities.region.province': 1,
     },
   },
 );

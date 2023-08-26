@@ -1,8 +1,8 @@
 import { SortOrder } from 'mongoose';
 
 export type SortParams = {
-  sortBy: string;
-  order: SortOrder;
+  sortBy?: string;
+  order?: SortOrder;
 };
 
 export type PagePaginationParams = { limit: number; page: number };

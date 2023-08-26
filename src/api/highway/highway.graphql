@@ -1,0 +1,19 @@
+# Queries ***************************************
+
+type Query {
+  highways(
+    textSearch: QueryTextSearchParams
+    sort: QuerySortParams
+  ): [Highway!]!
+
+  highway(identifier: ID): Highway!
+}
+
+# Types *****************************************
+
+type Highway {
+  id: ID!
+  no: String!
+  cities: [City!]!
+  distance: Int
+}
