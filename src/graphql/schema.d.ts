@@ -65,7 +65,7 @@ export interface BusStation {
     description?: Nullable<string>;
     slug: string;
     mainPhotoId?: Nullable<string>;
-    mainPhotoURL?: Nullable<string>;
+    mainPhoto?: Nullable<string>;
     photos?: Nullable<EmbeddedPhoto[]>;
     position: GeoJSONPoint;
     street: string;

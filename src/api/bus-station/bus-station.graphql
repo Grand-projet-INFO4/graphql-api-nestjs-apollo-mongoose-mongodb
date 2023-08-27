@@ -23,7 +23,7 @@ type BusStation {
   description: String
   slug: String!
   mainPhotoId: ID
-  mainPhotoURL: String
+  mainPhoto: String
   photos: [EmbeddedPhoto!]
   position: GeoJSONPoint!
   street: String!

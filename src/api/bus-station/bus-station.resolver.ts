@@ -47,7 +47,7 @@ export class BusStationResolver {
     }));
   }
 
-  @ResolveField('mainPhotoURL')
+  @ResolveField('mainPhoto')
   getMainPhotoURL(@Parent() busStation: BusStationDocument): string | null {
     if (!busStation.mainPhotoId) return null;
     const photo = busStation.photos?.find(
