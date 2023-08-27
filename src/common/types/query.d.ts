@@ -20,7 +20,9 @@ export type TextSearchParams = {
   text?: string; // Full-text search using Text index
 };
 
-export type BaseQueryParams = SortParams & PagePaginationParams & SearchParams;
+export type BaseQueryParams = SortParams &
+  PagePaginationParams &
+  TextSearchParams;
 
 export type PagePaginated<TItem = unknown> = {
   page: number;

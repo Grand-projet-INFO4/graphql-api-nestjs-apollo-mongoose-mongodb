@@ -1,0 +1,8 @@
+# Types *****************************************
+
+type EmbeddedPhoto {
+  id: ID!
+  filename: String!
+  url: String!
+  description: String
+}

@@ -13,6 +13,17 @@ export enum QuerySortOrder {
     desc = "desc"
 }
 
+export enum GeoJSONType {
+    Point = "Point"
+}
+
+export interface GetBusStationsQueryFilters {
+    regionId?: Nullable<string>;
+    cityId?: Nullable<string>;
+    highways?: Nullable<string[]>;
+    nearPoint?: Nullable<number[]>;
+}
+
 export interface GetCitiesQueryFilters {
     regionId?: Nullable<string>;
     weight?: Nullable<number>;
@@ -39,6 +50,7 @@ export interface QueryTextSearchParams {
 
 export interface IQuery {
     __typename?: 'IQuery';
+    busStations(pagination: QueryPagePaginationParams, textSearch?: Nullable<QueryTextSearchParams>, filters?: Nullable<GetBusStationsQueryFilters>): PaginatedBusStations | Promise<PaginatedBusStations>;
     cities(pagination: QueryPagePaginationParams, filters?: Nullable<GetCitiesQueryFilters>, textSearch?: Nullable<QueryTextSearchParams>, sort?: Nullable<QuerySortParams>): PagePaginatedCities | Promise<PagePaginatedCities>;
     highways(textSearch?: Nullable<QueryTextSearchParams>, sort?: Nullable<QuerySortParams>): Highway[] | Promise<Highway[]>;
     highway(identifier?: Nullable<string>): Highway | Promise<Highway>;
@@ -46,11 +58,38 @@ export interface IQuery {
     users(): User[] | Promise<User[]>;
 }
 
+export interface BusStation {
+    __typename?: 'BusStation';
+    id: string;
+    stationName: string;
+    description?: Nullable<string>;
+    slug: string;
+    mainPhotoId?: Nullable<string>;
+    mainPhotoURL?: Nullable<string>;
+    photos?: Nullable<EmbeddedPhoto[]>;
+    position: GeoJSONPoint;
+    street: string;
+    city: EmbeddedCity;
+    highways: string[];
+    createdAt: DateTime;
+    updatedAt: DateTime;
+}
+
+export interface PaginatedBusStations {
+    __typename?: 'PaginatedBusStations';
+    page: number;
+    limit: number;
+    count: number;
+    items: BusStation[];
+}
+
 export interface City {
     __typename?: 'City';
     id: string;
     cityName: string;
     region: Region;
+    createdAt: DateTime;
+    updatedAt: DateTime;
 }
 
 export interface PagePaginatedCities {
@@ -59,6 +98,13 @@ export interface PagePaginatedCities {
     limit: number;
     count: number;
     items: City[];
+}
+
+export interface EmbeddedCity {
+    __typename?: 'EmbeddedCity';
+    id: string;
+    cityName: string;
+    region: Region;
 }
 
 export interface Cooperative {
@@ -70,8 +116,18 @@ export interface Highway {
     __typename?: 'Highway';
     id: string;
     no: string;
-    cities: City[];
+    cities: EmbeddedCity[];
     distance?: Nullable<number>;
+    createdAt: DateTime;
+    updatedAt: DateTime;
+}
+
+export interface EmbeddedPhoto {
+    __typename?: 'EmbeddedPhoto';
+    id: string;
+    filename: string;
+    url: string;
+    description?: Nullable<string>;
 }
 
 export interface Region {
@@ -92,6 +148,12 @@ export interface User {
     phone: string;
     createdAt: DateTime;
     updatedAt: DateTime;
+}
+
+export interface GeoJSONPoint {
+    __typename?: 'GeoJSONPoint';
+    type: GeoJSONType;
+    coordinates: number[];
 }
 
 export type Void = any;

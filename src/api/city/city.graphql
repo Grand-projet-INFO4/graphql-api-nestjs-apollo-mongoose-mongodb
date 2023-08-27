@@ -20,6 +20,8 @@ type City {
   id: ID!
   cityName: String!
   region: Region!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type PagePaginatedCities {
@@ -27,4 +29,10 @@ type PagePaginatedCities {
   limit: Int!
   count: Int!
   items: [City!]!
+}
+
+type EmbeddedCity {
+  id: ID!
+  cityName: String!
+  region: Region!
 }

@@ -26,3 +26,14 @@ input QueryTextSearchParams {
   # Full-text search using Text index
   text: String
 }
+
+# Types of a GeoJSON data
+enum GeoJSONType {
+  Point
+}
+
+# GeoJSON Point
+type GeoJSONPoint {
+  type: GeoJSONType!
+  coordinates: [Float!]!
+}

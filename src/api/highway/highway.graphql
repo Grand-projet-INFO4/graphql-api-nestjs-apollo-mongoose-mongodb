@@ -14,6 +14,8 @@ type Query {
 type Highway {
   id: ID!
   no: String!
-  cities: [City!]!
+  cities: [EmbeddedCity!]!
   distance: Int
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }

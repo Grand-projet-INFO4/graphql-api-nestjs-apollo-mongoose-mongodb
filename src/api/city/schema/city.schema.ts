@@ -33,6 +33,12 @@ export class City {
 
   @Prop({ type: embeddedRegionSchema, required: true })
   region: EmbeddedRegionDocument;
+
+  @Prop({ type: Date, required: true, index: true })
+  createdAt: Date;
+
+  @Prop({ type: Date, required: true, index: true })
+  updatedAt: Date;
 }
 
 export const citySchema = SchemaFactory.createForClass(City);

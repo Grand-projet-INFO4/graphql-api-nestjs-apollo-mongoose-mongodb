@@ -47,6 +47,12 @@ export class BusStation {
 
   @Prop({ type: [{ type: String, required: true }], required: true })
   highways: string[];
+
+  @Prop({ type: Date, required: true, index: true })
+  createdAt: Date;
+
+  @Prop({ type: Date, required: true, index: true })
+  updatedAt: Date;
 }
 
 export const busStationSchema = SchemaFactory.createForClass(BusStation);

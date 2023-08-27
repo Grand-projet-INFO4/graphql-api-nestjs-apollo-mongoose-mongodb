@@ -8,11 +8,15 @@ import { RegionSeeder, RegionSeederPayload } from '../region/region.seeder';
 import { InjectConnection, InjectModel } from '@nestjs/mongoose';
 import { modelCollectionExists } from 'src/common/helpers/mongo.helper';
 import * as citiesByWeightSeeds from '../../../seed/city.seed.json';
+import { EmbeddedCitySeed } from './city';
+import { WithoutTimestamps } from 'src/common/types/timestamps';
 
 export type CitySeederPayload = WithMongoId<
-  Omit<City, 'region'> & {
-    region: RegionSeederPayload;
-  }
+  WithoutTimestamps<
+    Omit<City, 'region'> & {
+      region: RegionSeederPayload;
+    }
+  >
 >;
 
 type CitiesByWeightSeedOptions = {
@@ -88,5 +92,25 @@ export class CitySeeder implements Seeder {
       CitySeeder.cityNameMap = cityNameMap;
     }
     return CitySeeder.cityNameMap;
+  }
+
+  /**
+   * Parses a city seed data into its embedded city seed data version
+   *
+   * @param city The city seed data
+   * @param params Params
+   */
+  static parseEmbeddedCity(
+    city: CitySeederPayload,
+    params: { withWeight?: boolean },
+  ) {
+    const _city: EmbeddedCitySeed = {
+      _id: city._id,
+      cityName: city.cityName,
+      region: city.region,
+    };
+    city.alt && (_city.alt = city.alt);
+    params.withWeight && (_city.weight = city.weight);
+    return _city;
   }
 }
