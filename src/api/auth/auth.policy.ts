@@ -7,7 +7,7 @@ import {
 } from '@casl/ability';
 import { AnyObject } from '@casl/ability/dist/types/types';
 import { ForbiddenException } from '@nestjs/common';
-import { User } from '../user/schema';
+import { ReqAuthUser } from './auth';
 
 // Enum of all the general actions that users can perform
 export enum UserAction {
@@ -38,7 +38,9 @@ export abstract class PolicyDefinition<TEntity = unknown, TSubject = Subject> {
    * @param user The user whom the policy is applied to
    * @return The CASL ability instance
    */
-  abstract createAbilityForUser(user: User): AppAbility<TSubject, TEntity>;
+  abstract createAbilityForUser(
+    user: ReqAuthUser,
+  ): AppAbility<TSubject, TEntity>;
 
   /**
    * Validates an action based on the CASL ability instance
@@ -63,7 +65,7 @@ export abstract class PolicyDefinition<TEntity = unknown, TSubject = Subject> {
    * @param action The type of the user action
    * @param subject In case the validation requires the resource's instance, then this is the subject
    */
-  authorize(user: User, action: UserAction, subject?: TEntity): void {
+  authorize(user: ReqAuthUser, action: UserAction, subject?: TEntity): void {
     const ability = this.createAbilityForUser(user);
     let isSuccess: boolean;
     let exceptionOptions: ExceptionOptions | undefined;
