@@ -48,10 +48,10 @@ export class BusStation {
   @Prop({ type: [{ type: String, required: true }], required: true })
   highways: string[];
 
-  @Prop({ type: Date, required: true, index: true })
+  @Prop({ type: Date, index: true })
   createdAt: Date;
 
-  @Prop({ type: Date, required: true, index: true })
+  @Prop({ type: Date, index: true })
   updatedAt: Date;
 }
 

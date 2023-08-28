@@ -7,9 +7,13 @@ import {
 } from 'mongoose';
 
 import { DriverLicense, driverLicenseSchema } from './driver-license.schema';
-import { User } from 'src/api/user/schema';
-import { Cooperative } from 'src/api/cooperative/schema';
-import { Vehicle } from 'src/api/vehicle/schema/vehicle.schema';
+import { User, UserDocument } from 'src/api/user/schema';
+import { Cooperative, CooperativeDocument } from 'src/api/cooperative/schema';
+import {
+  Vehicle,
+  VehicleDocument,
+} from 'src/api/vehicle/schema/vehicle.schema';
+import { TripDocument } from 'src/api/trip/schema';
 
 // Drivers collection name
 export const DRIVER_COLLECTION = 'drivers';
@@ -34,10 +38,10 @@ export class Driver {
   @Prop({ type: [{ type: String, required: true }], required: true })
   phones: string[];
 
-  @Prop({ type: Date })
+  @Prop({ type: Date, index: true, sparse: true })
   hiredAt?: Date;
 
-  @Prop({ type: Date })
+  @Prop({ type: Date, index: true, sparse: true })
   latestTripAt?: Date;
 
   @Prop({
@@ -46,32 +50,37 @@ export class Driver {
     unique: true,
     sparse: true,
   })
-  user?: Types.ObjectId;
+  user?: Types.ObjectId | UserDocument;
 
   @Prop({
     type: MongooseSchema.ObjectId,
     ref: Cooperative.name,
-    required: true,
     index: true,
+    sparse: true,
   })
-  cooperative: Types.ObjectId;
+  cooperative: Types.ObjectId | CooperativeDocument;
 
   @Prop({
     type: MongooseSchema.ObjectId,
     ref: 'Trip',
-    index: true,
-    sparse: true,
   })
-  ongoingTrip?: Types.ObjectId;
+  ongoingTrip?: Types.ObjectId | TripDocument;
 
   @Prop({ type: MongooseSchema.ObjectId, ref: Vehicle.name })
-  vehicle?: Types.ObjectId;
+  vehicle?: Types.ObjectId | VehicleDocument;
+
+  @Prop({ type: Date, index: true })
+  createdAt: Date;
+
+  @Prop()
+  updatedAt: Date;
 }
 
 export const driverSchema = SchemaFactory.createForClass(Driver);
 
 // Indexes
 driverSchema.index({ 'license.licenseId': 1 }, { unique: true });
+driverSchema.index({ cooperative: 1, hiredAt: 1 }, { sparse: true });
 driverSchema.index({ firstName: 'text', lastName: 'text' });
 
 export type DriverDocument = HydratedDocument<Driver>;

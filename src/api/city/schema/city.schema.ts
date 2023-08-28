@@ -34,10 +34,10 @@ export class City {
   @Prop({ type: embeddedRegionSchema, required: true })
   region: EmbeddedRegionDocument;
 
-  @Prop({ type: Date, required: true, index: true })
+  @Prop()
   createdAt: Date;
 
-  @Prop({ type: Date, required: true, index: true })
+  @Prop({ type: Date, index: true })
   updatedAt: Date;
 }
 

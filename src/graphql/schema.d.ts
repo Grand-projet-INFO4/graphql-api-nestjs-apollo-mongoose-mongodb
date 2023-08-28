@@ -29,6 +29,11 @@ export interface GetCitiesQueryFilters {
     weight?: Nullable<number>;
 }
 
+export interface GetDriversQueryFilters {
+    licenseCategories?: Nullable<string[]>;
+    cooperativeId?: Nullable<string>;
+}
+
 export interface GetRegionsQueryFilters {
     province?: Nullable<string>;
 }
@@ -52,6 +57,8 @@ export interface IQuery {
     __typename?: 'IQuery';
     busStations(pagination: QueryPagePaginationParams, textSearch?: Nullable<QueryTextSearchParams>, filters?: Nullable<GetBusStationsQueryFilters>): PaginatedBusStations | Promise<PaginatedBusStations>;
     cities(pagination: QueryPagePaginationParams, filters?: Nullable<GetCitiesQueryFilters>, textSearch?: Nullable<QueryTextSearchParams>, sort?: Nullable<QuerySortParams>): PagePaginatedCities | Promise<PagePaginatedCities>;
+    drivers(pagination: QueryPagePaginationParams, textSearch?: Nullable<QueryTextSearchParams>, filters?: Nullable<GetDriversQueryFilters>, sort?: Nullable<QuerySortParams>): PaginatedDrivers | Promise<PaginatedDrivers>;
+    driver(identifier: string): Driver | Promise<Driver>;
     highways(textSearch?: Nullable<QueryTextSearchParams>, sort?: Nullable<QuerySortParams>): Highway[] | Promise<Highway[]>;
     highway(identifier?: Nullable<string>): Highway | Promise<Highway>;
     regions(filters?: Nullable<GetRegionsQueryFilters>, sort?: Nullable<QuerySortParams>): Region[] | Promise<Region[]>;
@@ -110,6 +117,36 @@ export interface EmbeddedCity {
 export interface Cooperative {
     __typename?: 'Cooperative';
     id?: Nullable<string>;
+}
+
+export interface Driver {
+    __typename?: 'Driver';
+    id: string;
+    firstName: string;
+    lastName: string;
+    photo?: Nullable<string>;
+    license: DriverLicense;
+    email?: Nullable<string>;
+    phones: string[];
+    hiredAt?: Nullable<DateTime>;
+    latestTripAt?: Nullable<DateTime>;
+    user?: Nullable<User>;
+    createdAt: DateTime;
+    updatedAt: DateTime;
+}
+
+export interface DriverLicense {
+    __typename?: 'DriverLicense';
+    licenseId: string;
+    categories: string[];
+}
+
+export interface PaginatedDrivers {
+    __typename?: 'PaginatedDrivers';
+    page: number;
+    limit: number;
+    count: number;
+    items: Driver[];
 }
 
 export interface Highway {

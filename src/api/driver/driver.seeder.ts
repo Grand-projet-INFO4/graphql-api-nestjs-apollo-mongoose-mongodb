@@ -14,10 +14,11 @@ import { InjectConnection, InjectModel } from '@nestjs/mongoose';
 import { TripDriverSeed } from './driver';
 import { TripSeeder } from '../trip/trip.seeder';
 import { TripStatus } from '../trip/trip.constants';
+import { WithoutTimestamps } from 'src/common/types/timestamps';
 
 export type DriverSeederPayload = WithMongoId<
   ReplaceFields<
-    Driver,
+    WithoutTimestamps<Driver>,
     {
       user?: mongo.BSON.ObjectId;
       cooperative: mongo.BSON.ObjectId;
@@ -37,6 +38,8 @@ type CooperativeDriversSeed = {
     | 'vehicle'
     | 'hiredAt'
     | 'latestTripAt'
+    | 'createdAt'
+    | 'updatedAt'
   > & {
     hiredMonthsAgo: number;
     username?: string;
