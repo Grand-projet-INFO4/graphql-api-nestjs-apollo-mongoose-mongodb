@@ -11,9 +11,10 @@ import {
 export function ApplyPolicy(
   Policy: PolicyDefinitionConstructor<PolicyDefinition>,
   action: UserAction,
+  subject: unknown,
 ) {
   return applyDecorators(
-    SetMetadata(CHECK_POLICIES_KEY, [[Policy, action]]),
+    SetMetadata(CHECK_POLICIES_KEY, [[Policy, action, subject]]),
     UseGuards(PolicyGuard),
   );
 }
@@ -23,6 +24,7 @@ export function ApplyPolicies(
   ...policyConstraints: [
     PolicyDefinitionConstructor<PolicyDefinition>,
     UserAction,
+    unknown,
   ][]
 ) {
   return applyDecorators(

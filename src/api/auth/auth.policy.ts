@@ -31,7 +31,10 @@ export interface ExceptionOptions {
 }
 
 // Abstract class that defines the handling of an API resource's policy
-export abstract class PolicyDefinition<TEntity = unknown, TSubject = Subject> {
+export abstract class PolicyDefinition<TSubject = Subject, TEntity = unknown> {
+  // Whether the policy also includes an extra validation with some filters
+  protected withFilters: boolean;
+
   /**
    * Creates the CASL ability instance for the policy
    *
@@ -54,7 +57,7 @@ export abstract class PolicyDefinition<TEntity = unknown, TSubject = Subject> {
     ability: AppAbility<TSubject, TEntity>,
     action: UserAction,
     subject?: TEntity,
-  ): void | boolean | ExceptionOptions;
+  ): boolean;
 
   /**
    * Authorizes the user action after the creation and validation of the user's CASL ability
@@ -65,30 +68,20 @@ export abstract class PolicyDefinition<TEntity = unknown, TSubject = Subject> {
    * @param action The type of the user action
    * @param subject In case the validation requires the resource's instance, then this is the subject
    */
-  authorize(user: ReqAuthUser, action: UserAction, subject?: TEntity): void {
+  authorize(user: ReqAuthUser, action: UserAction, subject?: TEntity): boolean {
     const ability = this.createAbilityForUser(user);
-    let isSuccess: boolean;
-    let exceptionOptions: ExceptionOptions | undefined;
     try {
-      const result = this.validateAbility(ability, action, subject);
-      if (typeof result === 'boolean') isSuccess = result;
-      else if (result) exceptionOptions = result;
+      const isAuthorized = this.validateAbility(ability, action, subject);
+      if (!isAuthorized) {
+        throw new ForbiddenException('Unauthorized action');
+      }
     } catch (error) {
       if (error instanceof ForbiddenError) {
-        throw new ForbiddenException({
-          message: 'Unauthorized action',
-          description: error.message,
-        });
+        throw new ForbiddenException(error.message);
       } else {
         throw error;
       }
     }
-    if (typeof isSuccess !== 'undefined' && !isSuccess) {
-      throw new ForbiddenException('Unauthorized action');
-    }
-    if (exceptionOptions) {
-      exceptionOptions.message ||= 'Unauthorized action';
-      throw new ForbiddenException(exceptionOptions);
-    }
+    return true;
   }
 }

@@ -28,7 +28,7 @@ export class PolicyGuard implements CanActivate {
   ): boolean | Promise<boolean> | Observable<boolean> {
     const policyConstraints =
       this.reflector.get<
-        [PolicyDefinitionConstructor<PolicyDefinition>, UserAction][]
+        [PolicyDefinitionConstructor<PolicyDefinition>, UserAction, unknown][]
       >(CHECK_POLICIES_KEY, ctx.getHandler()) ?? [];
     const authUser = GqlExecutionContext.create(ctx).getContext().req
       .user as ReqAuthUser;
@@ -37,9 +37,9 @@ export class PolicyGuard implements CanActivate {
         'You must be authenticated to perform this action',
       );
     }
-    return policyConstraints.every(([Policy, action]) => {
+    return policyConstraints.every(([Policy, action, subject]) => {
       const policy = new Policy();
-      return policy.authorize(authUser, action);
+      return policy.authorize(authUser, action, subject);
     });
   }
 }
