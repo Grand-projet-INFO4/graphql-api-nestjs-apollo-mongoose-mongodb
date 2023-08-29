@@ -19,6 +19,7 @@ import type {
   SanitizedAuthUser,
   SanitizedUser,
   SanitizedCooperativeAdmin,
+  SanitizedAuthUserCooperative,
 } from './auth';
 import { SignupDTO } from './dto';
 import { addDurationFromNow } from 'src/common/utils/date-time.utils';
@@ -29,8 +30,14 @@ import { CityService } from '../city/city.service';
 import { RedisClientInstance } from 'src/redis/redis';
 import {
   CooperativeAdmin,
+  CooperativeAdminDocument,
   CooperativeAdminModel,
 } from '../cooperative-admin/schema';
+import { WithoutTimestamps } from 'src/common/types/timestamps';
+import { RemoveMethods } from 'src/common/types/utils';
+import { Driver, DriverDocument, DriverModel } from '../driver/schema';
+import { CooperativeDocument } from '../cooperative/schema';
+import { CooperativeService } from '../cooperative/cooperative.service';
 
 // Access token duration: 3 days
 export const ACCESS_TOKEN_DURATION = 15 * 60; // 15 minutes
@@ -42,6 +49,8 @@ export class AuthService {
     private userService: UserService,
     @InjectModel(CooperativeAdmin.name)
     private cooperativeAdminModel: CooperativeAdminModel,
+    @InjectModel(Driver.name) private driverModel: DriverModel,
+    private cooperativeService: CooperativeService,
     private cityService: CityService,
     private config: ConfigService,
     private jwtService: JwtService,
@@ -101,51 +110,98 @@ export class AuthService {
    * @param id The user id
    */
   async getAuthUser(id: Types.ObjectId | string): Promise<ReqAuthUser> {
-    const user = await this.userModel.findById(id).lean();
+    const user = (await this.userModel.findById(id)) as ReqAuthUser;
+
     if (!user) {
       throw new NotFoundException('The authenticated user does not exist');
     }
+
     const cooperativeUserRole = user.roles.find((role) => {
       return COOPERATIVE_USER_ROLES.includes(role);
     });
+
     if (cooperativeUserRole) {
-      const cooperativeAdminAccounts = await this.cooperativeAdminModel
-        .find({
-          user: user._id,
-        })
-        .lean();
-      switch (cooperativeUserRole) {
-        case UserRole.Manager: {
-          const authUser = {
-            ...user,
-            cooperativeRole: UserRole.Manager,
-            coopManagerAccounts: cooperativeAdminAccounts,
-          } as ReqAuthUser;
-          return authUser;
-        }
+      user.cooperativeRole =
+        cooperativeUserRole as ReqAuthUser['cooperativeRole'];
+
+      const cooperativeLookupPipeline = {
+        from: 'cooperatives',
+        foreignField: '_id',
+        as: 'cooperatives',
+        localField: 'cooperative',
+      };
+      const setCooperativeFieldPipeline = {
+        $set: {
+          cooperative: {
+            $first: '$cooperatives',
+          },
+        },
+      };
+      const removeCooperativesFieldPipeline = {
+        cooperatives: 0,
+      };
+
+      switch (user.cooperativeRole) {
+        case UserRole.Manager:
         case UserRole.Regulator: {
-          const authUser = {
-            ...user,
-            cooperativeRole: UserRole.Regulator,
-            coopRegulatorAccount: cooperativeAdminAccounts[0],
-          } as ReqAuthUser;
-          return authUser;
+          const cooperativeAdminAccounts = await this.cooperativeAdminModel
+            .aggregate<CooperativeAdminDocument>([
+              {
+                $match: { user: user._id },
+              },
+            ])
+            .lookup(cooperativeLookupPipeline)
+            .append(setCooperativeFieldPipeline)
+            .project(removeCooperativesFieldPipeline);
+          if (user.cooperativeRole === UserRole.Manager) {
+            // A cooperative manager can manage multiple cooperatives
+            user.coopManagerAccounts = cooperativeAdminAccounts;
+          } else {
+            // A cooperative regulator belongs to only 1 cooperative
+            user.coopRegulatorAccount = cooperativeAdminAccounts[0];
+          }
+          break;
         }
+
         case UserRole.Driver: {
-          const authUser = {
-            ...user,
-            cooperativeRole: UserRole.Driver,
-            coopDriverAccount: cooperativeAdminAccounts[0],
-          } as ReqAuthUser;
-          return authUser;
+          const [driver] = await this.driverModel
+            .aggregate<DriverDocument>([
+              {
+                $match: { user: user._id },
+              },
+            ])
+            .lookup(cooperativeLookupPipeline)
+            .append(setCooperativeFieldPipeline)
+            .project(removeCooperativesFieldPipeline);
+          user.coopDriverAccount = driver;
+          break;
         }
       }
     }
-    const authUser = {
-      ...user,
-      cooperativeRole: 'none',
-    } as ReqAuthUser;
-    return authUser;
+
+    !user.cooperativeRole && (user.cooperativeRole = 'none');
+
+    return user;
+  }
+
+  /**
+   * Sanitizes a cooperative document that will be included inside the sanitized auth user data
+   *
+   * @param cooperative The cooperative document
+   * @returns The sanitized cooperative data
+   */
+  private sanitizeAuthUserCooperative(
+    cooperative: CooperativeDocument,
+  ): SanitizedAuthUserCooperative {
+    return {
+      id: cooperative.id,
+      coopName: cooperative.coopName,
+      slug: cooperative.slug,
+      zone: cooperative.zone,
+      profilePhoto: this.cooperativeService.getCooperativePhotoURL(
+        cooperative.profilePhoto,
+      ),
+    };
   }
 
   /**
@@ -182,7 +238,13 @@ export class AuthService {
           ...sanitizedUser,
           cooperativeRole: UserRole.Manager,
           coopManagerAccounts: authUser.coopManagerAccounts.map((account) => {
-            return { ...account, id: account.id } as SanitizedCooperativeAdmin;
+            return {
+              ...account,
+              id: account.id,
+              cooperative: this.sanitizeAuthUserCooperative(
+                account.cooperative as CooperativeDocument,
+              ),
+            } as SanitizedCooperativeAdmin;
           }),
         } as SanitizedAuthUser;
         return sanitizedAuthUser;
@@ -202,6 +264,9 @@ export class AuthService {
           cooperativeRole: authUser.cooperativeRole,
           [accountTypeKey]: {
             ...account,
+            cooperative: this.sanitizeAuthUserCooperative(
+              account.cooperative as CooperativeDocument,
+            ),
             id: account.id,
           } as SanitizedCooperativeAdmin,
         } as SanitizedAuthUser;
@@ -268,7 +333,7 @@ export class AuthService {
       ));
 
     // The user creation data
-    const data: User = {
+    const data: RemoveMethods<WithoutTimestamps<User>> = {
       firstName: payload.firstName,
       lastName: payload.lastName,
       username: username,

@@ -7,6 +7,8 @@ import {
   CooperativeAdminDocument,
 } from '../cooperative-admin/schema';
 import { UserRole } from '../user/user.constants';
+import { Driver, DriverDocument } from '../driver/schema';
+import { Cooperative } from '../cooperative/schema';
 
 export type TokenType = 'ACCESS' | 'REFRESH';
 
@@ -29,7 +31,7 @@ export interface AccessToken {
 }
 
 // Shape of the auth user data considering the cooperative admin account fields differences based the role
-type AuthUserShape<TUser, TCooperativeAdmin> = TUser &
+type AuthUserShape<TUser, TCooperativeAdmin, TCooperativeDriver> = TUser &
   (
     | { cooperativeRole: 'none' } // For typescript intellicense to work correctly
     | {
@@ -42,12 +44,16 @@ type AuthUserShape<TUser, TCooperativeAdmin> = TUser &
       }
     | {
         cooperativeRole: UserRole.Driver;
-        coopDriverAccount: TCooperativeAdmin;
+        coopDriverAccount: TCooperativeDriver;
       }
   );
 
 // Auth user from the request
-export type ReqAuthUser = AuthUserShape<UserDocument, CooperativeAdminDocument>;
+export type ReqAuthUser = AuthUserShape<
+  UserDocument,
+  CooperativeAdminDocument,
+  DriverDocument
+>;
 
 // Sanitized auth user data
 // The auth user data consists of the user data itself plus cooperative admins accounts data
@@ -55,7 +61,7 @@ export type ReqAuthUser = AuthUserShape<UserDocument, CooperativeAdminDocument>;
 // Basically, all `_id` fields are replaced with `id`
 export type SanitizedUser = SanitizedDocument<
   ReplaceFields<
-    Omit<User, 'password'>,
+    Omit<User, 'password' | 'isAdmin'>,
     {
       city?: SanitizedDocument<
         ReplaceFields<
@@ -68,8 +74,27 @@ export type SanitizedUser = SanitizedDocument<
     }
   >
 >;
-export type SanitizedCooperativeAdmin = SanitizedDocument<CooperativeAdmin>;
+export type SanitizedAuthUserCooperative = SanitizedDocument<
+  Pick<Cooperative, 'coopName' | 'slug' | 'profilePhoto' | 'zone'>
+>;
+export type SanitizedCooperativeAdmin = SanitizedDocument<
+  ReplaceFields<
+    CooperativeAdmin,
+    {
+      cooperative: SanitizedAuthUserCooperative;
+    }
+  >
+>;
+export type SanitizedCooperativeDriver = SanitizedDocument<
+  ReplaceFields<
+    Driver,
+    {
+      cooperative: SanitizedAuthUserCooperative;
+    }
+  >
+>;
 export type SanitizedAuthUser = AuthUserShape<
   SanitizedUser,
-  SanitizedCooperativeAdmin
+  SanitizedCooperativeAdmin,
+  SanitizedCooperativeDriver
 >;
