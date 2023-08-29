@@ -8,3 +8,6 @@ export const COOPERATIVE_ZONES: CooperativeZone[] = [
   CooperativeZone.National,
   CooperativeZone.Regional,
 ];
+
+// Folder that stores cooperatives photos within the static images directory
+export const COOPERATIVE_PHOTOS_DIR = 'cooperatives';
