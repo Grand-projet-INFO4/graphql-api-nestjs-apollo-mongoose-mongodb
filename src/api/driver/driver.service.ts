@@ -1,10 +1,16 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { FilterQuery, SortOrder, Types } from 'mongoose';
+import { ConfigService } from '@nestjs/config';
+import { InjectModel } from '@nestjs/mongoose';
 
 import { BaseQueryParams, PagePaginated } from 'src/common/types/query';
 import { DriverLicenseCategory } from './driver';
 import { Driver, DriverDocument, DriverModel } from './schema';
-import { InjectModel } from '@nestjs/mongoose';
+import {
+  IMAGES_DIR,
+  STATIC_FILES_URL_PREFIX,
+} from 'src/common/constants/static-files.constants';
+import { DRIVER_PHOTOS_DIR } from './driver.constants';
 
 export type GetDriversParams = BaseQueryParams & {
   cooperativeId?: Types.ObjectId | string;
@@ -13,7 +19,10 @@ export type GetDriversParams = BaseQueryParams & {
 
 @Injectable()
 export class DriverService {
-  constructor(@InjectModel(Driver.name) private driverModel: DriverModel) {}
+  constructor(
+    @InjectModel(Driver.name) private driverModel: DriverModel,
+    private configService: ConfigService,
+  ) {}
 
   async get({
     page,
@@ -76,7 +85,7 @@ export class DriverService {
   /**
    * Gets a driver by one of its identifier fields
    *
-   * @param identifier The identifier field. It could be the id the driver license id.
+   * @param identifier The identifier field's value. It could be the id the driver license id.
    */
   async getOne(identifier: Types.ObjectId | string) {
     const filters: FilterQuery<Driver> = {};
@@ -85,12 +94,26 @@ export class DriverService {
     } else {
       filters._id = identifier;
     }
-    const driver = this.driverModel
+    const driver = await this.driverModel
       .findOne(filters)
       .populate(['user', 'cooperative', 'ongoingTrip', 'vehicle']);
     if (!driver) {
       throw new NotFoundException('Could not find the driver');
     }
     return driver;
+  }
+
+  /**
+   * Gets a driver photo's full URL path from its photo filename
+   *
+   * @param filename The photo's filename
+   */
+  getDriverPhotoURL(filename: string): string {
+    return (
+      this.configService.get('APP_URL') +
+      [STATIC_FILES_URL_PREFIX, IMAGES_DIR, DRIVER_PHOTOS_DIR, filename].join(
+        '/',
+      )
+    );
   }
 }

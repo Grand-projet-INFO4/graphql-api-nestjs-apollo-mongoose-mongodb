@@ -15,7 +15,7 @@ type Query {
 
 input GetDriversQueryFilters {
   licenseCategories: [String!]
-  cooperativeId: ID
+  cooperativeId: String
 }
 
 # Types *****************************************
