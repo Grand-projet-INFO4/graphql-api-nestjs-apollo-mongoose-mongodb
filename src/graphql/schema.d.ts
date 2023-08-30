@@ -8,6 +8,18 @@
 /* tslint:disable */
 /* eslint-disable */
 
+export enum CooperativeZone {
+    NATIONAL = "NATIONAL",
+    REGIONAL = "REGIONAL"
+}
+
+export enum SocialMediaPlatform {
+    FACEBOOK = "FACEBOOK",
+    INSTAGRAM = "INSTAGRAM",
+    TWITTER = "TWITTER",
+    TIKTOK = "TIKTOK"
+}
+
 export enum QuerySortOrder {
     asc = "asc",
     desc = "desc"
@@ -57,6 +69,7 @@ export interface IQuery {
     __typename?: 'IQuery';
     busStations(pagination: QueryPagePaginationParams, textSearch?: Nullable<QueryTextSearchParams>, filters?: Nullable<GetBusStationsQueryFilters>): PaginatedBusStations | Promise<PaginatedBusStations>;
     cities(pagination: QueryPagePaginationParams, filters?: Nullable<GetCitiesQueryFilters>, textSearch?: Nullable<QueryTextSearchParams>, sort?: Nullable<QuerySortParams>): PagePaginatedCities | Promise<PagePaginatedCities>;
+    cooperative(identifier: string): Cooperative | Promise<Cooperative>;
     drivers(pagination: QueryPagePaginationParams, textSearch?: Nullable<QueryTextSearchParams>, filters?: Nullable<GetDriversQueryFilters>, sort?: Nullable<QuerySortParams>): PaginatedDrivers | Promise<PaginatedDrivers>;
     driver(identifier: string): Driver | Promise<Driver>;
     highways(textSearch?: Nullable<QueryTextSearchParams>, sort?: Nullable<QuerySortParams>): Highway[] | Promise<Highway[]>;
@@ -116,7 +129,21 @@ export interface EmbeddedCity {
 
 export interface Cooperative {
     __typename?: 'Cooperative';
-    id?: Nullable<string>;
+    id: string;
+    coopName: string;
+    description?: Nullable<string>;
+    slug: string;
+    zone?: Nullable<CooperativeZone>;
+    profilePhoto: string;
+    transparentLogo?: Nullable<string>;
+    coverPhoto?: Nullable<string>;
+    city: EmbeddedCity;
+    address: string;
+    email?: Nullable<string>;
+    phones: string[];
+    websiteURL?: Nullable<string>;
+    socialMedias?: Nullable<SocialMediaLink[]>;
+    highways: string[];
 }
 
 export interface Driver {
@@ -131,6 +158,7 @@ export interface Driver {
     hiredAt?: Nullable<DateTime>;
     latestTripAt?: Nullable<DateTime>;
     user?: Nullable<User>;
+    cooperative?: Nullable<Cooperative>;
     createdAt: DateTime;
     updatedAt: DateTime;
 }
@@ -172,6 +200,12 @@ export interface Region {
     id: string;
     regionName: string;
     province: string;
+}
+
+export interface SocialMediaLink {
+    __typename?: 'SocialMediaLink';
+    platoform: SocialMediaPlatform;
+    url: string;
 }
 
 export interface User {

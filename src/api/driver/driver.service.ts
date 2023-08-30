@@ -11,6 +11,9 @@ import {
   STATIC_FILES_URL_PREFIX,
 } from 'src/common/constants/static-files.constants';
 import { DRIVER_PHOTOS_DIR } from './driver.constants';
+import { UserDocument } from '../user/schema';
+import { VehicleDocument } from '../vehicle/schema';
+import { TripDocument } from '../trip/schema';
 
 export type GetDriversParams = BaseQueryParams & {
   cooperativeId?: Types.ObjectId | string;
@@ -70,6 +73,7 @@ export class DriverService {
     const count = await this.driverModel.countDocuments(filters);
     const drivers = await this.driverModel
       .find(filters)
+      .populate<{ user: UserDocument | null }>('user')
       .sort(sort)
       .skip((page - 1) * limit)
       .limit(limit);
@@ -94,9 +98,11 @@ export class DriverService {
     } else {
       filters._id = identifier;
     }
-    const driver = await this.driverModel
-      .findOne(filters)
-      .populate(['user', 'cooperative', 'ongoingTrip', 'vehicle']);
+    const driver = await this.driverModel.findOne(filters).populate<{
+      user: UserDocument | null;
+      ongoingTrip: TripDocument | null;
+      vehicle: VehicleDocument | null;
+    }>(['user', 'ongoingTrip', 'vehicle']);
     if (!driver) {
       throw new NotFoundException('Could not find the driver');
     }

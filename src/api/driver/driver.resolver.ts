@@ -1,4 +1,11 @@
-import { Args, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
+import {
+  Args,
+  Context,
+  Parent,
+  Query,
+  ResolveField,
+  Resolver,
+} from '@nestjs/graphql';
 import { UseGuards } from '@nestjs/common/decorators';
 
 import { DriverService } from './driver.service';
@@ -16,6 +23,7 @@ import { AccessTokenGuard } from '../auth/guard';
 import { ReqAuthUser } from '../auth/auth';
 import { Driver, DriverDocument } from './schema';
 import { BindDriverIdArgPipe } from './pipe';
+import { AppGqlContext } from 'src/graphql/context';
 
 @Resolver('Driver')
 export class DriverResolver {
@@ -69,5 +77,16 @@ export class DriverResolver {
     return driver.photo
       ? this.driverService.getDriverPhotoURL(driver.photo)
       : null;
+  }
+
+  @ResolveField('cooperative')
+  async getCooperative(
+    @Parent() driver: DriverDocument,
+    @Context() { loaders }: AppGqlContext,
+  ) {
+    if (!driver.cooperative) return null;
+    return 'coopName' in driver.cooperative
+      ? driver.cooperative
+      : loaders.cooperativeLoader.cooperativeHavingId.load(driver.cooperative);
   }
 }
