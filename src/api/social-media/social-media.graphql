@@ -1,0 +1,20 @@
+# Types *****************************************
+
+type SocialMedia {
+  id: ID!
+  platoform: SocialMediaPlatform!
+  url: String!
+  logo: String!
+}
+
+type SocialMediaLink {
+  platoform: SocialMediaPlatform!
+  url: String!
+}
+
+enum SocialMediaPlatform {
+  FACEBOOK
+  INSTAGRAM
+  TWITTER
+  TIKTOK
+}
