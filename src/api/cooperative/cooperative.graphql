@@ -1,3 +1,30 @@
+# Queries ***************************************
+
+# Types *****************************************
+
 type Cooperative {
-  id: ID
+  id: ID!
+  coopName: String!
+  description: String
+  zone: CooperativeZone
+  profilePhoto: String!
+  transparentPhoto: String
+  coverPhoto: String
+  city: EmbeddedCity!
+  address: String!
+  email: String
+  phones: [String!]!
+  websiteURL: String
+  socialMedias: [SocialMediaLink!]
+  highways: [String!]!
+  preferences: CooperativePreferences!
+}
+
+enum CooperativeZone {
+  NATIONAL
+  REGIONAL
+}
+
+type CooperativePreferences {
+  id: ID!
 }
