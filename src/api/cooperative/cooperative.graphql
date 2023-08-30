@@ -1,14 +1,20 @@
 # Queries ***************************************
 
+type Query {
+  # Gets a cooperative by one its identifier fields
+  cooperative(identifier: ID!): Cooperative!
+}
+
 # Types *****************************************
 
 type Cooperative {
   id: ID!
   coopName: String!
   description: String
+  slug: String!
   zone: CooperativeZone
   profilePhoto: String!
-  transparentPhoto: String
+  transparentLogo: String
   coverPhoto: String
   city: EmbeddedCity!
   address: String!
@@ -17,7 +23,7 @@ type Cooperative {
   websiteURL: String
   socialMedias: [SocialMediaLink!]
   highways: [String!]!
-  preferences: CooperativePreferences!
+  # preferences: CooperativePreferences!
 }
 
 enum CooperativeZone {
@@ -25,6 +31,6 @@ enum CooperativeZone {
   REGIONAL
 }
 
-type CooperativePreferences {
-  id: ID!
-}
+# type CooperativePreferences {
+#   id: ID!
+# }
