@@ -47,6 +47,11 @@ import {
   CooperativeAdmin,
   cooperativeAdminSchema,
 } from 'src/api/cooperative-admin/schema';
+import { TrackingDeviceSeeder } from 'src/api/tracking-device/tracking-device.seeder';
+import {
+  TrackingDevice,
+  trackingDeviceSchema,
+} from 'src/api/tracking-device/schema';
 
 try {
   seeder({
@@ -103,6 +108,9 @@ try {
       MongooseModule.forFeature([
         { name: CooperativeAdmin.name, schema: cooperativeAdminSchema },
       ]),
+      MongooseModule.forFeature([
+        { name: TrackingDevice.name, schema: trackingDeviceSchema },
+      ]),
     ],
   }).run([
     UserSeeder,
@@ -122,6 +130,7 @@ try {
     PlannedTripSeeder,
     BookingSeeder,
     CooperativeAdminSeeder,
+    TrackingDeviceSeeder,
   ]);
 } catch (error) {
   console.log('Error: ' + error.message);

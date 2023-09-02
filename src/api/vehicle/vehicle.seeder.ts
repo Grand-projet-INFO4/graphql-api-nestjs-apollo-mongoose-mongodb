@@ -16,6 +16,7 @@ import { EmbeddedVehicleSeed } from './vehicle';
 import { TripSeeder } from '../trip/trip.seeder';
 import { TripStatus } from '../trip/trip.constants';
 import * as vehiclesByCooperativeSeedOptions from '../../../seed/vehicle.seed.json';
+import { TrackingDeviceSeeder } from '../tracking-device/tracking-device.seeder';
 
 export type VehicleSeederPayload = WithMongoId<
   ReplaceFields<
@@ -151,6 +152,8 @@ export class VehicleSeeder implements Seeder {
       const ongoingTripsIdsIterator = TripSeeder.createTripsIdsGenerator(
         TripStatus.Ongoing,
       )();
+      const trackingDeviceIdMap = TrackingDeviceSeeder.getTrackingDeviceIdMap();
+      const trackingDeviceMap = TrackingDeviceSeeder.getTrackingDeviceMap();
       for (const vehicle of vehicles) {
         const driversKeysItems = driversKeysMap.get(vehicle._id.toString());
         vehicle.drivers = driversKeysItems.map<mongo.BSON.ObjectId>(
@@ -158,6 +161,12 @@ export class VehicleSeeder implements Seeder {
         );
         vehicle.ongoingTrip = ongoingTripsIdsIterator.next()
           .value as mongo.BSON.ObjectId;
+        const trackerId = trackingDeviceIdMap.get(vehicle.plateId);
+        if (trackerId) {
+          vehicle.tracker = TrackingDeviceSeeder.parseEmbeddedTrackingDevice(
+            trackingDeviceMap.get(trackerId.toString()),
+          );
+        }
       }
     }
     return VehicleSeeder.vehicles;

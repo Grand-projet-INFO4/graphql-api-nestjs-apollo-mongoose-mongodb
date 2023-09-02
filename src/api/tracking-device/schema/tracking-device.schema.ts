@@ -16,7 +16,7 @@ import {
 // Tracking devices colletion name
 export const TRACKING_DEVICE_COLLECTION = 'trackingDevices';
 
-@Schema({ collection: TRACKING_DEVICE_COLLECTION, timestamps: true })
+@Schema({ collection: TRACKING_DEVICE_COLLECTION })
 export class TrackingDevice {
   // (Numéro de série)
   @Prop({ type: String, required: true, unique: true })
@@ -26,7 +26,7 @@ export class TrackingDevice {
   position: GeoJSONPoint;
 
   // Speed in km/h
-  @Prop({ type: Number, required: true })
+  @Prop({ type: Number, required: true, default: 0 })
   speed: number;
 
   // Whether the device is currently being connected to the server or not
@@ -40,15 +40,30 @@ export class TrackingDevice {
     type: MongooseSchema.ObjectId,
     ref: Cooperative.name,
     required: true,
+    index: true,
   })
-  cooperative: Types.ObjectId;
+  cooperative?: Types.ObjectId;
+
+  // Date-Time of the most recent disconnection of the device
+  @Prop()
+  disconnectedAt?: Date;
+
+  @Prop({
+    type: Date,
+    required: true,
+  })
+  createdAt: Date;
+
+  // Date-Time of the update of either the position, speed, connected or vehicle fields
+  @Prop({
+    type: Date,
+    required: true,
+  })
+  updatedAt: Date;
 }
 
 export const trackingDeviceSchema =
   SchemaFactory.createForClass(TrackingDevice);
-
-// Indexes
-trackingDeviceSchema.index({ cooperative: 1 });
 
 export type TrackingDeviceDocument = HydratedDocument<TrackingDevice>;
 export type TrackingDeviceModel = Model<TrackingDevice>;
