@@ -59,7 +59,9 @@ try {
       ConfigModule.forRoot({
         isGlobal: true,
       }),
-      MongooseModule.forRoot(process.env.DATABASE_URL as string),
+      MongooseModule.forRoot(process.env.DATABASE_URL as string, {
+        directConnection: true
+      }),
       MongooseModule.forFeature([{ name: Region.name, schema: regionSchema }]),
       MongooseModule.forFeature([{ name: City.name, schema: citySchema }]),
       MongooseModule.forFeature([{ name: User.name, schema: userSchema }]),

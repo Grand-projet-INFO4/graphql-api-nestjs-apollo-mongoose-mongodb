@@ -42,6 +42,7 @@ import { CooperativeAdminModule } from './api/cooperative-admin/cooperative-admi
     }),
     MongooseModule.forRoot(process.env.DATABASE_URL as string, {
       autoIndex: !isProductionEnvironment(process.env.NODE_ENV),
+      directConnection: true
     }),
     UserModule,
     DataloaderModule,
