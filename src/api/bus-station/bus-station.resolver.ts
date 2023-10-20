@@ -9,6 +9,7 @@ import {
   QueryTextSearchParams,
 } from 'src/graphql/schema';
 import { BusStationDocument } from './schema';
+import { BoundingsBoxInput } from 'src/common/types/geojson';
 
 @Resolver('BusStation')
 export class BusStationResolver {
@@ -26,6 +27,7 @@ export class BusStationResolver {
       ...textSearch,
       ...filters,
       nearPoint: filters?.nearPoint as [number, number] | undefined,
+      boundingsBox: filters?.boundingsBox as BoundingsBoxInput,
       sortBy: sort?.sortBy ?? 'updatedAt',
       order: sort?.order,
     });

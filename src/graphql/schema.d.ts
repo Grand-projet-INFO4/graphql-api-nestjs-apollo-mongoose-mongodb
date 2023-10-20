@@ -34,6 +34,7 @@ export interface GetBusStationsQueryFilters {
     cityId?: Nullable<string>;
     highways?: Nullable<string[]>;
     nearPoint?: Nullable<number[]>;
+    boundingsBox?: Nullable<number[][]>;
 }
 
 export interface GetCitiesQueryFilters {

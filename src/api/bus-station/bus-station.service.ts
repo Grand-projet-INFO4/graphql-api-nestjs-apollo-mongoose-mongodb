@@ -11,12 +11,15 @@ import {
 } from 'src/common/constants/static-files.constants';
 import { BUS_STATIONS_PHOTOS_DIR } from './bus-station.constants';
 import { GeoJSONType } from 'src/common/constants/geojson.constants';
+import { BoundingsBoxInput } from 'src/common/types/geojson';
+import { getBoundingsBoxPolygon } from 'src/common/utils/geojson.utils';
 
 export type GetBusStationsParams = BaseQueryParams & {
   highways?: string[];
   cityId?: Types.ObjectId | string;
   regionId?: Types.ObjectId | string;
   nearPoint?: [number, number];
+  boundingsBox?: BoundingsBoxInput
 };
 
 @Injectable()
@@ -35,6 +38,7 @@ export class BusStationService {
     regionId,
     highways,
     nearPoint,
+    boundingsBox,
     sortBy = 'updatedAt',
     order = 'asc',
   }: GetBusStationsParams): Promise<PagePaginated<BusStationDocument>> {
@@ -44,6 +48,14 @@ export class BusStationService {
     cityId && (filters['city._id'] = cityId);
     regionId && (filters['city.region._id'] = regionId);
     highways && (filters.highways = { $in: highways });
+    boundingsBox && (filters.position = {
+      $geoWithin: {
+        $geometry: {
+          type: "Polygon",
+          coordinates: getBoundingsBoxPolygon(boundingsBox)
+        }
+      }
+    });
 
     const count = await this.busStationModel.countDocuments(filters);
 
@@ -62,13 +74,14 @@ export class BusStationService {
       .find(filters)
       .skip((page - 1) * limit)
       .limit(limit);
-    // We should not sort the query if the `nearPoint` filter is on
-    // since the `$nearSphere` operator takes care of that
-    !nearPoint &&
-      (query = query.sort([
+    // We should not explicitly sort the query
+    // if the $geoWithin or $nearSphere filter operators are used
+    if (!nearPoint && !boundingsBox) {
+      query = query.sort([
         ['city.weight', 'desc'],
         [sortBy, order],
-      ]));
+      ]);
+    }
 
     const busStations = await query.exec();
 

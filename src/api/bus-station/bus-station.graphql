@@ -13,6 +13,7 @@ input GetBusStationsQueryFilters {
   cityId: ID
   highways: [String!]
   nearPoint: [Float!]
+  boundingsBox: [[Float!]!]
 }
 
 # Types *****************************************
