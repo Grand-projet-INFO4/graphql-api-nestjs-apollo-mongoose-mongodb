@@ -47,6 +47,12 @@ export interface GetDriversQueryFilters {
     cooperativeId?: Nullable<string>;
 }
 
+export interface GetParkingLotsQueryFilters {
+    cooperativeId?: Nullable<string>;
+    nearPoint?: Nullable<number[]>;
+    boundingsBox?: Nullable<number[][]>;
+}
+
 export interface GetRegionsQueryFilters {
     province?: Nullable<string>;
 }
@@ -75,6 +81,7 @@ export interface IQuery {
     driver(identifier: string): Driver | Promise<Driver>;
     highways(textSearch?: Nullable<QueryTextSearchParams>, sort?: Nullable<QuerySortParams>): Highway[] | Promise<Highway[]>;
     highway(identifier?: Nullable<string>): Highway | Promise<Highway>;
+    parkingLots(pagination: QueryPagePaginationParams, sort?: Nullable<QuerySortParams>, filters?: Nullable<GetParkingLotsQueryFilters>): PaginatedParkingLots | Promise<PaginatedParkingLots>;
     regions(filters?: Nullable<GetRegionsQueryFilters>, sort?: Nullable<QuerySortParams>): Region[] | Promise<Region[]>;
     users(): User[] | Promise<User[]>;
 }
@@ -188,6 +195,38 @@ export interface Highway {
     updatedAt: DateTime;
 }
 
+export interface ParkingLot {
+    __typename?: 'ParkingLot';
+    id: string;
+    address: string;
+    locationHint?: Nullable<string>;
+    position: GeoJSONPoint;
+    city?: Nullable<EmbeddedCity>;
+    mainPhoto: CooperativePhoto;
+    phones?: Nullable<string[]>;
+    openHours: WeekOpenHours;
+    cooperative: Cooperative;
+    busStation?: Nullable<BusStation>;
+}
+
+export interface PaginatedParkingLots {
+    __typename?: 'PaginatedParkingLots';
+    page: number;
+    limit: number;
+    count: number;
+    items: ParkingLot[];
+}
+
+export interface CooperativePhoto {
+    __typename?: 'CooperativePhoto';
+    id: string;
+    filename: string;
+    url: string;
+    description?: Nullable<string>;
+    cooperativeId: string;
+    parkingLotId?: Nullable<string>;
+}
+
 export interface EmbeddedPhoto {
     __typename?: 'EmbeddedPhoto';
     id: string;
@@ -226,6 +265,13 @@ export interface GeoJSONPoint {
     __typename?: 'GeoJSONPoint';
     type: GeoJSONType;
     coordinates: number[];
+}
+
+export interface WeekOpenHours {
+    __typename?: 'WeekOpenHours';
+    opensAt: string;
+    closesAt: string;
+    tzOffset: string;
 }
 
 export type Void = any;

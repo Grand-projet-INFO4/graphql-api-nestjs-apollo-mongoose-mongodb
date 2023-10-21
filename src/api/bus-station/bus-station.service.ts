@@ -19,7 +19,7 @@ export type GetBusStationsParams = BaseQueryParams & {
   cityId?: Types.ObjectId | string;
   regionId?: Types.ObjectId | string;
   nearPoint?: [number, number];
-  boundingsBox?: BoundingsBoxInput
+  boundingsBox?: BoundingsBoxInput;
 };
 
 @Injectable()
@@ -48,14 +48,15 @@ export class BusStationService {
     cityId && (filters['city._id'] = cityId);
     regionId && (filters['city.region._id'] = regionId);
     highways && (filters.highways = { $in: highways });
-    boundingsBox && (filters.position = {
-      $geoWithin: {
-        $geometry: {
-          type: "Polygon",
-          coordinates: getBoundingsBoxPolygon(boundingsBox)
-        }
-      }
-    });
+    boundingsBox &&
+      (filters.position = {
+        $geoWithin: {
+          $geometry: {
+            type: GeoJSONType.Polygon,
+            coordinates: getBoundingsBoxPolygon(boundingsBox),
+          },
+        },
+      });
 
     const count = await this.busStationModel.countDocuments(filters);
 
