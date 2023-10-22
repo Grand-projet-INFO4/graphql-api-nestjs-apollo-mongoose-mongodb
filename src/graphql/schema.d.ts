@@ -101,6 +101,13 @@ export interface GetRegionsQueryFilters {
     province?: Nullable<string>;
 }
 
+export interface GetRoutesQueryFilters {
+    cooperativeId?: Nullable<string>;
+    parkingLotId?: Nullable<string>;
+    cityId?: Nullable<string>;
+    highways?: Nullable<string[]>;
+}
+
 export interface GetVehiclesQueryFilters {
     cooperativeId?: Nullable<string>;
     nearPoint?: Nullable<number[]>;
@@ -149,6 +156,7 @@ export interface IQuery {
     highway(identifier?: Nullable<string>): Highway | Promise<Highway>;
     parkingLots(pagination: QueryPagePaginationParams, sort?: Nullable<QuerySortParams>, filters?: Nullable<GetParkingLotsQueryFilters>): PaginatedParkingLots | Promise<PaginatedParkingLots>;
     regions(filters?: Nullable<GetRegionsQueryFilters>, sort?: Nullable<QuerySortParams>): Region[] | Promise<Region[]>;
+    routes(pagination: QueryPagePaginationParams, sort?: Nullable<QuerySortParams>, filters?: Nullable<GetRoutesQueryFilters>): PagePaginatedRoutes | Promise<PagePaginatedRoutes>;
     users(): User[] | Promise<User[]>;
     vehicles(pagination: QueryPagePaginationParams, sort?: Nullable<QuerySortParams>, filters?: Nullable<GetVehiclesQueryFilters>): Nullable<PagePaginatedVehicles> | Promise<Nullable<PagePaginatedVehicles>>;
 }
@@ -287,7 +295,7 @@ export interface ParkingLot {
     locationHint?: Nullable<string>;
     position: GeoJSONPoint;
     city?: Nullable<EmbeddedCity>;
-    mainPhoto: CooperativePhoto;
+    mainPhoto?: Nullable<CooperativePhoto>;
     phones?: Nullable<string[]>;
     openHours: WeekOpenHours;
     cooperative: Cooperative;
@@ -342,8 +350,29 @@ export interface Region {
     province: string;
 }
 
+export interface Route {
+    __typename?: 'Route';
+    id: string;
+    fee: number;
+    approxDuration: number;
+    maxDuration: number;
+    highways: string[];
+    distance: number;
+    cooperative: Cooperative;
+    parkingLots: ParkingLot[];
+}
+
+export interface PagePaginatedRoutes {
+    __typename?: 'PagePaginatedRoutes';
+    page: number;
+    limit: number;
+    count: number;
+    items: Route[];
+}
+
 export interface EmbeddedRoute {
     __typename?: 'EmbeddedRoute';
+    id: string;
     fee: number;
     approxDuration: number;
     maxDuration: number;

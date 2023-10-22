@@ -1,6 +1,6 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
 
-import { CityService } from './city.service';
+import { CityService } from '../city.service';
 import {
   GetCitiesQueryFilters,
   QueryPagePaginationParams,

@@ -1,8 +1,44 @@
+# Queries *************************************************
+
+type Query {
+  routes(
+    pagination: QueryPagePaginationParams!
+    sort: QuerySortParams
+    filters: GetRoutesQueryFilters
+  ): PagePaginatedRoutes!
+}
+
+input GetRoutesQueryFilters {
+  cooperativeId: ID
+  parkingLotId: ID
+  cityId: ID
+  highways: [String!]
+}
+
 # Types ***************************************************
 
-type EmbeddedRoute {
+type Route {
+  id: ID!
   fee: Int!
-  approxDuration: Int!
+  approxDuration: Float!
+  maxDuration: Int!
+  highways: [String!]!
+  distance: Float!
+  cooperative: Cooperative!
+  parkingLots: [ParkingLot!]!
+}
+
+type PagePaginatedRoutes {
+  page: Int!
+  limit: Int!
+  count: Int!
+  items: [Route!]!
+}
+
+type EmbeddedRoute {
+  id: ID!
+  fee: Int!
+  approxDuration: Float!
   maxDuration: Int!
   highways: [String!]!
   distance: Float!

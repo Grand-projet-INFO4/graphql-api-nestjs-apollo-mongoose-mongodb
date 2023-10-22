@@ -87,13 +87,13 @@ export class VehicleService {
       query = query.sort([[sortBy, order]]);
     }
 
-    const busStations = await query.exec();
+    const vehicles = await query.exec();
 
     return {
       page,
       limit,
       count,
-      items: busStations,
+      items: vehicles,
     };
   }
 

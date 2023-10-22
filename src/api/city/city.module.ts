@@ -4,7 +4,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { City, citySchema } from './schema';
 import { CityFieldExistsValidator } from './validator';
 import { CityService } from './city.service';
-import { CityResolver } from './city.resolver';
+import { CityResolver, EmbeddedCityResolver } from './resolver';
 
 const CityMongooseModule = MongooseModule.forFeature([
   {
@@ -15,7 +15,12 @@ const CityMongooseModule = MongooseModule.forFeature([
 
 @Module({
   imports: [CityMongooseModule],
-  providers: [CityFieldExistsValidator, CityService, CityResolver],
+  providers: [
+    CityFieldExistsValidator,
+    CityService,
+    CityResolver,
+    EmbeddedCityResolver,
+  ],
   exports: [CityMongooseModule, CityService],
 })
 export class CityModule {}

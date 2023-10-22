@@ -6,6 +6,9 @@ import {
   CooperativePhoto,
   cooperativePhotoSchema,
 } from './schema/cooperative-photo.schema';
+import { CooperativePhotoResolver } from './resolver';
+import { PhotoService } from './photo.service';
+import { PhotoDataLoader } from './photo.dataloader';
 
 const photoMongooseModule = MongooseModule.forFeature([
   {
@@ -19,6 +22,7 @@ const photoMongooseModule = MongooseModule.forFeature([
 
 @Module({
   imports: [photoMongooseModule],
-  exports: [photoMongooseModule],
+  providers: [CooperativePhotoResolver, PhotoService, PhotoDataLoader],
+  exports: [photoMongooseModule, PhotoService, PhotoDataLoader],
 })
 export class PhotoModule {}

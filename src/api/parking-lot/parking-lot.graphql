@@ -22,7 +22,7 @@ type ParkingLot {
   locationHint: String
   position: GeoJSONPoint!
   city: EmbeddedCity
-  mainPhoto: CooperativePhoto!
+  mainPhoto: CooperativePhoto
   phones: [String!]
   openHours: WeekOpenHours!
   cooperative: Cooperative!

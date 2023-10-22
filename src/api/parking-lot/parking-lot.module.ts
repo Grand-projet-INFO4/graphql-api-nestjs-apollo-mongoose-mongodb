@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
+
 import { ParkingLot, parkingLotSchema } from './schema';
 import { ParkingLotResolver } from './parking-lot.resolver';
 import { ParkingLotService } from './parking-lot.service';
