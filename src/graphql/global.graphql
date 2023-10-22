@@ -44,3 +44,18 @@ type WeekOpenHours {
   closesAt: String!
   tzOffset: String!
 }
+
+# Payment details
+type Payment {
+  amount: Float!
+  paidAt: DateTime!
+  method: PaymentMethod!
+  service: String!
+}
+# Payment method
+enum PaymentMethod {
+  CASH
+  MOBILE_MONEY
+  DEBIT_CARD
+  CREDIT_CARD
+}

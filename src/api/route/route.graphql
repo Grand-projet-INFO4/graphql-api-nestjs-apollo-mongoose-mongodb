@@ -1,0 +1,11 @@
+# Types ***************************************************
+
+type EmbeddedRoute {
+  fee: Int!
+  approxDuration: Int!
+  maxDuration: Int!
+  highways: [String!]!
+  distance: Float!
+  cooperative: Cooperative!
+  parkingLots: [EmbeddedParkingLot!]!
+}

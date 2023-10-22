@@ -66,6 +66,7 @@ function generateVehiclePhotosSeed(mainPhoto: string, photos: string[]) {
     if (photo === mainPhoto) {
       mainPhotoId = _photo._id;
     }
+    _photos.push(_photo);
   }
   return {
     mainPhotoId,

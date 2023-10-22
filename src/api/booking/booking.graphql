@@ -1,0 +1,33 @@
+# Types ***************************************************
+
+type EmbeddedBooking {
+  personName: String!
+  phone: String!
+  email: String
+  seats: [String!]!
+  mode: BookingMode!
+  payment: Payment!
+  secretCode: String
+  attendance: BookingPersonAttendance!
+  parkingLot: ParkingLot
+  user: User
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+enum BookingMode {
+  IN_PERSON
+  ONLINE
+}
+
+enum BookingPersonAttendance {
+  WAITING
+  CONFIRMED
+  MISSED
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+}

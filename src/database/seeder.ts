@@ -60,7 +60,8 @@ try {
         isGlobal: true,
       }),
       MongooseModule.forRoot(process.env.DATABASE_URL as string, {
-        directConnection: true
+        directConnection: true,
+        autoIndex: true,
       }),
       MongooseModule.forFeature([{ name: Region.name, schema: regionSchema }]),
       MongooseModule.forFeature([{ name: City.name, schema: citySchema }]),

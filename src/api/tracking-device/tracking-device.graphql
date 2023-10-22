@@ -1,0 +1,10 @@
+# Types ***************************************************
+
+type EmbeddedTrackingDevice {
+  serialId: String!
+  position: GeoJSONPoint!
+  speed: Float!
+  connected: Boolean!
+  disconnectedAt: DateTime!
+  updatedAt: DateTime!
+}

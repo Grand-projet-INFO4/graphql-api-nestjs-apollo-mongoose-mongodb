@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 // Schema for storing the number of seats of a vehicles
-@Schema({ timestamps: true, autoCreate: false })
+@Schema({ timestamps: false, autoCreate: false })
 export class VehicleSeatsCount {
   // Front seats count
   @Prop({

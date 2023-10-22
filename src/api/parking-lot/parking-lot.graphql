@@ -27,6 +27,8 @@ type ParkingLot {
   openHours: WeekOpenHours!
   cooperative: Cooperative!
   busStation: BusStation
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type PaginatedParkingLots {
@@ -34,4 +36,16 @@ type PaginatedParkingLots {
   limit: Int!
   count: Int!
   items: [ParkingLot!]!
+}
+
+type EmbeddedParkingLot {
+  id: ID!
+  address: String!
+  locationHint: String
+  position: GeoJSONPoint!
+  city: EmbeddedCity
+  openHours: WeekOpenHours!
+  cooperative: Cooperative!
+  mainPhoto: CooperativePhoto!
+  busStation: BusStation
 }

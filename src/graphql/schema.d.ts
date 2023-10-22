@@ -8,6 +8,23 @@
 /* tslint:disable */
 /* eslint-disable */
 
+export enum BookingMode {
+    IN_PERSON = "IN_PERSON",
+    ONLINE = "ONLINE"
+}
+
+export enum BookingPersonAttendance {
+    WAITING = "WAITING",
+    CONFIRMED = "CONFIRMED",
+    MISSED = "MISSED"
+}
+
+export enum BookingStatus {
+    PENDING = "PENDING",
+    CONFIRMED = "CONFIRMED",
+    CANCELLED = "CANCELLED"
+}
+
 export enum CooperativeZone {
     NATIONAL = "NATIONAL",
     REGIONAL = "REGIONAL"
@@ -20,6 +37,26 @@ export enum SocialMediaPlatform {
     TIKTOK = "TIKTOK"
 }
 
+export enum TripStatus {
+    ONGOING = "ONGOING",
+    COMPLETED = "COMPLETED",
+    INTERRUPTED = "INTERRUPTED"
+}
+
+export enum VehicleStatus {
+    IN_USE = "IN_USE",
+    OUT_OF_SERVICE = "OUT_OF_SERVICE",
+    REVIEWED = "REVIEWED",
+    MAINTAINED = "MAINTAINED",
+    REPAIRED = "REPAIRED"
+}
+
+export enum VehicleState {
+    OPERATIONAL = "OPERATIONAL",
+    FAILING = "FAILING",
+    DAMAGED = "DAMAGED"
+}
+
 export enum QuerySortOrder {
     asc = "asc",
     desc = "desc"
@@ -27,6 +64,13 @@ export enum QuerySortOrder {
 
 export enum GeoJSONType {
     Point = "Point"
+}
+
+export enum PaymentMethod {
+    CASH = "CASH",
+    MOBILE_MONEY = "MOBILE_MONEY",
+    DEBIT_CARD = "DEBIT_CARD",
+    CREDIT_CARD = "CREDIT_CARD"
 }
 
 export interface GetBusStationsQueryFilters {
@@ -57,6 +101,12 @@ export interface GetRegionsQueryFilters {
     province?: Nullable<string>;
 }
 
+export interface GetVehiclesQueryFilters {
+    cooperativeId?: Nullable<string>;
+    nearPoint?: Nullable<number[]>;
+    boundingsBox?: Nullable<number[][]>;
+}
+
 export interface QuerySortParams {
     sortBy: string;
     order: QuerySortOrder;
@@ -72,6 +122,22 @@ export interface QueryTextSearchParams {
     text?: Nullable<string>;
 }
 
+export interface EmbeddedBooking {
+    __typename?: 'EmbeddedBooking';
+    personName: string;
+    phone: string;
+    email?: Nullable<string>;
+    seats: string[];
+    mode: BookingMode;
+    payment: Payment;
+    secretCode?: Nullable<string>;
+    attendance: BookingPersonAttendance;
+    parkingLot?: Nullable<ParkingLot>;
+    user?: Nullable<User>;
+    createdAt: DateTime;
+    updatedAt: DateTime;
+}
+
 export interface IQuery {
     __typename?: 'IQuery';
     busStations(pagination: QueryPagePaginationParams, textSearch?: Nullable<QueryTextSearchParams>, filters?: Nullable<GetBusStationsQueryFilters>): PaginatedBusStations | Promise<PaginatedBusStations>;
@@ -84,6 +150,7 @@ export interface IQuery {
     parkingLots(pagination: QueryPagePaginationParams, sort?: Nullable<QuerySortParams>, filters?: Nullable<GetParkingLotsQueryFilters>): PaginatedParkingLots | Promise<PaginatedParkingLots>;
     regions(filters?: Nullable<GetRegionsQueryFilters>, sort?: Nullable<QuerySortParams>): Region[] | Promise<Region[]>;
     users(): User[] | Promise<User[]>;
+    vehicles(pagination: QueryPagePaginationParams, sort?: Nullable<QuerySortParams>, filters?: Nullable<GetVehiclesQueryFilters>): Nullable<PagePaginatedVehicles> | Promise<Nullable<PagePaginatedVehicles>>;
 }
 
 export interface BusStation {
@@ -109,6 +176,13 @@ export interface PaginatedBusStations {
     limit: number;
     count: number;
     items: BusStation[];
+}
+
+export interface EmbeddedCarModel {
+    __typename?: 'EmbeddedCarModel';
+    id: string;
+    modelName: string;
+    brand: string;
 }
 
 export interface City {
@@ -185,6 +259,17 @@ export interface PaginatedDrivers {
     items: Driver[];
 }
 
+export interface TripDriver {
+    __typename?: 'TripDriver';
+    id: string;
+    firstName: string;
+    lastName: string;
+    license: DriverLicense;
+    phones: string[];
+    hiredAt: DateTime;
+    latestTripAt?: Nullable<DateTime>;
+}
+
 export interface Highway {
     __typename?: 'Highway';
     id: string;
@@ -207,6 +292,8 @@ export interface ParkingLot {
     openHours: WeekOpenHours;
     cooperative: Cooperative;
     busStation?: Nullable<BusStation>;
+    createdAt: DateTime;
+    updatedAt: DateTime;
 }
 
 export interface PaginatedParkingLots {
@@ -215,6 +302,19 @@ export interface PaginatedParkingLots {
     limit: number;
     count: number;
     items: ParkingLot[];
+}
+
+export interface EmbeddedParkingLot {
+    __typename?: 'EmbeddedParkingLot';
+    id: string;
+    address: string;
+    locationHint?: Nullable<string>;
+    position: GeoJSONPoint;
+    city?: Nullable<EmbeddedCity>;
+    openHours: WeekOpenHours;
+    cooperative: Cooperative;
+    mainPhoto: CooperativePhoto;
+    busStation?: Nullable<BusStation>;
 }
 
 export interface CooperativePhoto {
@@ -242,10 +342,58 @@ export interface Region {
     province: string;
 }
 
+export interface EmbeddedRoute {
+    __typename?: 'EmbeddedRoute';
+    fee: number;
+    approxDuration: number;
+    maxDuration: number;
+    highways: string[];
+    distance: number;
+    cooperative: Cooperative;
+    parkingLots: EmbeddedParkingLot[];
+}
+
 export interface SocialMediaLink {
     __typename?: 'SocialMediaLink';
     platoform: SocialMediaPlatform;
     url: string;
+}
+
+export interface EmbeddedTrackingDevice {
+    __typename?: 'EmbeddedTrackingDevice';
+    serialId: string;
+    position: GeoJSONPoint;
+    speed: number;
+    connected: boolean;
+    disconnectedAt: DateTime;
+    updatedAt: DateTime;
+}
+
+export interface Trip {
+    __typename?: 'Trip';
+    id: string;
+    route: EmbeddedRoute;
+    path: TripPath;
+    currentVehicle: EmbeddedVehicle;
+    currentDriver: TripDriver;
+    reservedSeats?: Nullable<string[]>;
+    bookings: EmbeddedBooking[];
+    status: TripStatus;
+    checkoutDelay?: Nullable<number>;
+    startsAt: DateTime;
+    startedAt?: Nullable<DateTime>;
+    completedAt?: Nullable<DateTime>;
+    vehicle: Vehicle;
+    drivers: Driver[];
+    cooperative: Cooperative;
+    createdAt: DateTime;
+    updatedAt: DateTime;
+}
+
+export interface TripPath {
+    __typename?: 'TripPath';
+    from: EmbeddedCity;
+    to: EmbeddedCity;
 }
 
 export interface User {
@@ -261,6 +409,52 @@ export interface User {
     updatedAt: DateTime;
 }
 
+export interface Vehicle {
+    __typename?: 'Vehicle';
+    id: string;
+    plateId: string;
+    mainPhotoId?: Nullable<string>;
+    mainPhoto?: Nullable<EmbeddedPhoto>;
+    photos?: Nullable<EmbeddedPhoto[]>;
+    status: VehicleStatus;
+    state: VehicleState;
+    tracker?: Nullable<EmbeddedTrackingDevice>;
+    model: EmbeddedCarModel;
+    seatsCount: VehicleSeatsCount;
+    removedSeats?: Nullable<string[]>;
+    cooperative: Cooperative;
+    ongoingTrip?: Nullable<Trip>;
+    drivers: Driver[];
+    createdAt: DateTime;
+    updatedAt: DateTime;
+}
+
+export interface VehicleSeatsCount {
+    __typename?: 'VehicleSeatsCount';
+    front: number;
+    rearCols: number;
+    rearRows: number;
+}
+
+export interface EmbeddedVehicle {
+    __typename?: 'EmbeddedVehicle';
+    id: string;
+    plateId: string;
+    state: VehicleState;
+    model: EmbeddedCarModel;
+    seatsCount: VehicleSeatsCount;
+    removedSeats?: Nullable<string[]>;
+    cooperative: Cooperative;
+}
+
+export interface PagePaginatedVehicles {
+    __typename?: 'PagePaginatedVehicles';
+    page: number;
+    limit: number;
+    count: number;
+    items: Vehicle[];
+}
+
 export interface GeoJSONPoint {
     __typename?: 'GeoJSONPoint';
     type: GeoJSONType;
@@ -272,6 +466,14 @@ export interface WeekOpenHours {
     opensAt: string;
     closesAt: string;
     tzOffset: string;
+}
+
+export interface Payment {
+    __typename?: 'Payment';
+    amount: number;
+    paidAt: DateTime;
+    method: PaymentMethod;
+    service: string;
 }
 
 export type Void = any;

@@ -1,0 +1,32 @@
+# Types ***************************************************
+
+type Trip {
+  id: ID!
+  route: EmbeddedRoute!
+  path: TripPath!
+  currentVehicle: EmbeddedVehicle!
+  currentDriver: TripDriver!
+  reservedSeats: [String!]
+  bookings: [EmbeddedBooking!]!
+  status: TripStatus!
+  checkoutDelay: Int
+  startsAt: DateTime!
+  startedAt: DateTime
+  completedAt: DateTime
+  vehicle: Vehicle!
+  drivers: [Driver!]!
+  cooperative: Cooperative!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type TripPath {
+  from: EmbeddedCity!
+  to: EmbeddedCity!
+}
+
+enum TripStatus {
+  ONGOING
+  COMPLETED
+  INTERRUPTED
+}

@@ -47,3 +47,13 @@ type PaginatedDrivers {
   count: Int!
   items: [Driver!]!
 }
+
+type TripDriver {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  license: DriverLicense!
+  phones: [String!]!
+  hiredAt: DateTime!
+  latestTripAt: DateTime
+}
