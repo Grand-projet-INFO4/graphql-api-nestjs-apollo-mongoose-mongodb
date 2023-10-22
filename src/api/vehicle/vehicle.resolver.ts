@@ -62,4 +62,12 @@ export class VehicleResolver {
       description: photoDoc.description,
     };
   }
+
+  /**
+   * Total seats count field resolver
+   */
+  @ResolveField('totalSeatsCount')
+  getTotalSeatsCount(@Parent() vehicle: VehicleDocument) {
+    return this.vehicleService.countVehicleSeats(vehicle);
+  }
 }

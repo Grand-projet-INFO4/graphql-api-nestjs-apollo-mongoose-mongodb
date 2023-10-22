@@ -30,6 +30,13 @@ export enum CooperativeZone {
     REGIONAL = "REGIONAL"
 }
 
+export enum PlannedTripStatus {
+    PENDING = "PENDING",
+    FILLING = "FILLING",
+    READY = "READY",
+    CANCELLED = "CANCELLED"
+}
+
 export enum SocialMediaPlatform {
     FACEBOOK = "FACEBOOK",
     INSTAGRAM = "INSTAGRAM",
@@ -97,6 +104,18 @@ export interface GetParkingLotsQueryFilters {
     boundingsBox?: Nullable<number[][]>;
 }
 
+export interface GetPlannedTripsFilters {
+    cooperativeId?: Nullable<string>;
+    fromCityId?: Nullable<string>;
+    fromParkingLotId?: Nullable<string>;
+    toCityId?: Nullable<string>;
+    toParkingLotId?: Nullable<string>;
+    closedPath?: Nullable<boolean>;
+    status?: Nullable<PlannedTripStatus>;
+    availSeatsCount?: Nullable<number>;
+    startsAfter?: Nullable<string>;
+}
+
 export interface GetRegionsQueryFilters {
     province?: Nullable<string>;
 }
@@ -131,6 +150,7 @@ export interface QueryTextSearchParams {
 
 export interface EmbeddedBooking {
     __typename?: 'EmbeddedBooking';
+    id: string;
     personName: string;
     phone: string;
     email?: Nullable<string>;
@@ -155,6 +175,7 @@ export interface IQuery {
     highways(textSearch?: Nullable<QueryTextSearchParams>, sort?: Nullable<QuerySortParams>): Highway[] | Promise<Highway[]>;
     highway(identifier?: Nullable<string>): Highway | Promise<Highway>;
     parkingLots(pagination: QueryPagePaginationParams, sort?: Nullable<QuerySortParams>, filters?: Nullable<GetParkingLotsQueryFilters>): PaginatedParkingLots | Promise<PaginatedParkingLots>;
+    plannedTrips(pagination: QueryPagePaginationParams, filters?: Nullable<GetPlannedTripsFilters>): PagePaginatedPlannedTrips | Promise<PagePaginatedPlannedTrips>;
     regions(filters?: Nullable<GetRegionsQueryFilters>, sort?: Nullable<QuerySortParams>): Region[] | Promise<Region[]>;
     routes(pagination: QueryPagePaginationParams, sort?: Nullable<QuerySortParams>, filters?: Nullable<GetRoutesQueryFilters>): PagePaginatedRoutes | Promise<PagePaginatedRoutes>;
     users(): User[] | Promise<User[]>;
@@ -343,6 +364,32 @@ export interface EmbeddedPhoto {
     description?: Nullable<string>;
 }
 
+export interface PlannedTrip {
+    __typename?: 'PlannedTrip';
+    id: string;
+    route: EmbeddedRoute;
+    path: TripPath;
+    reservedSeats?: Nullable<string[]>;
+    availSeatsCount: number;
+    bookings: EmbeddedBooking[];
+    status: PlannedTripStatus;
+    checkoutDelay?: Nullable<number>;
+    startsAt: DateTime;
+    vehicle: Vehicle;
+    drivers: Driver[];
+    cooperative: Cooperative;
+    createdAt: DateTime;
+    updatedAt: DateTime;
+}
+
+export interface PagePaginatedPlannedTrips {
+    __typename?: 'PagePaginatedPlannedTrips';
+    page: number;
+    limit: number;
+    count: number;
+    items: PlannedTrip[];
+}
+
 export interface Region {
     __typename?: 'Region';
     id: string;
@@ -451,6 +498,7 @@ export interface Vehicle {
     model: EmbeddedCarModel;
     seatsCount: VehicleSeatsCount;
     removedSeats?: Nullable<string[]>;
+    totalSeatsCount: number;
     cooperative: Cooperative;
     ongoingTrip?: Nullable<Trip>;
     drivers: Driver[];

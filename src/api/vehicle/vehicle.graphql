@@ -28,6 +28,7 @@ type Vehicle {
   model: EmbeddedCarModel!
   seatsCount: VehicleSeatsCount!
   removedSeats: [String!]
+  totalSeatsCount: Int!
   cooperative: Cooperative!
   ongoingTrip: Trip
   drivers: [Driver!]!

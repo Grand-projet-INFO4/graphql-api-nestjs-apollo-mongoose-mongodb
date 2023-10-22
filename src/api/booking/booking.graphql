@@ -1,6 +1,7 @@
 # Types ***************************************************
 
 type EmbeddedBooking {
+  id: ID!
   personName: String!
   phone: String!
   email: String

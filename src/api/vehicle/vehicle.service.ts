@@ -108,4 +108,15 @@ export class VehicleService {
       )
     );
   }
+
+  /**
+   * Counts the total number of seats of a vehicle
+   */
+  countVehicleSeats(vehicle: VehicleDocument): number {
+    let count: number =
+      vehicle.seatsCount.front +
+      vehicle.seatsCount.rearCols * vehicle.seatsCount.rearRows;
+    vehicle.removedSeats && (count += vehicle.removedSeats.length);
+    return count;
+  }
 }
