@@ -1,4 +1,41 @@
+# Queries *************************************************
+
+type Query {
+  bookings(
+    pagination: QueryPagePaginationParams!
+    sort: QuerySortParams
+    textSearch: QueryTextSearchParams
+    filters: GetBookingsQueryFilters
+  ): PagePaginatedBookings!
+}
+
+input GetBookingsQueryFilters {
+  cooperativeId: ID
+  plannedTripId: ID
+  tripId: ID
+  mode: BookingMode
+}
+
 # Types ***************************************************
+
+type Booking {
+  id: ID!
+  personName: String!
+  phone: String!
+  email: String
+  seats: [String!]!
+  mode: BookingMode!
+  payment: Payment!
+  secretCode: String
+  attendance: BookingPersonAttendance!
+  parkingLot: ParkingLot
+  plannedTrip: PlannedTrip
+  trip: Trip
+  cooperative: Cooperative!
+  user: User
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
 
 type EmbeddedBooking {
   id: ID!
@@ -31,4 +68,11 @@ enum BookingStatus {
   PENDING
   CONFIRMED
   CANCELLED
+}
+
+type PagePaginatedBookings {
+  page: Int!
+  limit: Int!
+  count: Int!
+  items: [Booking!]!
 }

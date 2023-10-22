@@ -80,6 +80,13 @@ export enum PaymentMethod {
     CREDIT_CARD = "CREDIT_CARD"
 }
 
+export interface GetBookingsQueryFilters {
+    cooperativeId?: Nullable<string>;
+    plannedTripId?: Nullable<string>;
+    tripId?: Nullable<string>;
+    mode?: Nullable<BookingMode>;
+}
+
 export interface GetBusStationsQueryFilters {
     regionId?: Nullable<string>;
     cityId?: Nullable<string>;
@@ -148,6 +155,44 @@ export interface QueryTextSearchParams {
     text?: Nullable<string>;
 }
 
+export interface IQuery {
+    __typename?: 'IQuery';
+    bookings(pagination: QueryPagePaginationParams, sort?: Nullable<QuerySortParams>, textSearch?: Nullable<QueryTextSearchParams>, filters?: Nullable<GetBookingsQueryFilters>): PagePaginatedBookings | Promise<PagePaginatedBookings>;
+    busStations(pagination: QueryPagePaginationParams, textSearch?: Nullable<QueryTextSearchParams>, filters?: Nullable<GetBusStationsQueryFilters>): PaginatedBusStations | Promise<PaginatedBusStations>;
+    cities(pagination: QueryPagePaginationParams, filters?: Nullable<GetCitiesQueryFilters>, textSearch?: Nullable<QueryTextSearchParams>, sort?: Nullable<QuerySortParams>): PagePaginatedCities | Promise<PagePaginatedCities>;
+    cooperative(identifier: string): Cooperative | Promise<Cooperative>;
+    drivers(pagination: QueryPagePaginationParams, textSearch?: Nullable<QueryTextSearchParams>, filters?: Nullable<GetDriversQueryFilters>, sort?: Nullable<QuerySortParams>): PaginatedDrivers | Promise<PaginatedDrivers>;
+    driver(identifier: string): Driver | Promise<Driver>;
+    highways(textSearch?: Nullable<QueryTextSearchParams>, sort?: Nullable<QuerySortParams>): Highway[] | Promise<Highway[]>;
+    highway(identifier?: Nullable<string>): Highway | Promise<Highway>;
+    parkingLots(pagination: QueryPagePaginationParams, sort?: Nullable<QuerySortParams>, filters?: Nullable<GetParkingLotsQueryFilters>): PaginatedParkingLots | Promise<PaginatedParkingLots>;
+    plannedTrips(pagination: QueryPagePaginationParams, filters?: Nullable<GetPlannedTripsFilters>): PagePaginatedPlannedTrips | Promise<PagePaginatedPlannedTrips>;
+    regions(filters?: Nullable<GetRegionsQueryFilters>, sort?: Nullable<QuerySortParams>): Region[] | Promise<Region[]>;
+    routes(pagination: QueryPagePaginationParams, sort?: Nullable<QuerySortParams>, filters?: Nullable<GetRoutesQueryFilters>): PagePaginatedRoutes | Promise<PagePaginatedRoutes>;
+    users(): User[] | Promise<User[]>;
+    vehicles(pagination: QueryPagePaginationParams, sort?: Nullable<QuerySortParams>, filters?: Nullable<GetVehiclesQueryFilters>): Nullable<PagePaginatedVehicles> | Promise<Nullable<PagePaginatedVehicles>>;
+}
+
+export interface Booking {
+    __typename?: 'Booking';
+    id: string;
+    personName: string;
+    phone: string;
+    email?: Nullable<string>;
+    seats: string[];
+    mode: BookingMode;
+    payment: Payment;
+    secretCode?: Nullable<string>;
+    attendance: BookingPersonAttendance;
+    parkingLot?: Nullable<ParkingLot>;
+    plannedTrip?: Nullable<PlannedTrip>;
+    trip?: Nullable<Trip>;
+    cooperative: Cooperative;
+    user?: Nullable<User>;
+    createdAt: DateTime;
+    updatedAt: DateTime;
+}
+
 export interface EmbeddedBooking {
     __typename?: 'EmbeddedBooking';
     id: string;
@@ -165,21 +210,12 @@ export interface EmbeddedBooking {
     updatedAt: DateTime;
 }
 
-export interface IQuery {
-    __typename?: 'IQuery';
-    busStations(pagination: QueryPagePaginationParams, textSearch?: Nullable<QueryTextSearchParams>, filters?: Nullable<GetBusStationsQueryFilters>): PaginatedBusStations | Promise<PaginatedBusStations>;
-    cities(pagination: QueryPagePaginationParams, filters?: Nullable<GetCitiesQueryFilters>, textSearch?: Nullable<QueryTextSearchParams>, sort?: Nullable<QuerySortParams>): PagePaginatedCities | Promise<PagePaginatedCities>;
-    cooperative(identifier: string): Cooperative | Promise<Cooperative>;
-    drivers(pagination: QueryPagePaginationParams, textSearch?: Nullable<QueryTextSearchParams>, filters?: Nullable<GetDriversQueryFilters>, sort?: Nullable<QuerySortParams>): PaginatedDrivers | Promise<PaginatedDrivers>;
-    driver(identifier: string): Driver | Promise<Driver>;
-    highways(textSearch?: Nullable<QueryTextSearchParams>, sort?: Nullable<QuerySortParams>): Highway[] | Promise<Highway[]>;
-    highway(identifier?: Nullable<string>): Highway | Promise<Highway>;
-    parkingLots(pagination: QueryPagePaginationParams, sort?: Nullable<QuerySortParams>, filters?: Nullable<GetParkingLotsQueryFilters>): PaginatedParkingLots | Promise<PaginatedParkingLots>;
-    plannedTrips(pagination: QueryPagePaginationParams, filters?: Nullable<GetPlannedTripsFilters>): PagePaginatedPlannedTrips | Promise<PagePaginatedPlannedTrips>;
-    regions(filters?: Nullable<GetRegionsQueryFilters>, sort?: Nullable<QuerySortParams>): Region[] | Promise<Region[]>;
-    routes(pagination: QueryPagePaginationParams, sort?: Nullable<QuerySortParams>, filters?: Nullable<GetRoutesQueryFilters>): PagePaginatedRoutes | Promise<PagePaginatedRoutes>;
-    users(): User[] | Promise<User[]>;
-    vehicles(pagination: QueryPagePaginationParams, sort?: Nullable<QuerySortParams>, filters?: Nullable<GetVehiclesQueryFilters>): Nullable<PagePaginatedVehicles> | Promise<Nullable<PagePaginatedVehicles>>;
+export interface PagePaginatedBookings {
+    __typename?: 'PagePaginatedBookings';
+    page: number;
+    limit: number;
+    count: number;
+    items: Booking[];
 }
 
 export interface BusStation {
@@ -550,7 +586,7 @@ export interface Payment {
     amount: number;
     paidAt: DateTime;
     method: PaymentMethod;
-    service: string;
+    service?: Nullable<string>;
 }
 
 export type Void = any;

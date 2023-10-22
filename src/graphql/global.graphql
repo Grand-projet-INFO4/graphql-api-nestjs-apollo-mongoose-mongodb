@@ -50,7 +50,7 @@ type Payment {
   amount: Float!
   paidAt: DateTime!
   method: PaymentMethod!
-  service: String!
+  service: String
 }
 # Payment method
 enum PaymentMethod {
