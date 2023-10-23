@@ -52,6 +52,7 @@ import {
   TrackingDevice,
   trackingDeviceSchema,
 } from 'src/api/tracking-device/schema';
+import { isProductionEnvironment } from 'src/common/helpers/environment.helper';
 
 try {
   seeder({
@@ -60,8 +61,8 @@ try {
         isGlobal: true,
       }),
       MongooseModule.forRoot(process.env.DATABASE_URL as string, {
-        directConnection: true,
         autoIndex: true,
+        directConnection: !isProductionEnvironment(process.env.NODE_ENV),
       }),
       MongooseModule.forFeature([{ name: Region.name, schema: regionSchema }]),
       MongooseModule.forFeature([{ name: City.name, schema: citySchema }]),
