@@ -16,6 +16,24 @@ input GetBookingsQueryFilters {
   mode: BookingMode
 }
 
+# Mutations ***********************************************
+
+type Mutation {
+  addBooking(payload: AddBookingMutationPayload!): Booking!
+}
+
+input AddBookingMutationPayload {
+  personName: String!
+  phone: String!
+  email: String
+  seats: [String!]!
+  mode: BookingMode!
+  paymentMethod: PaymentMethod!
+  paymentService: String
+  parkingLotId: ID
+  plannedTripId: ID!
+}
+
 # Types ***************************************************
 
 type Booking {

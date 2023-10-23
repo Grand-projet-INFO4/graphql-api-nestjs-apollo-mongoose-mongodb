@@ -87,6 +87,18 @@ export interface GetBookingsQueryFilters {
     mode?: Nullable<BookingMode>;
 }
 
+export interface AddBookingMutationPayload {
+    personName: string;
+    phone: string;
+    email?: Nullable<string>;
+    seats: string[];
+    mode: BookingMode;
+    paymentMethod: PaymentMethod;
+    paymentService?: Nullable<string>;
+    parkingLotId?: Nullable<string>;
+    plannedTripId: string;
+}
+
 export interface GetBusStationsQueryFilters {
     regionId?: Nullable<string>;
     cityId?: Nullable<string>;
@@ -171,6 +183,11 @@ export interface IQuery {
     routes(pagination: QueryPagePaginationParams, sort?: Nullable<QuerySortParams>, filters?: Nullable<GetRoutesQueryFilters>): PagePaginatedRoutes | Promise<PagePaginatedRoutes>;
     users(): User[] | Promise<User[]>;
     vehicles(pagination: QueryPagePaginationParams, sort?: Nullable<QuerySortParams>, filters?: Nullable<GetVehiclesQueryFilters>): Nullable<PagePaginatedVehicles> | Promise<Nullable<PagePaginatedVehicles>>;
+}
+
+export interface IMutation {
+    __typename?: 'IMutation';
+    addBooking(payload: AddBookingMutationPayload): Booking | Promise<Booking>;
 }
 
 export interface Booking {
