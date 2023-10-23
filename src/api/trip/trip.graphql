@@ -1,3 +1,23 @@
+# Queries *************************************************
+
+type Query {
+  trips(
+    pagination: QueryPagePaginationParams!
+    sort: QuerySortParams
+    filters: GetTripsFilters
+  ): PagePaginatedTrips!
+}
+
+input GetTripsFilters {
+  cooperativeId: ID
+  fromCityId: ID
+  fromParkingLotId: ID
+  toCityId: ID
+  toParkingLotId: ID
+  closedPath: Boolean
+  status: TripStatus
+}
+
 # Types ***************************************************
 
 type Trip {
@@ -29,4 +49,11 @@ enum TripStatus {
   ONGOING
   COMPLETED
   INTERRUPTED
+}
+
+type PagePaginatedTrips {
+  page: Int!
+  limit: Int!
+  count: Int!
+  items: [Trip!]!
 }

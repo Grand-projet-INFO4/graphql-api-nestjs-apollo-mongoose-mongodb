@@ -2,6 +2,8 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 
 import { Trip, tripSchema } from './schema';
+import { TripResolver } from './trip.resolver';
+import { TripService } from './trip.service';
 
 export const tripModule = MongooseModule.forFeature([
   {
@@ -12,6 +14,7 @@ export const tripModule = MongooseModule.forFeature([
 
 @Module({
   imports: [tripModule],
-  exports: [tripModule],
+  providers: [TripResolver, TripService],
+  exports: [tripModule, TripService],
 })
 export class TripModule {}

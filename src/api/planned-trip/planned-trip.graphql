@@ -3,6 +3,7 @@
 type Query {
   plannedTrips(
     pagination: QueryPagePaginationParams!
+    sort: QuerySortParams
     filters: GetPlannedTripsFilters
   ): PagePaginatedPlannedTrips!
 }

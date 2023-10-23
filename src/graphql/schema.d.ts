@@ -146,6 +146,16 @@ export interface GetRoutesQueryFilters {
     highways?: Nullable<string[]>;
 }
 
+export interface GetTripsFilters {
+    cooperativeId?: Nullable<string>;
+    fromCityId?: Nullable<string>;
+    fromParkingLotId?: Nullable<string>;
+    toCityId?: Nullable<string>;
+    toParkingLotId?: Nullable<string>;
+    closedPath?: Nullable<boolean>;
+    status?: Nullable<TripStatus>;
+}
+
 export interface GetVehiclesQueryFilters {
     cooperativeId?: Nullable<string>;
     nearPoint?: Nullable<number[]>;
@@ -178,9 +188,10 @@ export interface IQuery {
     highways(textSearch?: Nullable<QueryTextSearchParams>, sort?: Nullable<QuerySortParams>): Highway[] | Promise<Highway[]>;
     highway(identifier?: Nullable<string>): Highway | Promise<Highway>;
     parkingLots(pagination: QueryPagePaginationParams, sort?: Nullable<QuerySortParams>, filters?: Nullable<GetParkingLotsQueryFilters>): PaginatedParkingLots | Promise<PaginatedParkingLots>;
-    plannedTrips(pagination: QueryPagePaginationParams, filters?: Nullable<GetPlannedTripsFilters>): PagePaginatedPlannedTrips | Promise<PagePaginatedPlannedTrips>;
+    plannedTrips(pagination: QueryPagePaginationParams, sort?: Nullable<QuerySortParams>, filters?: Nullable<GetPlannedTripsFilters>): PagePaginatedPlannedTrips | Promise<PagePaginatedPlannedTrips>;
     regions(filters?: Nullable<GetRegionsQueryFilters>, sort?: Nullable<QuerySortParams>): Region[] | Promise<Region[]>;
     routes(pagination: QueryPagePaginationParams, sort?: Nullable<QuerySortParams>, filters?: Nullable<GetRoutesQueryFilters>): PagePaginatedRoutes | Promise<PagePaginatedRoutes>;
+    trips(pagination: QueryPagePaginationParams, sort?: Nullable<QuerySortParams>, filters?: Nullable<GetTripsFilters>): PagePaginatedTrips | Promise<PagePaginatedTrips>;
     users(): User[] | Promise<User[]>;
     vehicles(pagination: QueryPagePaginationParams, sort?: Nullable<QuerySortParams>, filters?: Nullable<GetVehiclesQueryFilters>): Nullable<PagePaginatedVehicles> | Promise<Nullable<PagePaginatedVehicles>>;
 }
@@ -523,6 +534,14 @@ export interface TripPath {
     __typename?: 'TripPath';
     from: EmbeddedCity;
     to: EmbeddedCity;
+}
+
+export interface PagePaginatedTrips {
+    __typename?: 'PagePaginatedTrips';
+    page: number;
+    limit: number;
+    count: number;
+    items: Trip[];
 }
 
 export interface User {
