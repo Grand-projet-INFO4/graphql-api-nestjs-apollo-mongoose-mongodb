@@ -1,0 +1,74 @@
+# Queries *************************************************
+
+type Query {
+  vehicles(
+    pagination: QueryPagePaginationParams!
+    sort: QuerySortParams
+    filters: GetVehiclesQueryFilters
+  ): PagePaginatedVehicles
+}
+
+input GetVehiclesQueryFilters {
+  cooperativeId: ID
+  nearPoint: [Float!]
+  boundingsBox: [[Float!]!]
+}
+
+# Types ***************************************************
+
+type Vehicle {
+  id: ID!
+  plateId: String!
+  mainPhotoId: ID
+  mainPhoto: EmbeddedPhoto
+  photos: [EmbeddedPhoto!]
+  status: VehicleStatus!
+  state: VehicleState!
+  tracker: EmbeddedTrackingDevice
+  model: EmbeddedCarModel!
+  seatsCount: VehicleSeatsCount!
+  removedSeats: [String!]
+  totalSeatsCount: Int!
+  cooperative: Cooperative!
+  ongoingTrip: Trip
+  drivers: [Driver!]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+enum VehicleStatus {
+  IN_USE
+  OUT_OF_SERVICE
+  REVIEWED
+  MAINTAINED
+  REPAIRED
+}
+
+enum VehicleState {
+  OPERATIONAL
+  FAILING
+  DAMAGED
+}
+
+type VehicleSeatsCount {
+  front: Int!
+  rearCols: Int!
+  rearRows: Int!
+}
+
+type EmbeddedVehicle {
+  id: ID!
+  plateId: String!
+  state: VehicleState!
+  model: EmbeddedCarModel!
+  seatsCount: VehicleSeatsCount!
+  removedSeats: [String!]
+  cooperative: Cooperative!
+}
+
+type PagePaginatedVehicles {
+  page: Int!
+  limit: Int!
+  count: Int!
+  items: [Vehicle!]!
+}

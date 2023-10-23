@@ -1,0 +1,51 @@
+# Queries *************************************************
+
+type Query {
+  parkingLots(
+    pagination: QueryPagePaginationParams!
+    sort: QuerySortParams
+    filters: GetParkingLotsQueryFilters
+  ): PaginatedParkingLots!
+}
+
+input GetParkingLotsQueryFilters {
+  cooperativeId: ID
+  nearPoint: [Float!]
+  boundingsBox: [[Float!]!]
+}
+
+# Types ***************************************************
+
+type ParkingLot {
+  id: ID!
+  address: String!
+  locationHint: String
+  position: GeoJSONPoint!
+  city: EmbeddedCity
+  mainPhoto: CooperativePhoto
+  phones: [String!]
+  openHours: WeekOpenHours!
+  cooperative: Cooperative!
+  busStation: BusStation
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type PaginatedParkingLots {
+  page: Int!
+  limit: Int!
+  count: Int!
+  items: [ParkingLot!]!
+}
+
+type EmbeddedParkingLot {
+  id: ID!
+  address: String!
+  locationHint: String
+  position: GeoJSONPoint!
+  city: EmbeddedCity
+  openHours: WeekOpenHours!
+  cooperative: Cooperative!
+  mainPhoto: CooperativePhoto!
+  busStation: BusStation
+}

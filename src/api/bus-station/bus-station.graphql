@@ -1,0 +1,42 @@
+# Queries ***************************************
+
+type Query {
+  busStations(
+    pagination: QueryPagePaginationParams!
+    textSearch: QueryTextSearchParams
+    filters: GetBusStationsQueryFilters
+  ): PaginatedBusStations!
+}
+
+input GetBusStationsQueryFilters {
+  regionId: ID
+  cityId: ID
+  highways: [String!]
+  nearPoint: [Float!]
+  boundingsBox: [[Float!]!]
+}
+
+# Types *****************************************
+
+type BusStation {
+  id: ID!
+  stationName: String!
+  description: String
+  slug: String!
+  mainPhotoId: ID
+  mainPhoto: String
+  photos: [EmbeddedPhoto!]
+  position: GeoJSONPoint!
+  street: String!
+  city: EmbeddedCity!
+  highways: [String!]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type PaginatedBusStations {
+  page: Int!
+  limit: Int!
+  count: Int!
+  items: [BusStation!]!
+}

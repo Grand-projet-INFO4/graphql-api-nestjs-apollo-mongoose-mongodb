@@ -1,0 +1,17 @@
+# Types *****************************************
+
+type CooperativePhoto {
+  id: ID!
+  filename: String!
+  url: String!
+  description: String
+  cooperativeId: ID!
+  parkingLotId: ID
+}
+
+type EmbeddedPhoto {
+  id: ID!
+  filename: String!
+  url: String!
+  description: String
+}

@@ -18,7 +18,7 @@
     "phone": "+261324924506",
     "password": "$2b$10$kZl2CGCDgFA9y7YXADJu5engg5tN0lNM.kBjHm97KZKhgUEnUwFGu",
     "cityName": "Antananarivo",
-    "roles": ["BASIC", "ADMIN"]
+    "roles": ["BASIC", "MANAGER"]
   },
   {
     "firstName": "Ny Aina Fitiavana",
@@ -28,7 +28,7 @@
     "email": "fitiavanarabariahefa@gmail.com",
     "password": "$2b$10$kZl2CGCDgFA9y7YXADJu5engg5tN0lNM.kBjHm97KZKhgUEnUwFGu",
     "cityName": "Antananarivo",
-    "roles": ["BASIC", "ADMIN"]
+    "roles": ["BASIC", "MANAGER"]
   },
   {
     "firstName": "Kiadiniaina Estello",
@@ -38,7 +38,7 @@
     "email": "kiadyestello@gmail.com",
     "password": "$2b$10$kZl2CGCDgFA9y7YXADJu5engg5tN0lNM.kBjHm97KZKhgUEnUwFGu",
     "cityName": "Antananarivo",
-    "roles": ["BASIC", "ADMIN"]
+    "roles": ["BASIC", "MANAGER"]
   },
   {
     "firstName": "Dimbinirina Martin",
@@ -48,7 +48,7 @@
     "email": "thintin@gmail.com",
     "password": "$2b$10$kZl2CGCDgFA9y7YXADJu5engg5tN0lNM.kBjHm97KZKhgUEnUwFGu",
     "cityName": "Antananarivo",
-    "roles": ["BASIC", "ADMIN"]
+    "roles": ["BASIC", "MANAGER"]
   },
   {
     "firstName": "Cédrick",
@@ -58,7 +58,7 @@
     "email": "tarikacedrick@gmail.com",
     "password": "$2b$10$kZl2CGCDgFA9y7YXADJu5engg5tN0lNM.kBjHm97KZKhgUEnUwFGu",
     "cityName": "Antananarivo",
-    "roles": ["BASIC", "ADMIN"]
+    "roles": ["BASIC", "MANAGER"]
   },
   {
     "firstName": "Ranto Billy",
@@ -68,7 +68,7 @@
     "email": "rantobilly@gmail.com",
     "password": "$2b$10$kZl2CGCDgFA9y7YXADJu5engg5tN0lNM.kBjHm97KZKhgUEnUwFGu",
     "cityName": "Antananarivo",
-    "roles": ["BASIC", "ADMIN"]
+    "roles": ["BASIC", "MANAGER"]
   },
   {
     "firstName": "Tanjona Harintsarobidy",
@@ -78,6 +78,6 @@
     "email": "tanjonaharints@gmail.com",
     "password": "$2b$10$kZl2CGCDgFA9y7YXADJu5engg5tN0lNM.kBjHm97KZKhgUEnUwFGu",
     "cityName": "Antananarivo",
-    "roles": ["BASIC", "ADMIN"]
+    "roles": ["BASIC", "MANAGER"]
   }
 ]

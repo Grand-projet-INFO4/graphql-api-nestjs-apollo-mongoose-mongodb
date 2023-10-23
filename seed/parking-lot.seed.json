@@ -58,7 +58,7 @@
       {
         "cityName": "Mahajanga",
         "address": "Avenue Barday, Mahajanga, Madagascar",
-        "position": [47.515919756476, -18.945980733225966],
+        "position": [46.326868915397775, -15.721700919872207], 
         "openHours": {
           "opensAt": "06:00",
           "closesAt": "19:00",
@@ -161,7 +161,7 @@
       {
         "cityName": "Antananarivo",
         "address": "Gare routière Ampasampito, Antananarivo, Madagascar",
-        "position": [47.49653637165035, -18.897919744097468],
+        "position": [47.548905, -18.893896],
         "openHours": {
           "opensAt": "06:30",
           "closesAt": "18:00",
@@ -221,7 +221,7 @@
       {
         "cityName": "Mahajanga",
         "address": "Avenue Barday, Mahajanga, Madagascar",
-        "position": [46.327103, -17.84474775115543],
+        "position": [46.327429051776704, -15.721594346024267],
         "openHours": {
           "opensAt": "06:30",
           "closesAt": "18:00",

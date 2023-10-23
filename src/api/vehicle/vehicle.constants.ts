@@ -36,3 +36,6 @@ export const frontSeatRegExp = /^\w{1}$/;
 
 // Regular expression for a vehicle plate id
 export const plateIdRegExp = /^\d{4}\s{1}[A-Z]{2,3}$/;
+
+// The folder that stores the vehicles photos in the static images directory
+export const VEHICLES_PHOTOS_DIR = 'vehicles';

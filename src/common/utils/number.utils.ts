@@ -5,7 +5,7 @@
  * @param from The minimum value (Defaults to 1)
  */
 export function getRandomInteger(to: number, from = 1) {
-  if (from && from >= to) {
+  if (from && from > to) {
     throw new Error(
       'The `from` argument must be smaller that the `to` arguement',
     );

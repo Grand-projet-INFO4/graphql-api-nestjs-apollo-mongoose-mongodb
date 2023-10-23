@@ -7,9 +7,10 @@ import { CitySeeder, CitySeederPayload } from '../city/city.seeder';
 import { WithMongoId } from 'src/common/types/mongo-id';
 import { modelCollectionExists } from 'src/common/helpers/mongo.helper';
 import * as userSeedsOptions from '../../../seed/user.seed.json';
+import { RemoveMethods } from 'src/common/types/utils';
 
 export type UserSeederPayload = WithMongoId<
-  Omit<User, 'city'> & {
+  Omit<RemoveMethods<User>, 'city'> & {
     city?: CitySeederPayload;
   }
 >;

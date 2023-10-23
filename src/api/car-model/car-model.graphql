@@ -1,0 +1,7 @@
+# Types ***************************************************
+
+type EmbeddedCarModel {
+  id: ID!
+  modelName: String!
+  brand: String!
+}

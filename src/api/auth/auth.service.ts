@@ -1,7 +1,13 @@
-import { ForbiddenException, Injectable, Inject } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Injectable,
+  Inject,
+  NotFoundException,
+} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService, JwtSignOptions } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/mongoose';
+import { Types } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 
 import type {
@@ -11,14 +17,27 @@ import type {
   AccessToken,
   ReqAuthUser,
   SanitizedAuthUser,
+  SanitizedUser,
+  SanitizedCooperativeAdmin,
+  SanitizedAuthUserCooperative,
 } from './auth';
 import { SignupDTO } from './dto';
 import { addDurationFromNow } from 'src/common/utils/date-time.utils';
 import { User, UserDocument, UserModel } from '../user/schema';
 import { UserService } from '../user/user.service';
-import { UserRole } from '../user/user.constants';
+import { COOPERATIVE_USER_ROLES, UserRole } from '../user/user.constants';
 import { CityService } from '../city/city.service';
 import { RedisClientInstance } from 'src/redis/redis';
+import {
+  CooperativeAdmin,
+  CooperativeAdminDocument,
+  CooperativeAdminModel,
+} from '../cooperative-admin/schema';
+import { WithoutTimestamps } from 'src/common/types/timestamps';
+import { RemoveMethods } from 'src/common/types/utils';
+import { Driver, DriverDocument, DriverModel } from '../driver/schema';
+import { CooperativeDocument } from '../cooperative/schema';
+import { CooperativeService } from '../cooperative/cooperative.service';
 
 // Access token duration: 3 days
 export const ACCESS_TOKEN_DURATION = 15 * 60; // 15 minutes
@@ -28,6 +47,10 @@ export class AuthService {
   constructor(
     @InjectModel(User.name) private userModel: UserModel,
     private userService: UserService,
+    @InjectModel(CooperativeAdmin.name)
+    private cooperativeAdminModel: CooperativeAdminModel,
+    @InjectModel(Driver.name) private driverModel: DriverModel,
+    private cooperativeService: CooperativeService,
     private cityService: CityService,
     private config: ConfigService,
     private jwtService: JwtService,
@@ -82,10 +105,110 @@ export class AuthService {
   }
 
   /**
+   * Gets the authenticated user data that should be attached to requests
+   *
+   * @param id The user id
+   */
+  async getAuthUser(id: Types.ObjectId | string): Promise<ReqAuthUser> {
+    const user = (await this.userModel.findById(id)) as ReqAuthUser;
+
+    if (!user) {
+      throw new NotFoundException('The authenticated user does not exist');
+    }
+
+    const cooperativeUserRole = user.roles.find((role) => {
+      return COOPERATIVE_USER_ROLES.includes(role);
+    });
+
+    if (cooperativeUserRole) {
+      user.cooperativeRole =
+        cooperativeUserRole as ReqAuthUser['cooperativeRole'];
+
+      const cooperativeLookupPipeline = {
+        from: 'cooperatives',
+        foreignField: '_id',
+        as: 'cooperatives',
+        localField: 'cooperative',
+      };
+      const setCooperativeFieldPipeline = {
+        $set: {
+          cooperative: {
+            $first: '$cooperatives',
+          },
+        },
+      };
+      const removeCooperativesFieldPipeline = {
+        cooperatives: 0,
+      };
+
+      switch (user.cooperativeRole) {
+        case UserRole.Manager:
+        case UserRole.Regulator: {
+          const cooperativeAdminAccounts = await this.cooperativeAdminModel
+            .aggregate<CooperativeAdminDocument>([
+              {
+                $match: { user: user._id },
+              },
+            ])
+            .lookup(cooperativeLookupPipeline)
+            .append(setCooperativeFieldPipeline)
+            .project(removeCooperativesFieldPipeline);
+          if (user.cooperativeRole === UserRole.Manager) {
+            // A cooperative manager can manage multiple cooperatives
+            user.coopManagerAccounts = cooperativeAdminAccounts;
+          } else {
+            // A cooperative regulator belongs to only 1 cooperative
+            user.coopRegulatorAccount = cooperativeAdminAccounts[0];
+          }
+          break;
+        }
+
+        case UserRole.Driver: {
+          const [driver] = await this.driverModel
+            .aggregate<DriverDocument>([
+              {
+                $match: { user: user._id },
+              },
+            ])
+            .lookup(cooperativeLookupPipeline)
+            .append(setCooperativeFieldPipeline)
+            .project(removeCooperativesFieldPipeline);
+          user.coopDriverAccount = driver;
+          break;
+        }
+      }
+    }
+
+    !user.cooperativeRole && (user.cooperativeRole = 'none');
+
+    return user;
+  }
+
+  /**
+   * Sanitizes a cooperative document that will be included inside the sanitized auth user data
+   *
+   * @param cooperative The cooperative document
+   * @returns The sanitized cooperative data
+   */
+  private sanitizeAuthUserCooperative(
+    cooperative: CooperativeDocument,
+  ): SanitizedAuthUserCooperative {
+    return {
+      id: cooperative.id,
+      coopName: cooperative.coopName,
+      slug: cooperative.slug,
+      zone: cooperative.zone,
+      profilePhoto: this.cooperativeService.getCooperativePhotoURL(
+        cooperative.profilePhoto,
+      ),
+    };
+  }
+
+  /**
    * Sanitized auth user data to be sent on the client
    */
   sanitizeAuthUser(authUser: ReqAuthUser): SanitizedAuthUser {
-    const data: SanitizedAuthUser = {
+    const sanitizedUser: SanitizedUser = {
       id: authUser.id,
       firstName: authUser.firstName,
       lastName: authUser.lastName,
@@ -93,10 +216,10 @@ export class AuthService {
       email: authUser.email,
       roles: authUser.roles,
     };
-    authUser.phone && (data.phone = authUser.phone);
+    authUser.phone && (sanitizedUser.phone = authUser.phone);
     if (authUser.city) {
       const { city } = authUser;
-      data.city = {
+      sanitizedUser.city = {
         id: city.id,
         cityName: city.cityName,
         region: {
@@ -107,9 +230,56 @@ export class AuthService {
       };
     }
     if (authUser.photo) {
-      data.photo = this.userService.getPhotoURL(authUser.photo);
+      sanitizedUser.photo = this.userService.getPhotoURL(authUser.photo);
     }
-    return data;
+    switch (authUser.cooperativeRole) {
+      case UserRole.Manager: {
+        const sanitizedAuthUser = {
+          ...sanitizedUser,
+          cooperativeRole: UserRole.Manager,
+          coopManagerAccounts: authUser.coopManagerAccounts.map((account) => {
+            return {
+              ...account,
+              id: account.id,
+              cooperative: this.sanitizeAuthUserCooperative(
+                account.cooperative as CooperativeDocument,
+              ),
+            } as SanitizedCooperativeAdmin;
+          }),
+        } as SanitizedAuthUser;
+        return sanitizedAuthUser;
+      }
+      case UserRole.Driver:
+      case UserRole.Regulator: {
+        const account =
+          authUser.cooperativeRole === UserRole.Driver
+            ? authUser.coopDriverAccount
+            : authUser.coopRegulatorAccount;
+        const accountTypeKey =
+          authUser.cooperativeRole === UserRole.Driver
+            ? 'coopDriverAccount'
+            : 'coopRegulatorAccount';
+        const sanitizedAuthUser = {
+          ...sanitizedUser,
+          cooperativeRole: authUser.cooperativeRole,
+          [accountTypeKey]: {
+            ...account,
+            cooperative: this.sanitizeAuthUserCooperative(
+              account.cooperative as CooperativeDocument,
+            ),
+            id: account.id,
+          } as SanitizedCooperativeAdmin,
+        } as SanitizedAuthUser;
+        return sanitizedAuthUser;
+      }
+      default: {
+        const sanitizedAuthUser = {
+          ...sanitizedUser,
+          cooperativeRole: 'none',
+        } as SanitizedAuthUser;
+        return sanitizedAuthUser;
+      }
+    }
   }
 
   /**
@@ -163,7 +333,7 @@ export class AuthService {
       ));
 
     // The user creation data
-    const data: User = {
+    const data: RemoveMethods<WithoutTimestamps<User>> = {
       firstName: payload.firstName,
       lastName: payload.lastName,
       username: username,

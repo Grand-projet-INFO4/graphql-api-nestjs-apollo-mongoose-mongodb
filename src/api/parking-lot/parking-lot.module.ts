@@ -1,6 +1,9 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
+
 import { ParkingLot, parkingLotSchema } from './schema';
+import { ParkingLotResolver } from './parking-lot.resolver';
+import { ParkingLotService } from './parking-lot.service';
 
 const parkingLotModule = MongooseModule.forFeature([
   {
@@ -11,6 +14,7 @@ const parkingLotModule = MongooseModule.forFeature([
 
 @Module({
   imports: [parkingLotModule],
-  exports: [parkingLotModule],
+  providers: [ParkingLotResolver, ParkingLotService],
+  exports: [parkingLotModule, ParkingLotService],
 })
 export class ParkingLotModule {}

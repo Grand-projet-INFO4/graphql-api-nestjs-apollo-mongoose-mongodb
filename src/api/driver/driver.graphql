@@ -1,0 +1,59 @@
+# Queries ***************************************
+
+type Query {
+  # Gets paginated drivers
+  drivers(
+    pagination: QueryPagePaginationParams!
+    textSearch: QueryTextSearchParams
+    filters: GetDriversQueryFilters
+    sort: QuerySortParams
+  ): PaginatedDrivers!
+
+  # Gets a driver by its identifier
+  driver(identifier: ID!): Driver!
+}
+
+input GetDriversQueryFilters {
+  licenseCategories: [String!]
+  cooperativeId: String
+}
+
+# Types *****************************************
+
+type Driver {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  photo: String
+  license: DriverLicense!
+  email: String
+  phones: [String!]!
+  hiredAt: DateTime
+  latestTripAt: DateTime
+  user: User
+  cooperative: Cooperative
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type DriverLicense {
+  licenseId: String!
+  categories: [String!]!
+}
+
+type PaginatedDrivers {
+  page: Int!
+  limit: Int!
+  count: Int!
+  items: [Driver!]!
+}
+
+type TripDriver {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  license: DriverLicense!
+  phones: [String!]!
+  hiredAt: DateTime!
+  latestTripAt: DateTime
+}

@@ -4,26 +4,30 @@ import { Seeder } from 'nestjs-seeder';
 
 import { BUS_STATION_COLLECTION, BusStation, BusStationModel } from './schema';
 import { WithMongoId } from 'src/common/types/mongo-id';
-import { CitySeeder, CitySeederPayload } from '../city/city.seeder';
+import { CitySeeder } from '../city/city.seeder';
 import { ReplaceFields } from 'src/common/types/utils';
 import { GeoJSONPoint } from 'src/common/schemas/geojson-point.schema';
 import { EmbeddedPhotoSeed } from '../photo/photo';
 import { modelCollectionExists } from 'src/common/helpers/mongo.helper';
 import * as busStationSeedOptions from '../../../seed/bus-station.seed.json';
+import { EmbeddedCitySeed } from '../city/city';
+import { WithoutTimestamps } from 'src/common/types/timestamps';
 
-export type BusStationSeederPayload = WithMongoId<
-  ReplaceFields<
-    BusStation,
-    {
-      city: CitySeederPayload;
-      mainPhotoId?: mongo.BSON.ObjectId;
-      photos?: EmbeddedPhotoSeed[];
-    }
+export type BusStationSeederPayload = WithoutTimestamps<
+  WithMongoId<
+    ReplaceFields<
+      BusStation,
+      {
+        city: EmbeddedCitySeed;
+        mainPhotoId?: mongo.BSON.ObjectId;
+        photos?: EmbeddedPhotoSeed[];
+      }
+    >
   >
 >;
 
 type BusStationSeedOptions = ReplaceFields<
-  Omit<BusStation, 'city' | 'mainPhotoId'>,
+  Omit<BusStation, 'city' | 'mainPhotoId' | 'createdAt' | 'updatedAt'>,
   {
     cityName: string;
     position: [number, number];
@@ -79,7 +83,10 @@ export class BusStationSeeder implements Seeder {
         (options) => {
           const busStation: BusStationSeederPayload = {
             _id: new mongo.ObjectId(),
-            city: cityNameMap.get(options.cityName),
+            city: CitySeeder.parseEmbeddedCity(
+              cityNameMap.get(options.cityName),
+              { withWeight: true },
+            ),
             position: new GeoJSONPoint(options.position),
             stationName: options.stationName,
             slug: options.slug,

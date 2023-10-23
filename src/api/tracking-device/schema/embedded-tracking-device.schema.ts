@@ -6,7 +6,7 @@ import {
   geoJSONPointSchema,
 } from 'src/common/schemas/geojson-point.schema';
 
-@Schema({ timestamps: true, autoCreate: false })
+@Schema({ autoCreate: false })
 export class EmbeddedTrackingDevice {
   // (Numéro de série)
   @Prop({ type: String, required: true })
@@ -22,6 +22,17 @@ export class EmbeddedTrackingDevice {
   // Whether the device is currently being connected to the server or not
   @Prop({ type: Boolean, required: true, default: false })
   connected: boolean;
+
+  // Date-Time of the most recent disconnection of the device
+  @Prop()
+  disconnectedAt?: Date;
+
+  // Date-Time of the update of either the position, speed or connectied fields
+  @Prop({
+    type: Date,
+    required: true,
+  })
+  updatedAt: Date;
 }
 
 export const embeddedTrackingDeviceSchema = SchemaFactory.createForClass(

@@ -1,0 +1,13 @@
+# Types *****************************************
+
+type SocialMediaLink {
+  platoform: SocialMediaPlatform!
+  url: String!
+}
+
+enum SocialMediaPlatform {
+  FACEBOOK
+  INSTAGRAM
+  TWITTER
+  TIKTOK
+}

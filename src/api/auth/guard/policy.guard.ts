@@ -1,9 +1,15 @@
-import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
+import {
+  CanActivate,
+  ExecutionContext,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { Observable } from 'rxjs';
 
 import { PolicyDefinition, UserAction } from '../auth.policy';
-import { User } from 'src/api/user/schema';
+import { ReqAuthUser } from '../auth';
+import { GqlExecutionContext } from '@nestjs/graphql';
 
 export interface PolicyDefinitionConstructor<T extends PolicyDefinition> {
   new (): T;
@@ -22,12 +28,18 @@ export class PolicyGuard implements CanActivate {
   ): boolean | Promise<boolean> | Observable<boolean> {
     const policyConstraints =
       this.reflector.get<
-        [PolicyDefinitionConstructor<PolicyDefinition>, UserAction][]
+        [PolicyDefinitionConstructor<PolicyDefinition>, UserAction, unknown][]
       >(CHECK_POLICIES_KEY, ctx.getHandler()) ?? [];
-    const user = ctx.switchToHttp().getRequest() as User;
-    return policyConstraints.every(([Policy, action]) => {
+    const authUser = GqlExecutionContext.create(ctx).getContext().req
+      .user as ReqAuthUser;
+    if (!authUser) {
+      throw new UnauthorizedException(
+        'You must be authenticated to perform this action',
+      );
+    }
+    return policyConstraints.every(([Policy, action, subject]) => {
       const policy = new Policy();
-      return policy.authorize(user, action);
+      return policy.authorize(authUser, action, subject);
     });
   }
 }

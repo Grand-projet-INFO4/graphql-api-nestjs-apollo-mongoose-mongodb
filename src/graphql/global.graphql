@@ -1,2 +1,61 @@
 scalar Void
 scalar DateTime
+
+# Sort params for queries
+input QuerySortParams {
+  sortBy: String!
+  order: QuerySortOrder!
+}
+
+enum QuerySortOrder {
+  asc
+  desc
+}
+
+# Page based pagination params for queries
+input QueryPagePaginationParams {
+  page: Int!
+  limit: Int!
+}
+
+# Text search params for queries
+input QueryTextSearchParams {
+  # Partial substring match using RegExp
+  search: String
+
+  # Full-text search using Text index
+  text: String
+}
+
+# Types of a GeoJSON data
+enum GeoJSONType {
+  Point
+}
+
+# GeoJSON Point
+type GeoJSONPoint {
+  type: GeoJSONType!
+  coordinates: [Float!]!
+}
+
+# Week open hours
+type WeekOpenHours {
+  opensAt: String!
+  closesAt: String!
+  tzOffset: String!
+}
+
+# Payment details
+type Payment {
+  amount: Float!
+  paidAt: DateTime!
+  method: PaymentMethod!
+  service: String
+}
+# Payment method
+enum PaymentMethod {
+  CASH
+  MOBILE_MONEY
+  DEBIT_CARD
+  CREDIT_CARD
+}

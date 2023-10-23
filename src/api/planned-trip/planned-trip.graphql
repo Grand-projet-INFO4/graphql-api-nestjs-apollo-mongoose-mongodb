@@ -1,0 +1,54 @@
+# Queries *************************************************
+
+type Query {
+  plannedTrips(
+    pagination: QueryPagePaginationParams!
+    sort: QuerySortParams
+    filters: GetPlannedTripsFilters
+  ): PagePaginatedPlannedTrips!
+}
+
+input GetPlannedTripsFilters {
+  cooperativeId: ID
+  fromCityId: ID
+  fromParkingLotId: ID
+  toCityId: ID
+  toParkingLotId: ID
+  closedPath: Boolean
+  status: PlannedTripStatus
+  availSeatsCount: Int
+  startsAfter: String
+}
+
+# Types ***************************************************
+
+type PlannedTrip {
+  id: ID!
+  route: EmbeddedRoute!
+  path: TripPath!
+  reservedSeats: [String!]
+  availSeatsCount: Int!
+  bookings: [EmbeddedBooking!]!
+  status: PlannedTripStatus!
+  checkoutDelay: Int
+  startsAt: DateTime!
+  vehicle: Vehicle!
+  drivers: [Driver!]!
+  cooperative: Cooperative!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+enum PlannedTripStatus {
+  PENDING
+  FILLING
+  READY
+  CANCELLED
+}
+
+type PagePaginatedPlannedTrips {
+  page: Int!
+  limit: Int!
+  count: Int!
+  items: [PlannedTrip!]!
+}

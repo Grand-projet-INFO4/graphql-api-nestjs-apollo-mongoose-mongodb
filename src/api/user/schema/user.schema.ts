@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Model } from 'mongoose';
 
-import { UserRole, USER_ROLES } from '../user.constants';
+import { UserRole, USER_ROLES, ADMIN_USER_ROLES } from '../user.constants';
 import { EmbeddedCityDocument, embeddedCitySchema } from 'src/api/city/schema';
 
 @Schema({ timestamps: true })
@@ -35,9 +35,29 @@ export class User {
     required: true,
   })
   roles: UserRole[];
+
+  // Instance methods
+
+  isAdmin: typeof isAdmin;
+}
+
+// Instance methods
+
+/**
+ * Checks whether the user has an application admin role
+ *
+ * @param strict If set to true, the user must strictly only have the `admin` role
+ */
+function isAdmin(this: UserDocument, strict = false): boolean {
+  if (strict) return this.roles.includes(UserRole.Admin);
+  return this.roles.some((role) => ADMIN_USER_ROLES.includes(role));
 }
 
 export const userSchema = SchemaFactory.createForClass(User);
+// Instance methods
+userSchema.methods = {
+  isAdmin,
+};
 
 // Text search index on the firstName, lastName and username fields
 userSchema.index(

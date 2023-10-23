@@ -164,7 +164,7 @@ export class TripSeeder implements Seeder {
               startedAt.setHours(hours);
               startedAt.setMinutes(0);
             } else {
-              const hours = getRandomInteger(nowHours, 7);
+              const hours = nowHours > 7 ? getRandomInteger(nowHours, 7) : 7;
               now.setHours(hours);
               now.setMinutes(0);
               startedAt = now;

@@ -13,6 +13,9 @@ export class EmbeddedCity {
 
   @Prop({ type: embeddedRegionSchema, required: true })
   region: EmbeddedRegionDocument;
+
+  @Prop()
+  weight?: number;
 }
 
 export const embeddedCitySchema = SchemaFactory.createForClass(EmbeddedCity);

@@ -1,0 +1,17 @@
+# Queries ***************************************
+
+type Query {
+  regions(filters: GetRegionsQueryFilters, sort: QuerySortParams): [Region!]!
+}
+
+input GetRegionsQueryFilters {
+  province: String
+}
+
+# Types *****************************************
+
+type Region {
+  id: ID!
+  regionName: String!
+  province: String!
+}

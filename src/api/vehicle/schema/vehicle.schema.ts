@@ -32,6 +32,7 @@ import {
   vehicleSeatsCountSchema,
 } from './vehicle-seats-count.schema';
 import { type DriverDocument } from 'src/api/driver/schema';
+import { TripDocument } from 'src/api/trip/schema';
 
 // Vehicles collection name
 export const VEHICLE_COLLECTION = 'vehicles';
@@ -118,7 +119,7 @@ export class Vehicle {
     type: MongooseSchema.ObjectId,
     ref: 'Trip',
   })
-  ongoingTrip?: Types.ObjectId;
+  ongoingTrip?: Types.ObjectId | TripDocument;
 
   // Assigned drivers ids
   @Prop({

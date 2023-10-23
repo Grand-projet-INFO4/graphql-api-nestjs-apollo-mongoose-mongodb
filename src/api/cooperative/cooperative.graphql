@@ -1,0 +1,36 @@
+# Queries ***************************************
+
+type Query {
+  # Gets a cooperative by one its identifier fields
+  cooperative(identifier: ID!): Cooperative!
+}
+
+# Types *****************************************
+
+type Cooperative {
+  id: ID!
+  coopName: String!
+  description: String
+  slug: String!
+  zone: CooperativeZone
+  profilePhoto: String!
+  transparentLogo: String
+  coverPhoto: String
+  city: EmbeddedCity!
+  address: String!
+  email: String
+  phones: [String!]!
+  websiteURL: String
+  socialMedias: [SocialMediaLink!]
+  highways: [String!]!
+  # preferences: CooperativePreferences!
+}
+
+enum CooperativeZone {
+  NATIONAL
+  REGIONAL
+}
+
+# type CooperativePreferences {
+#   id: ID!
+# }

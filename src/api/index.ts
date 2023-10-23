@@ -12,6 +12,7 @@ import { PlannedTripModule } from './planned-trip/planned-trip.module';
 import { RegionModule } from './region/region.module';
 import { RouteModule } from './route/route.module';
 import { SocialMediaModule } from './social-media/social-media.module';
+import { TrackingDevice } from './tracking-device/schema';
 import { TrackingDeviceModule } from './tracking-device/tracking-device.module';
 import { TripModule } from './trip/trip.module';
 import { UserModule } from './user/user.module';
@@ -38,4 +39,5 @@ export const apiModules = [
   TripModule,
   BookingModule,
   CooperativeAdminModule,
+  TrackingDevice,
 ];
